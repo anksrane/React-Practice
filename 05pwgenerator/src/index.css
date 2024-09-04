@@ -1,2 +1,2 @@
-.form-container{width: fit-content; background-color: rgb(74, 74, 74);}
+.form-container{width: 100%; max-width: 450px; background-color: rgb(74, 74, 74);}
 .pwd{width: 100%;height: auto;}

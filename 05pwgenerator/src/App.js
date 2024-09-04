@@ -1,11 +1,14 @@
 import './App.css';
-import { useState,useCallback } from "react";
+import { useState,useCallback,useEffect,useRef } from "react";
 
 function App(){
   const [length,setLength]=useState(8);
   const [numberAllowed,setNumberAllowed]=useState(false);
   const [charAllowed,setcharAllowed]=useState(false);
   const [password,setPassword]=useState("");
+
+  // useRef Hook
+  const passwordRef=useRef(null);
 
   const passwordGenerator=useCallback(()=>{
     let pass="";
@@ -17,7 +20,18 @@ function App(){
       pass+=str.charAt(char);      
     }
     setPassword(pass);
-  },[length,numberAllowed,charAllowed,setPassword])
+  },[length,numberAllowed,charAllowed])
+  
+  const copyPwToClipboard=useCallback(()=>{
+    // show selected in input text
+    passwordRef.current?.select();
+    // passwordRef.current?.setSelectionRange(0,8)
+    window.navigator.clipboard.writeText(password)
+  },[password])
+
+  useEffect(()=>{
+    passwordGenerator()
+  },[length,numberAllowed,charAllowed,passwordGenerator])
 
   return (
     <>
@@ -25,17 +39,26 @@ function App(){
       <div className="rounded mx-auto px-3 py-5 form-container">
         <h1 className="text-white text-center">Password Generator</h1>
         <div className="text-center d-flex rounded password-container">
-            <input className='border-0 rounded-start pwd' type="password" value={password} placeholder='Password' readOnly/>
-            <button className='px-3 py-2 border-0 bg-dark text-white rounded-end'>Copy</button>
+            <input className='border-0 rounded-start pwd' type="text" value={password} placeholder='Password' ref={passwordRef} readOnly/>
+            <button onClick={copyPwToClipboard} className='px-3 py-2 border-0 bg-dark text-white rounded-end'>Copy</button>
         </div>
-        <div className="d-flex inputs-container">
+        <div className="mt-3 d-flex inputs-container">
           <div className="d-flex align-content-center length-container">
             <input id='range' type="range" min={6} max={30} value={length} onChange={(e)=>{setLength(e.target.value)}}/>
             <label className='text-light ms-1' htmlFor="range">Length: {length} </label>
           </div>
-          <div className="checkbox-container">
-            <input type="checkbox" id="numberInput" defaultChecked={numberAllowed} onChange={setNumberAllowed} />
+          <div className="ms-2 checkbox-container">
+            <input type="checkbox" id="numberInput" defaultChecked={numberAllowed} onChange={()=>{
+              setNumberAllowed((prev)=>!prev)
+              }} />
+              <label htmlFor="numberInput" className='ms-1 text-white'>Numbers</label>
           </div>
+          <div className="ms-2 checkbox-container">
+            <input type="checkbox" id="charaterInput" defaultChecked={charAllowed} onChange={()=>{
+              setcharAllowed((prev)=>!prev)
+              }} />
+              <label htmlFor="charaterInput" className='ms-1 text-white'>Charater</label>
+          </div>          
         </div>  
         </div>
     </div>    
