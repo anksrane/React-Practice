@@ -5,7 +5,7 @@ function App() {
   const [color, setColor] = useState("olive")
   return (
     <>
-<div className="w-100 vh-100 duration-200" style={{backgroundColor: color}}  >
+    <div className="w-100 vh-100 duration-200" style={{backgroundColor: color}}  >
       <div className="flex flex-wrap justify-center bottom-12 inset-x-0 px-2">
           <button
           onClick={() => setColor("red")}
