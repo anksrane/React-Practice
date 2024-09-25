@@ -27,6 +27,15 @@ import Github, { githubInfoLoader } from './components/Github/Github.jsx';
 //       {
 //         path:"contact",
 //         element: <Contact></Contact>
+//       },
+//       {
+//         path:"user/:userid",
+//         element:<User></User>
+//       },
+//       {
+//         path:"github",
+//         loader:githubInfoLoader,
+//         element:<Github></Github>
 //       }
 //     ]
 //   }
