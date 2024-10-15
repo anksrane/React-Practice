@@ -4,8 +4,8 @@ import Cards from './components/Cards';
 function App() {
   return (
     <>
-    <Cards username='Ankit' btnText='Visit Here'/>
-    <Cards username='Ankit'/>
+      <Cards username='Ankit' btnText='Visit Here'/>
+      <Cards username='Ankit'/>
     </>
   );
 }

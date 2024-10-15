@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Playlist Video Fetcher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Fetch YouTube Playlist Videos</h1>
+
+    <input type="text" id="playlistUrl" placeholder="Enter YouTube Playlist URL" style="width: 300px;">
+    <button onclick="fetchPlaylist()">Get Videos</button>
+
+    <table id="videoTable">
+        <thead>
+            <tr>
+                <th>Sr. No.</th>
+                <th>Video Title</th>
+                <th>Video Length</th>
+                <th>Video Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Video rows will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        // You need to add your YouTube Data API key below
+        const apiKey = 'AIzaSyBZzHWcDxlwrqfX-oIm3z8R9BvR_RI4UCQ';
+
+        function extractPlaylistId(url) {
+            const regex = /[?&]list=([^&#]*)/;
+            const match = url.match(regex);
+            return (match && match[1]) ? match[1] : null;
+        }
+
+        async function fetchPlaylist() {
+            const playlistUrl = document.getElementById('playlistUrl').value;
+            const playlistId = extractPlaylistId(playlistUrl);
+
+            if (!playlistId) {
+                alert("Invalid YouTube playlist URL.");
+                return;
+            }
+
+            const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=50&playlistId=${playlistId}&key=${apiKey}`;
+
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+
+            if (!data.items) {
+                alert('Could not retrieve playlist.');
+                return;
+            }
+
+            const videoTableBody = document.querySelector('#videoTable tbody');
+            videoTableBody.innerHTML = ''; // Clear previous results
+            var counter=1;
+            for (const item of data.items) {
+                const videoId = item.contentDetails.videoId;
+                const videoTitle = item.snippet.title;
+                const videoLink = `https://www.youtube.com/watch?v=${videoId}`;
+
+                // Fetch video duration (for each video, we need to call a separate API request)
+                const videoDetailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${apiKey}`;
+                const videoResponse = await fetch(videoDetailsUrl);
+                const videoData = await videoResponse.json();
+                const duration = videoData.items[0].contentDetails.duration;
+
+                // Convert duration from ISO 8601 format to a readable format (e.g., PT15M33S to 15:33)
+                const formattedDuration = convertDuration(duration);
+
+                // Add a new row to the table
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${counter}</td>
+                    <td>${videoTitle}</td>
+                    <td>${formattedDuration}</td>
+                    <td><a href="${videoLink}" target="_blank">${videoLink}</a></td>
+                `;
+                videoTableBody.appendChild(row);
+                counter++;
+            }
+        }
+
+        // Helper function to convert ISO 8601 duration (e.g. PT15M33S) to HH:MM:SS format
+        function convertDuration(duration) {
+            const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/;
+            const matches = duration.match(regex);
+            const hours = (matches[1] || 0).toString().padStart(2, '0');
+            const minutes = (matches[2] || 0).toString().padStart(2, '0');
+            const seconds = (matches[3] || 0).toString().padStart(2, '0');
+            return hours > 0 ? `${hours}:${minutes}:${seconds}` : `${minutes}:${seconds}`;
+        }
+    </script>
+
+</body>
+</html>
