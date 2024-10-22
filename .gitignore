@@ -6,3 +6,4 @@ node_modules/
 
 # Ignore all files in the temp directory
 temp/
+12Blogs_with_appwrite/.env
