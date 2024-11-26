@@ -36,7 +36,7 @@ function Cart({ isActive, toggleCart }) {
             <div className="cart-box" key={product.id}>
               <img src={product.image} alt="" className="cart-img"></img>
               <div className="cart-item-info">
-                <h5>{product.title}</h5>
+                <p className="prod-title">{product.title}</p>
                 <p>$ {product.price}</p>
                 <input
                   type="number"
@@ -46,10 +46,10 @@ function Cart({ isActive, toggleCart }) {
                 ></input>
               </div>
               <button
-                className="btn btn-danger btn-sm"
+                className="btn btn-sm"
                 onClick={() => removeFromCart(product.id)}
               >
-                Remove
+                <i className="fa-solid fa-trash btn btn-danger"></i>
               </button>
             </div>
           ))
