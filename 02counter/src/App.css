@@ -1,1 +1,108 @@
-body{text-align: center;}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+body {
+  background-color: black;
+  height: 100vh;
+  color: #f2f3f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: "Montserrat", serif;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* common css */
+button {
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  }
+  
+  button,
+  button span {
+    transition: 200ms;
+  }
+  
+  
+  button .text {
+    transform: translateX(35px);
+    color: white;
+    font-weight: bold;
+  }
+  
+  button .icon {
+    position: absolute;
+    transform: translateX(150px);
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  button svg {
+    width: 15px;
+    fill: #eee;
+  }
+  
+  button:hover .text {
+    color: transparent;
+  }
+  
+  button:hover .icon {
+    width: 200px;
+    border-left: none;
+    transform: translateX(0);
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  button:active .icon svg {
+    transform: scale(0.8);
+  }
+  
+  /* Color CSS */
+  button.add {
+    background-color: green;
+  }
+  
+  button.add .icon {
+    border-left: 1px solid rgb(108, 233, 108);
+  }
+  
+  button.add:hover {
+    background: rgb(25, 171, 25);
+  }
+
+  button.add:hover .icon {
+    border-left: none;
+  }
+  
+  button.remove {
+    background: #e62222;
+  }
+  
+  button.remove .icon {
+    border-left: 1px solid #c41b1b;
+  }
+  
+  button.remove:hover {
+    background: #ff3636;
+  }
+
+  button.remove:hover .icon {
+    border-left: none;
+  }
