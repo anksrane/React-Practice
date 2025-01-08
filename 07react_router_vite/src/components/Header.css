@@ -1,0 +1,11 @@
+/* src/components/Header.css */
+nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+  }
+  
+  nav li {
+    margin-right: 15px;
+  }
+  
