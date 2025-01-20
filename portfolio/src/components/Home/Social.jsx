@@ -4,8 +4,8 @@ import "./Home.css";
 function Social() {
   return (
     <div className='social-icons-container'>
-      <i className="fa-brands fa-instagram"></i>
-      <i className="fa-brands fa-github"></i>
+      <a className='social-icons' href="www.linkedin.com/in/ankit-rane"><i className="fa-brands fa-linkedin"></i></a>
+      <a className='social-icons' href="https://github.com/anksrane"><i className="fa-brands fa-github"></i></a>
     </div>
   )
 }

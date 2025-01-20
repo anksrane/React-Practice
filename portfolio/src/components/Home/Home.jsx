@@ -9,10 +9,10 @@ function Home() {
     <div className="container home-container">
       <div className="home-container-grid">
         <Social />
-        <Data />
         <div className="img-container">
           <img src={homeBanner} alt="profileImage" className="profile_img" />
         </div>
+        <Data />
       </div>
     </div>
   );
