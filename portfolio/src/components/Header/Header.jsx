@@ -33,6 +33,16 @@ function Header() {
                 About
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/skills">
+                Skills
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/work">
+                Work
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

@@ -10,7 +10,7 @@ function Home() {
       <div className="home-container-grid">
         <Social />
         <div className="img-container">
-          <img src={homeBanner} alt="profileImage" className="profile_img" />
+          <img src={homeBanner} alt="profileImage" className="img-fluid profile_img" />
         </div>
         <Data />
       </div>

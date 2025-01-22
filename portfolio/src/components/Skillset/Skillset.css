@@ -1,0 +1,16 @@
+.skillset-container{
+    background-color: #09171d;
+    height: 100vh;
+    margin-top: -56px;
+    padding-top: 10%;
+}
+.row div{height: inherit;}
+.skills-content{
+    margin-top: 0;
+    margin-bottom: 1rem;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    color: #E9D8A6;
+    font-size: calc(18px + (22 - 18) * ((100vw - 320px) / (1920 - 320)));
+}
