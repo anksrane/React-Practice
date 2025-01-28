@@ -1,1 +1,16 @@
-.work-container{margin-top: -56px;}
+.work-container{margin-top: -56px;padding-top: 60px;}
+svg {
+  width: 80%;
+  max-width: 600px;
+}
+
+text {
+  font-size: 5rem;
+  font-weight: bold;
+  fill: none;
+  stroke: white;
+  stroke-width: 2px;
+  stroke-dasharray: 0 1000;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

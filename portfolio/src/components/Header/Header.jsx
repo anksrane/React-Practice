@@ -43,6 +43,11 @@ function Header() {
                 Work
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/Journey">
+                Journey
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
