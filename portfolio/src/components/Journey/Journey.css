@@ -204,13 +204,13 @@
   }
   
   .timeline .timeline-text .main-heading {
-    font-size: calc(24px + (30 - 24) * ((100vw - 320px) / (1920 - 320)));
+    font-size: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
     font-weight: 600;
     margin-bottom: 3px;
   }
 
   .timeline .timeline-text .sub-heading{
-    font-size: calc(20px + (26 - 20) * ((100vw - 320px) / (1920 - 320)));
+    font-size: calc(20px + (26 - 18) * ((100vw - 320px) / (1920 - 320)));
   }
   .timeline .timeline-text .list{
     font-size: calc(16px + (20 - 16) * ((100vw - 320px) / (1920 - 320)));
@@ -291,4 +291,22 @@
     .timeline .timeline-box, .timeline .timeline-launch {
         margin: 0px 20px 30px 45px;
     }
+    .timeline .timeline-continue::after {
+        left: 20px;
+    }
+    .timeline .row.timeline-left .timeline-date::after, .timeline .row.timeline-right .timeline-date::after {
+      left: 20px;
+    }   
+    .timeline .timeline-box, .timeline .timeline-launch {
+      margin: 0px 20px 30px 30px;
+    }     
+  }
+
+  .loader {
+    text-align: center;
+    padding: 20px;
+    font-size: 16px;
+    color: #666;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
   }
