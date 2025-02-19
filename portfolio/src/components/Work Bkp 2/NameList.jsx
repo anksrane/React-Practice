@@ -1,8 +1,5 @@
-import React, {useContext} from "react";
-import {WorkContext} from '../context/WorkContext';
-
-const NameList = () => {
-  const { worklist, setSelectedWork } = useContext(WorkContext);
+import React from "react";
+const NameList = ({ worklist, setSelectedWork }) => {
 
   return (
     <div className="name-list">

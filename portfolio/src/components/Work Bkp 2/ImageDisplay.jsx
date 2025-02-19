@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
-import {WorkContext} from '../context/WorkContext';
+import React, { useState, useEffect } from "react";
 
-const ImageDisplay = () => {
-  const {selectedWork}=useContext(WorkContext);
+const ImageDisplay = ({ selectedImage }) => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -13,12 +11,12 @@ const ImageDisplay = () => {
     }, 300); // Adjust delay in milliseconds (300ms = 0.3s)
 
     return () => clearTimeout(timeout); // Cleanup timeout on unmount/change
-  }, [selectedWork]);
+  }, [selectedImage]);
 
   return (
     <div className="image-container">
       <img
-        src={selectedWork.src}
+        src={selectedImage}
         alt="Selected Work"
         className={`img-fluid ${loaded ? "fade-in" : ""}`}
       />
