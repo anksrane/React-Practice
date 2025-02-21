@@ -1,18 +1,34 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import "./Home.css";
-import Social from "./Social";
-import Data from "./Data";
-import homeBanner from '../../assets/about.jpg';
+
+// Lazy load components
+const Social = lazy(() => import("./Social"));
+const Data = lazy(() => import("./Data"));
+
+// Lazy load the image using dynamic import
+const homeBanner = new URL('../../assets/about.jpg', import.meta.url).href;
 
 function Home() {
   return (
     <div className="container home-container">
       <div className="home-container-grid">
-        <Social />
+        <Suspense fallback={<div>Loading Social...</div>}>
+          <Social />
+        </Suspense>
+
         <div className="img-container">
-          <img src={homeBanner} alt="profileImage" className="img-fluid profile_img" />
+          {/* Lazy load image with loading="lazy" */}
+          <img 
+            src={homeBanner} 
+            alt="profileImage" 
+            className="img-fluid profile_img" 
+            loading="lazy" 
+          />
         </div>
-        <Data />
+
+        <Suspense fallback={<div>Loading Data...</div>}>
+          <Data />
+        </Suspense>
       </div>
     </div>
   );
