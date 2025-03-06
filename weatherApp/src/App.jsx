@@ -17,7 +17,7 @@ function App() {
           {/* Search Section End */}
 
           {/* Weather Section Start */}
-          <Weather weatherInfo ={weatherInfo} />
+          <Weather weatherInfo ={weatherInfo} city={city} />
           {/* Weather Section End */}
 
           {/* Hourly Forecast Start */}
