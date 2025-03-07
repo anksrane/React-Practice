@@ -27,11 +27,22 @@ const getWeatherCondition = (code) => {
   return conditions[code] || "Unknown Weather"; // Default to "Unknown Weather"
 };
 
-function Weather({ weatherInfo,city }) {
+function Weather({ weatherInfo, city }) {
   if (!weatherInfo || !weatherInfo.current) {
-    return <p className="text-center text-gray-500">Enter a city to get weather info.</p>;
+    // Show skeleton loader before data is available
+    return (
+      <div className="py-[30px] weather-container">
+        <div className="current-weather animate-pulse">
+          <div className="w-20 h-20 bg-gray-300 rounded-full mx-auto"></div>
+          <h2 className="text-center text-white mt-4 text-3xl font-[600] bg-gray-300 w-24 h-6 mx-auto rounded"></h2>
+          <p className="text-center text-white mt-2 text-lg bg-gray-300 w-32 h-4 mx-auto rounded"></p>
+          <h2 className="text-center text-white mt-4 text-2xl font-[600] bg-gray-300 w-40 h-6 mx-auto rounded"></h2>
+        </div>
+      </div>
+    );
   }
 
+  // Once data is loaded, show actual weather information
   const temperature = weatherInfo.current.temperature_2m;
   const weatherCode = weatherInfo.current.weather_code;
   const condition = getWeatherCondition(weatherCode);
@@ -39,9 +50,9 @@ function Weather({ weatherInfo,city }) {
   return (
     <div className="py-[30px] weather-container">
       <div className="current-weather">
-        <img src={condition[1]} className="m-auto weather-img" />
+        <img src={condition[1]} className="m-auto weather-img" alt="Weather Icon" />
         <h2 className="text-center text-white mt-4 text-3xl font-[600] temp">
-        {temperature} <span> &deg;C</span>
+          {temperature} <span> &deg;C</span>
         </h2>
         <p className="text-center text-white mt-2 text-lg temp-type">
           {condition[0]}
