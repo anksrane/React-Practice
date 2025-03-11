@@ -20,8 +20,7 @@ function useWeatherInfo(cityName){
             }
             // console.log(data.results[0]);
             const { latitude, longitude } = data.results[0];
-            // Now fetch weather forecast
-            // const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code&hourly=temperature_2m&timezone=auto`;
+            // fetch weather forecast
             const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code&timezone=auto&hourly=temperature_2m,weather_code`;
 
             return fetch(weatherUrl)
