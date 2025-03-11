@@ -1,12 +1,12 @@
 import { useState,useEffect } from 'react'
 import './App.css'
-import { Search,Weather,Forecast,ForecastContainer } from './components'
+import { Search,Weather,ForecastContainer } from './components'
 import useWeatherInfo from './hooks/useWeatherInfo';
 
 function App() {
-  const [city,setCity]= useState("");
+  const [city,setCity]= useState("Thane");
   const [hourlyForecast,setHourlyForeCast]= useState([]);
-  const weatherInfo= useWeatherInfo(city);
+  const {data:weatherInfo,loading,error}=useWeatherInfo(city);
 
   useEffect(() => {
     if (weatherInfo) {
@@ -27,25 +27,39 @@ function App() {
       }).slice(0, 48);
 
       setHourlyForeCast(next48HoursWeather);
+    }else{
+      setHourlyForeCast([])
     }
   }, [weatherInfo]);
 
 
   return (
     <>
-      <main className='flex justify-center items-center'>
+      <main className='flex justify-center items-center min-h-screen'>
         <div className="w-fit p-[20px] rounded-md bg-black  bg-opacity-80 backdrop-filter backdrop-blur-lg container">
-          {/* Search Section Start*/}
+          {/* Search Section */}
           <Search onSearch={setCity} />
-          {/* Search Section End */}
 
-          {/* Weather Section Start */}
-          <Weather weatherInfo ={weatherInfo} city={city} />
-          {/* Weather Section End */}
+          {/* Conditional Rendering */}
+          {loading && (
+            <p className="text-center text-white mt-6">Fetching weather data...</p>
+          )}
 
-          {/* Hourly Forcast Swiper JS Start */}
-          <ForecastContainer hourlyForecast={hourlyForecast} />
-          {/* Hourly Forcast Swiper JS End */}
+          {error && (
+            <p className="text-center text-red-400 mt-6">{error}</p>
+          )}
+
+          {!city && !loading && !error && (
+            <p className="text-center text-gray-400 mt-6">Please enter a city to get weather updates.</p>
+          )}
+
+          {/* Weather & Forecast Section */}
+          {weatherInfo && !loading && !error && (
+            <>
+              <Weather weatherInfo={weatherInfo} city={city} />
+              <ForecastContainer hourlyForecast={hourlyForecast} />
+            </>
+          )}
         </div>
       </main>
     </>

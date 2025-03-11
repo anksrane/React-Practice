@@ -24,35 +24,35 @@ const getWeatherCondition = (code) => {
         96: ["Thunderstorm with Slight Hail","weather-icons/thunder_rain.svg"],
         99: ["Thunderstorm with Heavy Hail","weather-icons/thunder_rain.svg"],
     };
-    return conditions[code] || "Unknown Weather"; // Default to "Unknown Weather"
+    return conditions[code] || ["Unknown Weather", "weather-icons/no-result.svg"]; // Default to "Unknown Weather"
 };
 
 function formatDateTime(inputDateTime) {
+    if(!inputDateTime) return ["--", "--"];
     const dateObj = new Date(inputDateTime);
     const datePart = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short' }).format(dateObj);
     const timePart = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).format(dateObj).toLowerCase();
-    let tempVar=[]
-    tempVar.push(datePart);
-    tempVar.push(timePart)
-    return tempVar;
+    return [datePart, timePart];
 }
 
 function ForecastSlideComponent({hourlyWeather}) {
+    if(!hourlyWeather) return null;
     const time=formatDateTime(hourlyWeather.time);
-    const temp=hourlyWeather.temperature;
+    const temp=hourlyWeather.temperature!==undefined ? hourlyWeather.temperature: "--";
     const condition = getWeatherCondition(hourlyWeather.code);
     
   return (
-    <div className="">
-        <p className="text-center text-white mb-2 time">{time[0]}</p>
-        <p className="text-center text-white mb-2 time">{time[1]}</p>
-        <img
-          src={condition[1]}
-          className="max-w-[50px] m-auto weather-img-small"
-        />
-        <p className="text-center text-white my-2 temp">
-          {temp} <span> &deg;</span>
-        </p>
+    <div className="bg-white/10 rounded-lg p-4 shadow-md">
+      <p className="text-center text-white mb-1 time">{time[0]}</p>
+      <p className="text-center text-white mb-1 time">{time[1]}</p>
+      <img
+        src={condition[1]}
+        alt={condition[0]}
+        className="max-w-[50px] m-auto weather-img-small"
+      />
+      <p className="text-center text-white my-2 temp text-lg font-semibold">
+        {temp} <span>&deg;</span>
+      </p>
     </div>
   )
 }

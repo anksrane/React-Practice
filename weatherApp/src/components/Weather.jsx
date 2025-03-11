@@ -1,4 +1,5 @@
 import React from "react";
+import WeatherSkeleton from "./WeatherSkeleton";
 
 const getWeatherCondition = (code) => {
   const conditions = {
@@ -24,33 +25,26 @@ const getWeatherCondition = (code) => {
       96: ["Thunderstorm with Slight Hail","weather-icons/clouds.svg"],
       99: ["Thunderstorm with Heavy Hail","weather-icons/clouds.svg"],
   };
-  return conditions[code] || "Unknown Weather"; // Default to "Unknown Weather"
+  return conditions[code] || ["Unknown Weather", "weather-icons/no-result.svg"]; // Default to "Unknown Weather"
 };
 
 function Weather({ weatherInfo, city }) {
   if (!weatherInfo || !weatherInfo.current) {
     // Show skeleton loader before data is available
-    return (
-      <div className="py-[30px] weather-container">
-        <div className="current-weather animate-pulse">
-          <div className="w-20 h-20 bg-gray-300 rounded-full mx-auto"></div>
-          <h2 className="text-center text-white mt-4 text-3xl font-[600] bg-gray-300 w-24 h-6 mx-auto rounded"></h2>
-          <p className="text-center text-white mt-2 text-lg bg-gray-300 w-32 h-4 mx-auto rounded"></p>
-          <h2 className="text-center text-white mt-4 text-2xl font-[600] bg-gray-300 w-40 h-6 mx-auto rounded"></h2>
-        </div>
-      </div>
-    );
+    return WeatherSkeleton;
   }
 
   // Once data is loaded, show actual weather information
-  const temperature = weatherInfo.current.temperature_2m;
+  const temperature = weatherInfo.current.temperature_2m ?? "--";
   const weatherCode = weatherInfo.current.weather_code;
   const condition = getWeatherCondition(weatherCode);
 
   return (
     <div className="py-[30px] weather-container">
       <div className="current-weather">
-        <img src={condition[1]} className="m-auto weather-img" alt="Weather Icon" />
+        <img src={condition[1]}
+          onError={(e)=>(e.target.src="weather-icons/no-result.svg")}
+        className="m-auto weather-img" alt={condition[0]} />
         <h2 className="text-center text-white mt-4 text-3xl font-[600] temp">
           {temperature} <span> &deg;C</span>
         </h2>

@@ -2,6 +2,8 @@ import { useEffect,useRef,useState } from "react";
 
 function useWeatherInfo(cityName){
     const [weatherInfo, setWeatherInfo] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const fetchRef= useRef(null);
 
     useEffect(()=>{
@@ -9,6 +11,10 @@ function useWeatherInfo(cityName){
 
         if (fetchRef.current === cityName) return; 
         fetchRef.current = cityName; // Store city to prevent duplicate fetch
+
+        setLoading(true);
+        setError(null);
+        setWeatherInfo(null);
 
         const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${cityName}&count=1&language=en&format=json`;
 
@@ -18,7 +24,6 @@ function useWeatherInfo(cityName){
             if (!data.results || data.results.length === 0) {
                 throw new Error("City not found");
             }
-            // console.log(data.results[0]);
             const { latitude, longitude } = data.results[0];
             // fetch weather forecast
             const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code&timezone=auto&hourly=temperature_2m,weather_code`;
@@ -29,13 +34,13 @@ function useWeatherInfo(cityName){
         .then(data1=>{
             setWeatherInfo(data1);
         })
-        .catch(error => {
-            console.error(error);
-            setWeatherInfo(null)
-        });
+        .catch(err => {
+            setError(err.message);
+        })
+        .finally(()=>setLoading(false));
     },[cityName]);
 
-    return weatherInfo;
+    return {data: weatherInfo, loading, error};
 }
 
 export default useWeatherInfo;
