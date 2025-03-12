@@ -48,13 +48,12 @@ function ForecastContainer({hourlyForecast}) {
             }}        
             spaceBetween={20}
             slidesPerView={3}
-            // loop={hourlyForecast.length > 3}
             breakpoints={{
                 300: {
-                slidesPerView: 1, // Screens >= 640px
+                slidesPerView: 1, // Screens >= 3000px
                 },
-                768: {
-                slidesPerView: 2, // Screens >= 768px
+                650: {
+                slidesPerView: 2, // Screens >= 650px
                 },
                 1024: {
                 slidesPerView: 3, // Screens >= 1024px

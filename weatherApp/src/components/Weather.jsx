@@ -40,7 +40,7 @@ function Weather({ weatherInfo, city }) {
   const condition = getWeatherCondition(weatherCode);
 
   return (
-    <div className="py-[30px] weather-container">
+    <div className="py-[10px] sm:py-[30px] weather-container">
       <div className="current-weather">
         <img src={condition[1]}
           onError={(e)=>(e.target.src="weather-icons/no-result.svg")}
