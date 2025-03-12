@@ -19,10 +19,9 @@
   /* border-radius: 50%; */
 }
 
-
 /* Social CSS */
 .social-icons-container{display: flex;flex-direction: column;gap: 15px;}
-.social-icons{text-decoration: none; color: #000;}
+.social-icons{text-decoration: none; color: var(--text-color)}
 .social-icons-container i{font-size: calc(24px + (30 - 24) * ((100vw - 320px) / (1920 - 320)));}
 
 /* Data CSS */
