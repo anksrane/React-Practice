@@ -1,16 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+
 import './Header.css'
 
 function Header() {
+
+
   return (
     <header>
     <nav className="navbar">
       <div className="nav-container">
         <Link className="navbar-brand" to="/">
-          MyApp
+          @nkit
         </Link>
-        <div className="navbar-collapse" id="navbar-tabs">
+        <button className='hamButton'
+        onClick={()=>{
+          document.querySelector('.nav-links').classList.toggle('active');
+        }}
+        ><i className="ri-menu-line"></i></button>
+        <div className="nav-collapse">
+          <button className='closeButton'><i className="ri-close-circle-fill"></i></button>
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link className="nav-link" to="/">

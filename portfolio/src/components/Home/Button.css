@@ -1,5 +1,5 @@
 /* From Uiverse.io by adamgiebl */ 
-button {
+.hover-styled-btn {
     font-size: 20px;
     background: #EE9B00;
     color: #9B2226;
@@ -13,37 +13,37 @@ button {
     cursor: pointer;
   }
   
-  button span {
+  .hover-styled-btn span {
     display: block;
     margin-left: 0.3em;
     transition: all 0.3s ease-in-out;
     font-size: calc(20px + (24 - 20) * ((100vw - 320px) / (1920 - 320)));
   }
   
-  button svg {
+  .hover-styled-btn svg {
     display: block;
     transform-origin: center center;
     transition: transform 0.3s ease-in-out;
   }
 
-  .button:hover {
+  .hover-styled-btn:hover {
     background-color: #222222;
   }
   
-  button:hover .svg-wrapper {
+  .hover-styled-btn:hover .svg-wrapper {
     animation: fly-1 0.6s ease-in-out infinite alternate;
   }
   
-  button:hover svg {
+  .hover-styled-btn:hover svg {
     transform: translateX(3em) rotate(45deg) scale(1.1);
     color: #fff;
   }
   
-  button:hover span {
+  .hover-styled-btn:hover span {
     transform: translateX(6em);
   }
   
-  button:active {
+  .hover-styled-btn:active {
     transform: scale(0.95);
   }
   
