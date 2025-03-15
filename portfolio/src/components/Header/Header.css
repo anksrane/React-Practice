@@ -14,7 +14,7 @@ header{position: relative; z-index: 999;}
     padding: 20px 0px;
     
 }
-.nav-collapse.active{right: 0;}
+/* .nav-collapse.active{right: 0;} */
 .closeButton{display: block;margin: 0px 10px 0px auto;background-color: transparent;border: 0;cursor: pointer;}
 .closeButton i{color: var(--text-color);font-size: 30px;}
 .navbar-nav{list-style: none; padding-left: 0;}
