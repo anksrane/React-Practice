@@ -3,21 +3,23 @@ header{position: relative; z-index: 999;}
 .nav-container{padding: 15px;display: flex;align-items: center;justify-content: space-between;}
 .navbar-brand{text-decoration: none;color: var(--text-color);font-size: calc(16px + (20 - 16) * ((100vw - 320px) / (1920 - 320)));font-weight: 700;}
 .hamButton{border-radius: 0;border: 0;background-color: transparent;}
+.hamButton.hidden{visibility: hidden;}
 .hamButton i{color: var(--text-color);font-size: calc(30px + (36 - 30) * ((100vw - 320px) / (1920 - 320)));font-weight: bold;cursor: pointer;}
-
-.nav-collapse{position: fixed;right: 300%;top: 0;width: 100%;max-width: 300px;height: 100%;
+.nav-collapse{position: fixed;right: 0;top: 0;width: 100%;max-width: 300px;height: 100%;
     background: rgba(255, 255, 255, 0.1); 
     backdrop-filter: blur(10px); 
     -webkit-backdrop-filter: blur(10px); 
     border: 1px solid rgba(255, 255, 255, 0.3); 
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); 
     padding: 20px 0px;
-    
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 100;
 }
-/* .nav-collapse.active{right: 0;} */
 .closeButton{display: block;margin: 0px 10px 0px auto;background-color: transparent;border: 0;cursor: pointer;}
 .closeButton i{color: var(--text-color);font-size: 30px;}
 .navbar-nav{list-style: none; padding-left: 0;}
-.navbar-nav .nav-item{margin: 0px 5px;border-bottom: 1px solid var(--border-color);}
+.navbar-nav .nav-item{margin: 0px 5px;border-bottom: 1px solid var(--border-color);overflow-y: hidden;}
 .navbar-nav .nav-item:last-child{border: none;}
-.navbar .nav-link{color: var(--text-color);text-decoration: none;display: block;font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)));padding: 10px 20px;}
+.navbar .nav-link{color: var(--text-color);text-decoration: none;display: block;font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)));padding: 10px 20px;
+}
