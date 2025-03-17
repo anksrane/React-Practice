@@ -1,12 +1,12 @@
-#root,.main-wrapper{min-height: 100vh;background-color: #000814;}
-main{height: 100%;}
 @media (prefers-color-scheme: dark) {
-    :root {
-      --primary-color: #ffff00;
-      --secondary-color: #f6b162;
-      --accent-color: #cd7866;
-      --background-color: #121212;
-      --text-color: #ffffff;
-      --border-color: #686868;
-    }
+  :root {
+    --primary-color: #ffff00;
+    --secondary-color: #f6b162;
+    --accent-color: #cd7866;
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --border-color: #686868;
   }
+}
+#root,.main-wrapper,main{min-height: 100vh;}
+#root{background-color: var(--background-color);}

@@ -1,16 +1,24 @@
-.skillset-container{
-    background-color: #09171d;
-    height: 100vh;
-    margin-top: -56px;
-    padding-top: 10%;
+.skillset-container-outer{
+    background-color: var(--background-color);
+    min-height: inherit;
 }
-.row div{height: inherit;}
-.skills-content{
-    margin-top: 0;
-    margin-bottom: 1rem;
-    display: flex;
-    height: 100%;
+.skillset-container-inner{
+    min-height: inherit;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
     align-items: center;
+}
+.skill-text-container{
+    height: fit-content;
+}
+.skills-content{
+    margin: 0 auto 1rem auto;
     color: #E9D8A6;
     font-size: calc(18px + (22 - 18) * ((100vw - 320px) / (1920 - 320)));
+    max-width: 550px;
+    width: 95%;
+}
+.textsphere-container{
+    display: flex;
 }
