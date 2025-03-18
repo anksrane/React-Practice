@@ -1,6 +1,6 @@
 import React from 'react'
 import TextSphere from "./TextSphere";
-import './Skillset.css'
+// import './Skillset.css'
 
 function Skillset() {
   return (
@@ -12,7 +12,8 @@ function Skillset() {
             </p>
           </div>
           <div className="textsphere-container">
-            <TextSphere />
+            {/* <TextSphere /> */}
+            
           </div>
         </div>
     </div>

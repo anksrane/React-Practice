@@ -60,7 +60,7 @@ function Header() {
   return (
     <header>
     <nav className="navbar">
-      <div className="nav-container">
+      <div className="container nav-container">
         <Link className="navbar-brand" to="/">
           @nkit
         </Link>

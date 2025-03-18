@@ -12,23 +12,23 @@ function Home() {
   return (
     <div className="container home-container">
       <div className="home-container-grid">
-        {/* <Suspense fallback={<div>Loading Social...</div>}>
+        <Suspense fallback={<div>Loading Social...</div>}>
           <Social />
-        </Suspense> */}
+        </Suspense>
 
         <div className="img-container">
           {/* Lazy load image with loading="lazy" */}
-          {/* <img 
+          <img 
             src={homeBanner} 
             alt="profileImage" 
             className="img-fluid profile_img" 
             loading="lazy" 
-          /> */}
+          />
         </div>
 
-        {/* <Suspense fallback={<div>Loading Data...</div>}>
+        <Suspense fallback={<div>Loading Data...</div>}>
           <Data />
-        </Suspense> */}
+        </Suspense>
       </div>
     </div>
   );
