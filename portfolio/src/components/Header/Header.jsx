@@ -58,7 +58,6 @@ function Header() {
   };
 
   return (
-    <header>
     <nav className="navbar">
       <div className="container nav-container">
         <Link className="navbar-brand" to="/">
@@ -101,10 +100,8 @@ function Header() {
             </li>
           </ul>
         </div>
-
       </div>
     </nav>
-  </header>
   )
 }
 

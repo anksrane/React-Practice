@@ -1,5 +1,6 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import { gsap } from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import './About.css';
 
 const skill = [
@@ -15,20 +16,40 @@ const skill = [
   { name: "API Integration", icon: "/icons/api-settings-svgrepo-com.svg" },
 ];
 
+gsap.registerPlugin(ScrollTrigger);
+console.log("GSAP Object:", gsap);
+console.log("ScrollTrigger:", ScrollTrigger);
+
 function About() {
   const containerRef = useRef(null);
+  const pageInfoRef = useRef(null);
+  const skillsRef = useRef(null);
 
   useLayoutEffect(() => {
-    if (!containerRef.current) return;
+
+    if (!containerRef.current || !pageInfoRef.current || !skillsRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.from(containerRef.current, { 
-        opacity: 0, 
-        y: 100, 
-        duration: 1, 
-        ease: "power2.out", 
-        delay: 0.2 
-      });
+      const tl = gsap.timeline({ defaults: { duration: 0.6, ease: "power2.out" } });
+
+      tl.from(containerRef.current, { 
+        opacity: 0, y: 80,
+        scrollTrigger: { trigger: containerRef.current, start: "top 80%", toggleActions: "play none none none" }
+      })
+      .from(pageInfoRef.current, { 
+        opacity: 0, y: 40, 
+        scrollTrigger: { trigger: pageInfoRef.current, start: "top 80%", toggleActions: "play none none none" }
+      }, "-=0.4")
+      .from(skillsRef.current, { 
+        opacity: 0, y: 40, 
+        scrollTrigger: { trigger: skillsRef.current, start: "top 85%", toggleActions: "play none none none" }
+      }, "-=0.2")       
+      .from(".sub-heading", { opacity: 0, y: -20 }, "-=0.4") // Title animation
+      .from(".line", { scaleX: 0, transformOrigin: "center" }, "-=0.7") // Line scaling
+      .from(".page-info-content", { opacity: 0, y: 20 }, "-=0.4") // Content fade-in
+      .from(".skills-content", { opacity: 0, scale: 0.8, stagger: 0.05 }, "-=0.4") // Staggered skill content
+      .from(".skill-item", { opacity: 0, scale: 0.8, stagger: 0.05 }, "-=0.4"); // Staggered skill items
+
     }, containerRef);
 
     return () => ctx.revert(); // Cleanup GSAP on unmount
@@ -36,7 +57,7 @@ function About() {
 
   return (
     <div ref={containerRef} className="container skillset-container-outer">
-      <div className="page-info">
+      <div ref={pageInfoRef}  className="page-info">
         <h2 className="sub-heading">About Me</h2>
         <div className="line"></div>
         <p className="page-info-content">
@@ -44,7 +65,7 @@ function About() {
         </p>
       </div>
 
-      <div className="skillset-container-inner">
+      <div ref={skillsRef}  className="skillset-container-inner">
         <div className="skill-text-container">
           <h3 className="skill-heading">Know About Me!</h3>
           <p className="skills-content">
