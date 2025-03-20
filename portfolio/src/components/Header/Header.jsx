@@ -49,22 +49,22 @@ function Header() {
 
   const handleNavClick = (path) => {
     tl.current.reverse();
-    setMenuOpen(false);
     const totalDuration = tl.current.duration() * 1000;
   
     setTimeout(() => {
       navigate(path);
+      setMenuOpen(false);
     }, totalDuration);
   };
 
   return (
     <nav className="navbar">
-      <div className="container nav-container">
+      <div className="custom-container nav-container">
         <Link className="navbar-brand" to="/">
           @nkit
         </Link>
 
-        <button className={`hamButton ${menuOpen ? 'hidden' : ''}`}
+        <button className={`hamButton ${menuOpen ? 'hide' : ''}`}
         onClick={openMenu}
         ><i className="ri-menu-line"></i></button>
 

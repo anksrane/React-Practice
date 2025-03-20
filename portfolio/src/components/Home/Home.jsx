@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 import "./Home.css";
 
 // Lazy load components
@@ -10,7 +10,7 @@ const homeBanner = new URL('../../assets/about.jpg', import.meta.url).href;
 
 function Home() {
   return (
-    <div className="container home-container">
+    <div className="custom-container home-container">
       <div className="home-container-grid">
         <Suspense fallback={<div>Loading Social...</div>}>
           <Social />
@@ -19,7 +19,7 @@ function Home() {
         <div className="img-container">
           {/* Lazy load image with loading="lazy" */}
           <img 
-            src={homeBanner} 
+            src="" 
             alt="profileImage" 
             className="img-fluid profile_img" 
             loading="lazy" 

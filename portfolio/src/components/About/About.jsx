@@ -56,7 +56,7 @@ function About() {
   }, []);
 
   return (
-    <div ref={containerRef} className="container skillset-container-outer">
+    <div ref={containerRef} className="custom-container skillset-container-outer">
       <div ref={pageInfoRef}  className="page-info">
         <h2 className="sub-heading">About Me</h2>
         <div className="line"></div>

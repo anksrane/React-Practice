@@ -66,7 +66,7 @@ const academics=[
 function Journey() {
   return (
     <>
-    <div className="flex flex-col items-center py-10 px-5 bg-black text-white">
+    <div className="custom-container flex flex-col items-center py-10 px-5 text-white">
       <h2 className="text-3xl font-bold text-center mb-10">Professional Journey</h2>
       <div className="relative w-full max-w-5xl">
         <div className="absolute left-1/2 top-0 w-1 bg-gray-500 h-full transform -translate-x-1/2 hidden md:block"></div>
@@ -86,7 +86,7 @@ function Journey() {
         ))}
       </div>
     </div>
-    <div className="flex flex-col items-center py-10 px-5 bg-black text-white">
+    <div className="custom-container flex flex-col items-center py-10 px-5 text-white">
       <h2 className="text-3xl font-bold text-center mb-10">Academics Journey</h2>
       <div className="relative w-full max-w-3xl">
         <div className="absolute left-1/2 top-0 w-1 bg-gray-500 h-full transform -translate-x-1/2 hidden md:block"></div>

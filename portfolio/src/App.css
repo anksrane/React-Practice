@@ -1,7 +1,7 @@
 #root{min-height: 100vh;}
 #root{background-color: var(--background-color);}
-.container{width: 85%;margin: auto;}
+.custom-container{width: 85%;margin: auto;}
 
-@media (width<=991px){
-    .container{width: 100%;padding: 0px 15px;}
+@media (width<991px){
+    .custom-container{width: 100%;padding: 0px 15px;}
 }

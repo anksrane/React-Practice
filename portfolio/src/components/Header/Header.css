@@ -3,7 +3,7 @@ header{position: relative; z-index: 999;}
 .nav-container{padding: 15px;display: flex;align-items: center;justify-content: space-between;}
 .navbar-brand{text-decoration: none;color: var(--text-color);font-size: calc(16px + (20 - 16) * ((100vw - 320px) / (1920 - 320)));font-weight: 700;}
 .hamButton{border-radius: 0;border: 0;background-color: transparent;}
-.hamButton.hidden{visibility: hidden;}
+.hamButton.hide{opacity: 0;}
 .hamButton i{color: var(--text-color);font-size: calc(30px + (36 - 30) * ((100vw - 320px) / (1920 - 320)));font-weight: bold;cursor: pointer;}
 .nav-collapse{position: fixed;right: 0;top: 0;width: 100%;max-width: 300px;height: 100%;
     background: rgba(255, 255, 255, 0.1); 
