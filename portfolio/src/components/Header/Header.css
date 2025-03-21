@@ -23,3 +23,7 @@ header{position: relative; z-index: 999;}
 .navbar-nav .nav-item:last-child{border: none;}
 .navbar .nav-link{color: var(--text-color);text-decoration: none;display: block;font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)));padding: 10px 20px;
 }
+
+@media (max-width: 991px) {
+    .nav-container{padding: 15px;}
+}

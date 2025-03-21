@@ -4,7 +4,7 @@ import "./Button.css";
 
 function Button() {
   return (
-<button className='hover-styled-btn'>
+<a className='hover-styled-btn'>
   <Link className="svg-wrapper-1" to="/contactus">
     <div className="svg-wrapper">
       <svg
@@ -22,7 +22,7 @@ function Button() {
     </div>
   </Link>
   <span>Say Hello</span>
-</button>
+</a>
 
   )
 }

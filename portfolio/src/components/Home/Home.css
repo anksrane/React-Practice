@@ -9,9 +9,9 @@
 
 /* Data CSS */
 .data-main-container{grid-area:data}
-.home-container-grid .name{font-size: calc(40px + (80 - 40) * ((100vw - 320px) / (1920 - 320)));font-weight: 700;display: flex;gap: 10px;cursor: pointer;color: var(--text-color);}
-.home-container-grid .position{padding-left: 60px;position: relative;font-size: calc(30px + (40 - 30) * ((100vw - 320px) / (1920 - 320)));font-weight: 600;color: var(--text-color);}
-.home-container-grid .position::before{content: '';position: absolute; width: 50px;height: 1px;background-color: var(--text-color);left: 0;top: 50%;}
+.home-container-grid .name{font-size: calc(30px + (80 - 30) * ((100vw - 320px) / (1920 - 320)));font-weight: 700;display: flex;gap: 10px;cursor: pointer;color: var(--text-color);}
+.home-container-grid .position{padding-left: 8%;position: relative;font-size: calc(22px + (40 - 22) * ((100vw - 320px) / (1920 - 320)));font-weight: 600;color: var(--text-color);}
+.home-container-grid .position::before{content: '';position: absolute; width: 100%;max-width: 30px; height: 1px;background-color: var(--text-color);left: 0;top: 50%;}
 .home-container-grid .info{opacity: 0.9;font-size: calc(16px + (20 - 16) * ((100vw - 320px) / (1920 - 320)));margin-bottom: 30px; color: var(--text-color);}
 .home-container-grid .img-responsive{max-width: 40px;}
 .home-container-grid .name:hover .img-responsive{animation: smooth-wave 2s cubic-bezier(0.42, 0, 0.58, 1) infinite;transform-origin: bottom center;}
@@ -28,7 +28,6 @@
 /* Image CSS */
 .img-container{grid-area:img}
 .img-container{border-radius:50%;overflow:hidden;background:0 0;display:flex;justify-content:center;align-items:center}
-.profile_img{object-fit:cover}
 .img-container{width: fit-content;animation: profile_animate 5s ease-in-out infinite 1s;border: 5px solid rgba(169, 214, 229,0.5);overflow: hidden;}
 .profile_img{background-repeat: no-repeat; background-position: center;background-size: cover; width: 400px;height: 400px;justify-self: center;object-fit: cover;}
 @keyframes profile_animate {
@@ -43,27 +42,47 @@
     }
 }
 
+@media (max-width: 1024px) {
+  .home-container-grid .position::before{max-width: 20px;margin-bottom: 5px;}
+  .social-icons-container{gap: 5px;}
+}
+
 /* For screens with max width 991px */
 @media (max-width: 991px) {
-    .home-container-grid {
-      grid-template-columns: 0.3fr 1.7fr; /* Two columns */
-      grid-template-areas: 
-        "img img"
-        "social data"; /* Data takes up the full second row */
-    }
-  
-    /* Ensure Data spans both columns in the second row */
-    .data-main-container {
-      grid-column: span 2;  /* Make Data take up both columns */
-      width: 100%;
-    }
-  
-    /* Assign each child to a specific grid area on small screens */
-    .social-icons-container {
-      grid-area: social;
-    }
-  
-    .img-container {
-      grid-area: img;
-    }
+
   }
+
+@media (max-width: 768px) {
+  .profile_img{width: 250px;height: 250px;}
+}
+@media (max-width: 540px) {
+  .home-container-grid .position::before{width: 0;}
+  .home-container-grid {
+    grid-template-columns: 0.2fr 1.8fr; /* Two columns */
+    grid-template-areas: 
+      "img img"
+      "data data"
+      "social social"; /* Data takes up the full second row */
+      gap: 5px;
+  }
+
+  /* Ensure Data spans both columns in the second row */
+  .data-main-container {
+    grid-column: span 2;  /* Make Data take up both columns */
+    width: 100%;
+  }
+
+  /* Assign each child to a specific grid area on small screens */
+  .social-icons-container {
+    grid-area: social;
+    flex-direction: row;
+  }
+
+  .img-container {
+    grid-area: img;
+  }
+  .home-container-grid .name{margin: 5px 0;width: fit-content;margin: auto;}
+  .home-container-grid .position{padding-left: 0%;text-align: center;}
+  .home-container-grid .info{margin-top: 10px;text-align: center;}
+  .hover-styled-btn{margin: auto;}
+}

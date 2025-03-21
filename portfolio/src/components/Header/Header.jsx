@@ -84,11 +84,6 @@ function Header() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" onClick={()=>handleNavClick('/skills')}>
-                Skills
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link className="nav-link" onClick={()=>handleNavClick('/work')}>
                 Work
               </Link>

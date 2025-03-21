@@ -17,7 +17,7 @@
     display: block;
     margin-left: 0.3em;
     transition: all 0.3s ease-in-out;
-    font-size: calc(20px + (24 - 20) * ((100vw - 320px) / (1920 - 320)));
+    font-size: calc(18px + (24 - 18) * ((100vw - 320px) / (1920 - 320)));
   }
   
   .hover-styled-btn svg {
