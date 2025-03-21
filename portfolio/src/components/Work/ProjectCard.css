@@ -27,7 +27,7 @@
 }
 
 .project-title {
-    font-size: 28px;
+    font-size: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
     font-weight: bold;
     color: var(--text-color-blue);
 }

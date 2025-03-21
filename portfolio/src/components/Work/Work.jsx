@@ -1,35 +1,43 @@
 import React from "react";
 import ProjectCard from "./ProjectCard";
 import "./Work.css";
+import img1 from "./../../assets/image/g20.jpg";  
+import img2 from "./../../assets/image/vijay-tanks.jpg";
+import img3 from "./../../assets/image/birla.jpg";
+import img4 from "./../../assets/image/stockholding.jpg";
 
 const projects = [
     {
-        title: "X-Dividend Mobile App",
+        title: "G20",
         description:
-            "The app offers comprehensive data on companies, including categories of Most Actives, Gainers and Losers Stock Market. Users can sort the information by sector, name, highest or lowest price, dividend date, and ex-dividend date. This data is updated in real-time, ensuring that users always have access to the most current information.",
-        techStack: ["React Native", "Hybrid Mobile App", "Android", "iOS"],
-        image: "https://www.muhammadaamirmalik.com/assets/projects/Xdividend.png",
+            "Developed a multilingual platform to showcase Indian culture in the context of global democracy initiatives for the G20 summit.",
+        techStack: ["JavaScript", "jQuery", "XML", "HTML5", "CSS3", "Bootstrap"],
+        image: img1,
+        link: "https://www.motherofdemocracyg20.com/" 
     },
     {
-        title: "Stock Tracker Web App",
+        title: "Vijay Tanks",
         description:
-            "A web application that allows users to track stock prices, set alerts, and analyze financial data in real-time. Features include interactive charts, company insights, and user-friendly design.",
-        techStack: ["React", "Redux", "Chart.js", "Firebase"],
-        image: "https://www.muhammadaamirmalik.com/assets/projects/stocktracker.png",
+            "Developed and maintained a website for Vijay Tanks, a global industrial engineering company in the energy sector. The site highlights their offerings of storage tanks and process equipment.",
+        techStack: ["JavaScript", "jQuery", "HTML5", "CSS3", "Bootstrap"],
+        image: img2,
+        link: "https://www.vijaytanks.com/"
     },
     {
-        title: "X-Dividend Mobile App",
+        title: "Birla",
         description:
-            "The app offers comprehensive data on companies, including categories of Most Actives, Gainers and Losers Stock Market. Users can sort the information by sector, name, highest or lowest price, dividend date, and ex-dividend date. This data is updated in real-time, ensuring that users always have access to the most current information.",
-        techStack: ["React Native", "Hybrid Mobile App", "Android", "iOS"],
-        image: "https://www.muhammadaamirmalik.com/assets/projects/Xdividend.png",
+            "Built a dealer locator tool integrated with Google Maps for Birla A1, allowing users to easily locate dealers of Birla products across India.",
+        techStack: ["JavaScript", "jQuery", "HTML5", "CSS3", "Bootstrap"],
+        image: img3,
+        link: "https://www.birlaa1.com/birla-a1-locator-dealer.php"
     },
     {
-        title: "Stock Tracker Web App",
+        title: "Stockholding",
         description:
-            "A web application that allows users to track stock prices, set alerts, and analyze financial data in real-time. Features include interactive charts, company insights, and user-friendly design.",
-        techStack: ["React", "Redux", "Chart.js", "Firebase"],
-        image: "https://www.muhammadaamirmalik.com/assets/projects/stocktracker.png",
+            "Worked on a web application offering financial planning, wealth management, and investment solutions for a large financial services firm.",
+        techStack: ["JavaScript", "jQuery", "HTML5", "CSS3", "Bootstrap"],
+        image: img4,
+        link: "https://www.stockholding.com/"
     },
 ];
 
