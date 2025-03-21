@@ -6,8 +6,10 @@ body{font-family: "Funnel Display", serif;scroll-behavior: smooth;padding: 0px;m
       --secondary-color: #f6b162;
       --accent-color: #cd7866;
       --background-color: #121212;
-      --background-color-light: #383838;
+      --background-color-light: #212121;
+      --background-color-lighter: #383838;
       --text-color: #ffffff;
+      --text-color-blue:#00bcd4;
       --border-color: #686868;
     }
   }

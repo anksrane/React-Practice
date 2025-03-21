@@ -1,0 +1,82 @@
+/* Project Card */
+.project-card {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    background-color: var(--background-color-light);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+/* Alternate layout for even projects */
+.project-card.reverse {
+    flex-direction: row-reverse;
+}
+
+/* Text Content */
+.project-info {
+    flex: 1;
+    text-align: left;
+}
+
+.project-tag {
+    font-size: 14px;
+    color: #aaaaaa;
+}
+
+.project-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--text-color-blue);
+}
+
+.project-description {
+    background-color: #252525;
+    padding: 10px;
+    border-radius: 5px;
+    line-height: 1.6;
+}
+
+/* Tech Stack */
+.project-tech {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.tech-item {
+    background-color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: var(--text-color-blue);
+}
+
+/* Image */
+.project-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.project-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .project-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .project-card.reverse {
+        flex-direction: column;
+    }
+}
