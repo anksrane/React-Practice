@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { gsap } from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import './About.css';
@@ -17,15 +17,13 @@ const skill = [
 ];
 
 gsap.registerPlugin(ScrollTrigger);
-console.log("GSAP Object:", gsap);
-console.log("ScrollTrigger:", ScrollTrigger);
 
 function About() {
   const containerRef = useRef(null);
   const pageInfoRef = useRef(null);
   const skillsRef = useRef(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
 
     if (!containerRef.current || !pageInfoRef.current || !skillsRef.current) return;
 
@@ -45,7 +43,7 @@ function About() {
         scrollTrigger: { trigger: skillsRef.current, start: "top 85%", toggleActions: "play none none none" }
       }, "-=0.2")       
       .from(".sub-heading", { opacity: 0, y: -20 }, "-=0.4") // Title animation
-      .from(".line", { scaleX: 0, transformOrigin: "center" }, "-=0.7") // Line scaling
+      .from(".line", { scaleX: 0, transformOrigin: "center" }) // Line scaling
       .from(".page-info-content", { opacity: 0, y: 20 }, "-=0.4") // Content fade-in
       .from(".skills-content", { opacity: 0, scale: 0.8, stagger: 0.05 }, "-=0.4") // Staggered skill content
       .from(".skill-item", { opacity: 0, scale: 0.8, stagger: 0.05 }, "-=0.4"); // Staggered skill items

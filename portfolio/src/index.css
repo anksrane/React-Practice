@@ -14,7 +14,3 @@ body{font-family: "Funnel Display", serif;scroll-behavior: smooth;padding: 0px;m
     }
   }
 *{margin: 0;padding: 0;box-sizing: border-box;}
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;

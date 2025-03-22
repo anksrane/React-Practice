@@ -1,6 +1,6 @@
 #root{min-height: 100vh;}
 #root{background-color: var(--background-color);}
-.custom-container{width: 85%;margin: auto;}
+.custom-container{width: 85%;margin: auto; padding-bottom: 50px;}
 
 @media (width<991px){
     .custom-container{width: 100%;padding: 0px 15px;}

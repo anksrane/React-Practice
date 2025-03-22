@@ -5,7 +5,7 @@
 .social-icons-container{grid-area:social}
 .social-icons-container{display: flex;flex-direction: column;gap: 15px;}
 .social-icons{text-decoration: none; color: var(--text-color)}
-.social-icons-container i{font-size: calc(24px + (30 - 24) * ((100vw - 320px) / (1920 - 320)));}
+.social-icons-container i{font-size: calc(28px + (30 - 28) * ((100vw - 320px) / (1920 - 320)));}
 
 /* Data CSS */
 .data-main-container{grid-area:data}
