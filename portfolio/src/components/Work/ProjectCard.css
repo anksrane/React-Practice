@@ -8,6 +8,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: white;
+    overflow: hidden;
 }
 
 /* Alternate layout for even projects */
@@ -17,7 +18,7 @@
 
 /* Text Content */
 .project-info {
-    flex: 1;
+    /* flex: 1; */
     text-align: left;
 }
 
@@ -30,11 +31,15 @@
     font-size: calc(20px + (30 - 20) * ((100vw - 320px) / (1920 - 320)));
     font-weight: bold;
     color: var(--text-color-blue);
+    margin-bottom: 5px;
+    display: block;
+    text-decoration: none;
+    width: fit-content;
 }
 
 .project-description {
-    background-color: #252525;
-    padding: 10px;
+    /* background-color: #252525; */
+    padding: 10px 0px;
     border-radius: 5px;
     line-height: 1.6;
 }
@@ -57,7 +62,7 @@
 
 /* Image */
 .project-image {
-    flex: 1;
+    /* flex: 1; */
     display: flex;
     justify-content: center;
 }
@@ -74,6 +79,7 @@
     .project-card {
         flex-direction: column;
         text-align: center;
+        padding: 20px 15px;
     }
 
     .project-card.reverse {

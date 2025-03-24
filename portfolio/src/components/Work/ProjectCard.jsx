@@ -8,7 +8,7 @@ function ProjectCard({ project, isEven }) {
       <div className="project-info">
         <p className="project-tag"></p>
         <a href={project.link} className="project-title" target="_blank" rel="noopener noreferrer">
-          {project.title}</a>
+          {project.title} <i class="ri-links-line"></i></a>
         <p className="project-description">{project.description}</p>
         <div className="project-tech">
           {project.techStack.map((tech, index) => (

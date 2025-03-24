@@ -19,7 +19,7 @@ function Home() {
         <div className="img-container">
           {/* Lazy load image with loading="lazy" */}
           <img 
-            src={homeBanner} 
+            src="" 
             alt="profileImage" 
             className="img-fluid profile_img" 
             loading="lazy" 

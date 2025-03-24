@@ -10,4 +10,9 @@
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .work-section .page-info{margin-bottom: 20px;}
 }

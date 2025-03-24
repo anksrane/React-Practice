@@ -72,10 +72,10 @@ function Journey() {
   containerRefs.current = [];
 
   useEffect(() => {
-    console.log("GSAP Version:", gsap.version);
-    console.log("Is ScrollTrigger Registered?", gsap.core.globals().ScrollTrigger ? "Yes" : "No");
+    // console.log("GSAP Version:", gsap.version);
+    // console.log("Is ScrollTrigger Registered?", gsap.core.globals().ScrollTrigger ? "Yes" : "No");
   
-    // ✅ Page Load Animation (Outside gsap.context)
+    // ✅ Page Load Animation
     gsap.timeline()
       .from(".sub-heading", { opacity: 0, y: -20, duration: 0.8, ease: "power2.out" }) // Title animation
       .from(".line", { scaleX: 0, transformOrigin: "center", duration: 1, ease: "power2.out" }, "-=0.6"); // Line scaling
@@ -106,7 +106,7 @@ function Journey() {
               end: endValue,
               toggleActions: "play none none reverse",
               scroller: "body", 
-              markers: true, 
+              //markers: true, 
             },
           }
         );
@@ -128,7 +128,7 @@ function Journey() {
                 end: endValue,
                 toggleActions: "play none none reverse",
                 scroller: "body", 
-                markers: true, 
+                //markers: true, 
               },
             }
           );
@@ -151,7 +151,7 @@ function Journey() {
                 end: endValue,
                 toggleActions: "play none none reverse",
                 scroller: "body", 
-                markers: true, 
+                //markers: true, 
               },
             }
           );
@@ -164,95 +164,6 @@ function Journey() {
     return () => ctx.revert(); // ✅ Cleanup GSAP animations properly
   }, []);
   
-  // useEffect(() => {
-
-  //   console.log("GSAP Version:", gsap.version);
-  //   console.log("Is ScrollTrigger Registered?", gsap.core.globals().ScrollTrigger ? "Yes" : "No");
-  //   let ctx = gsap.context(() => {
-  //     containerRefs.current.forEach((el, index) => {
-  //       if (!el) return; // ✅ Prevents errors if ref is not attached
-  
-  //       const rightMargin = el.querySelector(".right-margin");
-  //       const leftMargin = el.querySelector(".left-margin");
-
-  //       let startValue = window.innerWidth < 768 ? "top 90%" : "top 80%"; 
-  //       let endValue = window.innerWidth < 768 ? "top 70%" : "top 50%"; 
-  //       let animationDuration = window.innerWidth < 768 ? 0.8 : 1;        
-  
-  //       // ✅ First animation: Y-axis (fade in)
-  //       gsap.fromTo(
-  //         el,
-  //         { opacity: 0, y: 50 },
-  //         {
-  //           opacity: 1,
-  //           y: 0,
-  //           duration: 1,
-  //           ease: "power2.out",
-  //           scrollTrigger: {
-  //             trigger: el,
-  //             start: "top 80%",
-  //             end: "top 50%",
-  //             toggleActions: "play none none reverse",
-  //             scroller: "body", 
-  //             markers: true, 
-  //           },
-  //         }
-  //       );
-  
-  //       // ✅ Second animation: X-axis movement (after Y animation completes)
-  //       if (rightMargin) {
-  //         gsap.fromTo(
-  //           rightMargin,
-  //           // { x: -100, opacity: 0 },
-  //           { x: window.innerWidth < 768 ? 0 : -100, opacity: 0 },
-  //           {
-  //             x: 0,
-  //             opacity: 1,
-  //             duration: 1,
-  //             ease: "power2.out",
-  //             delay: 0.2,
-  //             scrollTrigger: {
-  //               trigger: el,
-  //               start: "top 80%",
-  //               end: "top 50%",
-  //               toggleActions: "play none none reverse",
-  //               scroller: "body", 
-  //               markers: true, 
-  //             },
-  //           }
-  //         );
-  //       }
-  
-  //       if (leftMargin) {
-  //         gsap.fromTo(
-  //           leftMargin,
-  //           // { x: 100, opacity: 0 },
-  //           { x: window.innerWidth < 768 ? 0 : 100, opacity: 0 },
-  //           {
-  //             x: 0,
-  //             opacity: 1,
-  //             duration: 1,
-  //             ease: "power2.out",
-  //             delay: 0.2,
-  //             scrollTrigger: {
-  //               trigger: el,
-  //               start: "top 80%",
-  //               end: "top 50%",
-  //               toggleActions: "play none none reverse",
-  //               scroller: "body", 
-  //               markers: true, 
-  //             },
-  //           }
-  //         );
-  //       }
-  //     });
-  
-  //     ScrollTrigger.refresh(); // ✅ Ensure ScrollTrigger updates
-  //   }, containerRefs); // ✅ Attach animations to refs
-  
-  //   return () => ctx.revert(); // ✅ Cleanup GSAP animations properly
-  // }, []);  
-
   return (
     <>
     <div className="custom-container journey-container">

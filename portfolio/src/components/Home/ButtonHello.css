@@ -1,8 +1,8 @@
 /* From Uiverse.io by adamgiebl */ 
 .hover-styled-btn {
     font-size: 20px;
-    background: var(--secondary-color);
-    color: var(--background-color);
+    background: var(--background-color-lighter);
+    color: var(--primary-color);
     padding: 6px 20px;
     display: flex;
     align-items: center;
@@ -11,6 +11,8 @@
     overflow: hidden;
     transition: all 0.2s;
     cursor: pointer;
+    width: fit-content;
+    border: 1px solid ;
   }
   
   .hover-styled-btn span {
@@ -27,7 +29,8 @@
   }
 
   .hover-styled-btn:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--text-color-blue-dark);
+    border: 1px solid var(--text-color-blue);
   }
   
   .hover-styled-btn:hover .svg-wrapper {

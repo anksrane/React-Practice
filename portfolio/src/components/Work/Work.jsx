@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import ProjectCard from "./ProjectCard";
+import gsap from 'gsap';
+import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import "./Work.css";
 import img1 from "./../../assets/image/g20.jpg";  
 import img2 from "./../../assets/image/vijay-tanks.jpg";
@@ -41,7 +43,69 @@ const projects = [
     },
 ];
 
+gsap.registerPlugin(ScrollTrigger);
+gsap.core.globals('ScrollTrigger', ScrollTrigger);
+
 function Work() {
+  const containerRefs = useRef([]);
+  containerRefs.current = [];
+
+  useEffect(()=>{
+    const mm = gsap.matchMedia();
+    console.log("GSAP Version:", gsap.version);
+    console.log("Is ScrollTrigger Registered?", gsap.core.globals().ScrollTrigger ? "Yes" : "No");    
+
+    gsap.timeline()
+    .from(".work-section",{ opacity: 0, y: 50, duration: 0.8, ease: "power2.out" })
+    .from(".sub-heading", { opacity: 0, y: -20, duration: 0.8, ease: "power2.out" },"=-1") // Title animation
+    .from(".line", { scaleX: 0, transformOrigin: "center", duration: 1, ease: "power2.out" }, "-=0.6"); // Line scaling
+
+    // Responsive Animations
+    mm.add("(min-width: 768px)", () => {
+        containerRefs.current.forEach((card, index) => {
+          const isEven = index % 2 === 1;
+          const xValue = isEven ? 100 : -100;
+  
+          gsap.fromTo(card, { opacity: 0, y: 40 }, {
+            opacity: 1, y: 0, duration: 0.8, ease: "power2.in",
+            scrollTrigger: { trigger: card, start: "top 70%", stagger:true, toggleActions: "play none none reverse"}
+          });
+  
+          gsap.fromTo(card.querySelector(".project-info"), { x: xValue, opacity: 0 }, {
+            x: 0, opacity: 1, duration: 0.8, ease: "power2.out",
+            scrollTrigger: { trigger: card, start: "top 50%", stagger:true, toggleActions: "play none none reverse"}
+          });
+  
+          gsap.fromTo(card.querySelector(".project-image"), { x: -xValue, opacity: 0 }, {
+            x: 0, opacity: 1, duration: 1, ease: "power2.out",
+            scrollTrigger: { trigger: card, start: "top 50%", stagger:true, toggleActions: "play none none reverse"}
+          });
+        });
+      });
+  
+      mm.add("(max-width: 767px)", () => {
+        containerRefs.current.forEach((card) => {
+          gsap.fromTo(card, { opacity: 0, y: 40 }, {
+            opacity: 1, y: 0, duration: 0.6, ease: "power2.in",
+            scrollTrigger: { trigger: card, start: "top 80%", stagger:true, toggleActions: "play none none reverse"}
+          });
+  
+          gsap.fromTo(card.querySelector(".project-info"), { opacity: 0 }, {
+            opacity: 1, duration: 0.6, ease: "power2.out",
+            scrollTrigger: { trigger: card, start: "top 70%", stagger:true, toggleActions: "play none none reverse"}
+          });
+  
+          gsap.fromTo(card.querySelector(".project-image"), { opacity: 0 }, {
+            opacity: 1, duration: 0.8, ease: "power2.out",
+            scrollTrigger: { trigger: card, start: "top 70%", stagger:true, toggleActions: "play none none reverse"}
+          });
+        });
+      });
+  
+      return () => mm.revert();
+
+  },[])
+    
     return (
       <section className="work-section">
         <div className="custom-container">
@@ -52,7 +116,9 @@ function Work() {
 
             <div className="work-projects">
                 {projects.map((project, index) => (
-                <ProjectCard key={index} project={project} isEven={index % 2 === 1} />
+                    <div key={index} ref={(el) => (containerRefs.current[index] = el)}>
+                        <ProjectCard project={project} isEven={index % 2 === 1} />
+                    </div>
                 ))}
             </div>
         </div>
