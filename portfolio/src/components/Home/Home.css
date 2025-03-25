@@ -9,7 +9,7 @@
 
 /* Data CSS */
 .data-main-container{grid-area:data}
-.home-container-grid .name{font-size: calc(30px + (80 - 30) * ((100vw - 320px) / (1920 - 320)));font-weight: 700;display: flex;gap: 10px;cursor: pointer;color: var(--text-color);}
+.home-container-grid .name{font-size: calc(30px + (80 - 30) * ((100vw - 320px) / (1920 - 320)));font-weight: 700;display: flex;gap: 10px;cursor: pointer;color: var(--text-color);overflow: hidden;}
 .home-container-grid .position{padding-left: 8%;position: relative;font-size: calc(22px + (40 - 22) * ((100vw - 320px) / (1920 - 320)));font-weight: 600;color: var(--text-color);}
 .home-container-grid .position::before{content: '';position: absolute; width: 100%;max-width: 30px; height: 1px;background-color: var(--text-color);left: 0;top: 50%;}
 .home-container-grid .info{opacity: 0.9;font-size: calc(16px + (20 - 16) * ((100vw - 320px) / (1920 - 320)));margin-bottom: 30px; color: var(--text-color);}
