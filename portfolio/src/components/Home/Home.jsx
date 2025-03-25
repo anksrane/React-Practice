@@ -96,7 +96,7 @@ function Home() {
           {/* Lazy load image with loading="lazy" */}
           <img 
             ref={imageRef}
-            src="" 
+            src={homeBanner} 
             alt="profileImage" 
             className="img-fluid profile_img" 
             loading="lazy" 
