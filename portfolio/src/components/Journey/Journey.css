@@ -36,5 +36,5 @@
     .timeline-main-container{gap: 0.25rem;}    
     .dot{display: none;}
     .journey-info-container{width: 100%;}
-    .right-margin,.left-margin{margin: unset;}
+    .right-margin,.left-margin{margin: unset;width: 100%;}
 }

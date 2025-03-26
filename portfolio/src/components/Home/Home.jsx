@@ -78,62 +78,6 @@ function Home() {
     return () => ctx.revert(); // Cleanup GSAP on unmount
   }, [isLoaded]);
 
-  // useLayoutEffect(() => {
-  //   if (!isLoaded) return;
-
-  //   let ctx = gsap.context(() => {
-  //     let tl = gsap.timeline();
-
-  //     // Social & Data Slide In
-  //     tl.from(socialRef.current, {
-  //       x: -100,
-  //       opacity: 0,
-  //       duration: 1,
-  //       ease: "power2.out",
-  //     })
-  //       .from(
-  //         dataRef.current,
-  //         {
-  //           x: -100,
-  //           opacity: 0,
-  //           duration: 1,
-  //           ease: "power2.out",
-  //         },
-  //         "-=0.5"
-  //       )
-  //       .from(
-  //         imageRef.current,
-  //         {
-  //           x: 100,
-  //           scale: 1.5,
-  //           opacity: 0,
-  //           duration: 1,
-  //           ease: "power2.out",
-  //         },
-  //         "-=0.5"
-  //       );
-
-  //     // Text Stagger Animation
-  //     if (firstHalfRef.current && secondHalfRef.current && positionFirstRef.current.children && positionSecondRef.current.children) {
-  //       tl.from([firstHalfRef.current.children,secondHalfRef.current.children], {
-  //         y: 50,
-  //         opacity: 0,
-  //         duration:0.3,
-  //         stagger: 0.1,
-  //       });
-
-  //       tl.from([positionFirstRef.current.children,positionSecondRef.current.children], {
-  //         y: 50,
-  //         opacity: 0,
-  //         duration:0.3,
-  //         stagger: 0.1,
-  //       });
-  //     }
-  //   });
-
-  //   return () => ctx.revert(); // Cleanup on unmount
-  // }, [isLoaded]);
-
   return (
     <div className="custom-container home-container">
       <div className="home-container-grid">
@@ -147,7 +91,7 @@ function Home() {
           {/* Lazy load image with loading="lazy" */}
           <img 
             ref={imageRef}
-            src={homeBanner} 
+            src={homeBanner}
             alt="profileImage" 
             className="img-fluid profile_img" 
             loading="lazy" 
