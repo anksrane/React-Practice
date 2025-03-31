@@ -82,7 +82,7 @@ function Home() {
     <div className="custom-container home-container">
       <div className="home-container-grid">
         <Suspense fallback={<div>Loading Social...</div>}>
-          <div ref={socialRef}>
+          <div className="social-icons-container-outer" ref={socialRef}>
             <Social />
           </div>
         </Suspense>

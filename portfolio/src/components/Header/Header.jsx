@@ -61,7 +61,7 @@ function Header() {
     <nav className="navbar">
       <div className="custom-container nav-container">
         <Link className="navbar-brand" to="/">
-          @nkit
+          Ankit Rane
         </Link>
 
         <button className={`hamButton ${menuOpen ? 'hide' : ''}`}
