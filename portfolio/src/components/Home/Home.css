@@ -95,6 +95,7 @@
       "data"
       "social"; /* Data takes up the full second row */
       gap: 5px;
+      padding: 8% 0 2% 0;
   }
 
   /* Ensure Data spans both columns in the second row */
@@ -117,4 +118,5 @@
   .home-container-grid .position{padding-left: 0%;text-align: center;margin: 5px auto 15px auto;}
   .home-container-grid .info{margin-top: 10px;text-align: center;}
   .hover-styled-btn{margin: auto;}
+  
 }
