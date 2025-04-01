@@ -13,6 +13,7 @@ body{font-family: "Funnel Display", serif;scroll-behavior: smooth;padding: 0px;m
       --text-color-blue:#00bcd4;
       --text-color-blue-dark:#082c30;
       --border-color: #686868;
+      --pearl-color:#EAE0C8;
     }
   }
 *{margin: 0;padding: 0;box-sizing: border-box;}

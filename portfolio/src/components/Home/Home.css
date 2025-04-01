@@ -114,7 +114,7 @@
     grid-area: img;
   }
   .home-container-grid .name{margin: 5px 0;width: fit-content;margin: auto;}
-  .home-container-grid .position{padding-left: 0%;text-align: center;}
+  .home-container-grid .position{padding-left: 0%;text-align: center;margin: 5px auto 15px auto;}
   .home-container-grid .info{margin-top: 10px;text-align: center;}
   .hover-styled-btn{margin: auto;}
 }

@@ -7,6 +7,7 @@ import img1 from "./../../assets/image/g20.jpg";
 import img2 from "./../../assets/image/vijay-tanks.jpg";
 import img3 from "./../../assets/image/birla.jpg";
 import img4 from "./../../assets/image/stockholding.jpg";
+import img5 from "./../../assets/image/zuarifarmhub.jpg";
 
 const projects = [
     {
@@ -24,6 +25,14 @@ const projects = [
         techStack: ["JavaScript", "jQuery", "HTML5", "CSS3", "Bootstrap"],
         image: img2,
         link: "https://www.vijaytanks.com/"
+    },
+    {
+        title: "Zuari FarmHub",
+        description:
+            "Developed and maintained a website for Zuari FarmHub, a leading agricultural solutions provider. The site showcases their extensive range of agri-inputs, including fertilizers, seeds, and crop protection products, along with their commitment to empowering farmers with innovative and sustainable farming solutions.",
+        techStack: ["JavaScript", "jQuery", "HTML5", "CSS3", "Bootstrap"],
+        image: img5,
+        link: "https://zuarifarmhub.com/"
     },
     {
         title: "Birla",
@@ -65,20 +74,20 @@ function Work() {
         containerRefs.current.forEach((card, index) => {
           const isEven = index % 2 === 1;
           const xValue = isEven ? 100 : -100;
-  
+          
           gsap.fromTo(card, { opacity: 0, y: 40 }, {
             opacity: 1, y: 0, duration: 0.8, ease: "power2.in",
-            scrollTrigger: { trigger: card, start: "top 70%", stagger:true, toggleActions: "play none none reverse"}
+            scrollTrigger: { trigger: card, start: "top 65%", stagger:true, toggleActions: "play none none reverse",yoyo:true,}
           });
   
           gsap.fromTo(card.querySelector(".project-info"), { x: xValue, opacity: 0 }, {
             x: 0, opacity: 1, duration: 0.8, ease: "power2.out",
-            scrollTrigger: { trigger: card, start: "top 50%", stagger:true, toggleActions: "play none none reverse"}
+            scrollTrigger: { trigger: card, start: "top 50%", stagger:true, toggleActions: "play none none reverse",yoyo:true,}
           });
   
           gsap.fromTo(card.querySelector(".project-image"), { x: -xValue, opacity: 0 }, {
             x: 0, opacity: 1, duration: 1, ease: "power2.out",
-            scrollTrigger: { trigger: card, start: "top 50%", stagger:true, toggleActions: "play none none reverse"}
+            scrollTrigger: { trigger: card, start: "top 50%", stagger:true, toggleActions: "play none none reverse",yoyo:true,}
           });
         });
       });

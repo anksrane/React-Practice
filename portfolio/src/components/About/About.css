@@ -16,3 +16,7 @@
         flex-direction: column-reverse;
     }
 }
+@media (width<=768px){
+    .sub-heading{margin-top: 20px;}
+    .page-info-content{margin: 20px 0px 30px 0px;}
+}

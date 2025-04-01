@@ -181,7 +181,7 @@ function Journey() {
             <div className={`${index % 2 == 0 ? "right-margin" : "left-margin"}`}>
               <div className="year-label" style={{ backgroundColor: item.color }}>{item.date}</div>
               <div className="journey-info-container">
-                <h3 className="info-title">{item.title}</h3>
+                <h3 className="info-title">{item.title} <i className="ri-briefcase-4-fill"></i></h3>
                 <h4 className="info-subtitle">{item.companyname}</h4>
                 <h5 className="info-subtitle">{item.title}</h5>
                 <p className="info-para">{item.description}</p>
