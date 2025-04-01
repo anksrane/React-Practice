@@ -26,20 +26,51 @@
 .home-container-grid .hello-link:hover{border: 1px solid var(--background-color);}
 
 /* Image CSS */
-.img-container{grid-area:img}
-.img-container{border-radius:50%;overflow:hidden;background:0 0;display:flex;justify-content:center;align-items:center}
-.img-container{width: fit-content;animation: profile_animate 5s ease-in-out infinite 1s;border: 5px solid rgba(169, 214, 229,0.5);overflow: hidden;}
-.profile_img{background-repeat: no-repeat; background-position: center;background-size: cover; width: 400px;height: 400px;justify-self: center;object-fit: cover;}
+.img-container {
+  grid-area: img;
+  border-radius: 50%; /* Initially round */
+  overflow: hidden;
+  background: linear-gradient(-45deg, #dec4c5, #f6bc34,#679fa0, #f0f3d6);
+  background-size: 300% 300%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  border: 5px solid rgba(169, 214, 229, 1);
+  
+  /* Apply both animations */
+  animation: gradientbg 15s ease infinite, profile_animate 5s ease-in-out infinite 1s;
+}
+
+/* Background Gradient Animation */
+@keyframes gradientbg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Profile Image */
+.profile_img {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 400px;
+  height: 400px;
+  justify-self: center;
+  object-fit: cover;
+}
+
+/* Border Radius Animation */
 @keyframes profile_animate {
-    0%{
-        border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
-    }
-    50%{
-        border-radius: 30% 60% 70% 40%/50% 60% 30% 60%;
-    }
-    100%{
-        border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
-    }
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
 }
 
 @media (max-width: 1024px) {

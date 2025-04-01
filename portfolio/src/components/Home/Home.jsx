@@ -8,7 +8,7 @@ const Social = lazy(() => import("./Social"));
 const Data = lazy(() => import("./Data"));
 
 // Lazy load the image using dynamic import
-const homeBanner = new URL('../../assets/about.jpg', import.meta.url).href;
+const homeBanner = new URL('../../assets/pic.png', import.meta.url).href;
 
 function Home() {
   const socialRef = useRef(null);
