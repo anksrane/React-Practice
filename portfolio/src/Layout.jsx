@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from './components/Header/Header'
-import videoBg from './assets/video/vid3.mp4';
+import videoBg from './assets/video/bubble.mp4';
 
 function Layout() {
   return (
