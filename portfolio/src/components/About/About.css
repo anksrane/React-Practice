@@ -1,4 +1,4 @@
-.skillset-container-outer{background-color:var(--background-color);}
+/* .skillset-container-outer{background-color:var(--background-color);} */
 .skillset-container-inner{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
 .skill-text-container{height:fit-content}
 .sub-heading{color: var(--text-color);text-align: center;font-size: calc(26px + (36 - 26) * ((100vw - 320px) / (1920 - 320)));text-transform: uppercase;margin-top: 4%; margin-bottom: 1%;}
@@ -11,10 +11,7 @@
 .img-responsive{max-width: 100%;height: auto;width: 100%;max-width: 30px;}
 .skill-name{color: var(--text-color);}
 @media (width<=991px){
-    .skillset-container-inner{
-        display: flex;
-        flex-direction: column-reverse;
-    }
+    .skillset-container-inner{display: flex;flex-direction: column-reverse;}
 }
 @media (width<=768px){
     .sub-heading{margin-top: 20px;}
