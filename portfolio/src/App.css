@@ -19,6 +19,7 @@
     width: 100%;
     height: 100%; /* Make the video fill the entire viewport */
     z-index: -1; /* Put the video behind other content */
+    background-color: var(--background-color);
   }  
   .video-background {
     position: absolute;
