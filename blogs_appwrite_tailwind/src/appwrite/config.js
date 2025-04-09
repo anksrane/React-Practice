@@ -30,7 +30,7 @@ export class ConfigService{
                 }
             )
         } catch (error) {
-            console.error("CreatePost",error);
+            console.log("CreatePost",error);
         }
     }
 
@@ -48,7 +48,7 @@ export class ConfigService{
                 }
             )
         } catch (error) {
-            console.error("updatePost",error);
+            console.log("updatePost",error);
         }
     }
 
@@ -61,7 +61,7 @@ export class ConfigService{
             )
             return true;
         } catch (error) {
-            console.error("deletePost",error);     
+            console.log("deletePost",error);     
             return false;       
         }
     }
@@ -74,7 +74,7 @@ export class ConfigService{
                 slug
             )
         } catch (error) {
-            console.error("getPost",error);            
+            console.log("getPost",error);            
         }
     }
 
@@ -87,7 +87,7 @@ export class ConfigService{
                 queries,
             )
         } catch (error) {
-            console.error("listPosts",error);
+            console.log("listPosts",error);
             return false;
         }
     }
@@ -101,7 +101,7 @@ export class ConfigService{
                 file
             )
         } catch (error) {
-            console.error("uploadFile",error);
+            console.log("uploadFile",error);
             return false;
         }
     }
@@ -114,7 +114,7 @@ export class ConfigService{
             )
             return true;
         } catch (error) {
-            console.error("deleteFile",error);
+            console.log("deleteFile",error);
             return false;
         }
     }
