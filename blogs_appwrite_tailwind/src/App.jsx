@@ -22,18 +22,18 @@ function App() {
   },[])
 
   return !loading ?(
-    <div className='min-h-screen flex flex-wrap content-between bg-grey-400'>
+    <div className='min-h-screen flex flex-wrap content-between bg-slate-400'>
       <div className='w-full block'>
         <Header />
           <main>
             {/* <Outlet /> */}
-            Data
+            Todo
           </main>
         <Footer />
       </div>
     </div>
   ) : 
-  <div className='min-h-screen flex flex-wrap content-between bg-grey-400'>
+  <div className='min-h-screen flex flex-wrap content-between bg-slate-400'>
   <div className='w-full block'>
     <Header />
       <main>
