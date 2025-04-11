@@ -22,7 +22,7 @@ const projects = [
     {
         title: "Gmmco",
         description:
-            "Developed a multilingual corporate platform for Gmmco, enhancing user experience and accessibility. The platform showcases Gmmco’s extensive range of construction and mining equipment, product solutions, and services, providing seamless navigation and detailed insights for customers.",
+            "Developed a corporate platform for Gmmco, enhancing user experience and accessibility. The platform showcases Gmmco’s extensive range of construction and mining equipment, product solutions, and services, providing seamless navigation and detailed insights for customers.",
         techStack: ["React","JavaScript", "jQuery", "XML", "HTML5", "CSS3", "Bootstrap"],
         image: img6,
         link: "https://www.gmmco.in/" 
