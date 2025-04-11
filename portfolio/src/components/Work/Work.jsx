@@ -8,6 +8,7 @@ import img2 from "./../../assets/image/vijay-tanks.jpg";
 import img3 from "./../../assets/image/birla.jpg";
 import img4 from "./../../assets/image/stockholding.jpg";
 import img5 from "./../../assets/image/zuarifarmhub.jpg";
+import img6 from "./../../assets/image/gmmco.jpg";
 
 const projects = [
     {
@@ -17,6 +18,14 @@ const projects = [
         techStack: ["JavaScript", "jQuery", "XML", "HTML5", "CSS3", "Bootstrap"],
         image: img1,
         link: "https://www.motherofdemocracyg20.com/" 
+    },
+    {
+        title: "Gmmco",
+        description:
+            "Developed a multilingual corporate platform for Gmmco, enhancing user experience and accessibility. The platform showcases Gmmco’s extensive range of construction and mining equipment, product solutions, and services, providing seamless navigation and detailed insights for customers.",
+        techStack: ["React","JavaScript", "jQuery", "XML", "HTML5", "CSS3", "Bootstrap"],
+        image: img6,
+        link: "https://www.gmmco.in/" 
     },
     {
         title: "Vijay Tanks",
