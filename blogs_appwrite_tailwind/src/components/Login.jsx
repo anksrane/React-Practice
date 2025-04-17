@@ -4,7 +4,7 @@ import { login as authLogin } from '../store/authSlice'
 import { useDispatch } from 'react-redux'
 import { Button, Input } from './index'
 import authService from '../appwrite/auth'
-import {useForm} from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 function Login() {
     const dispatch = useDispatch()
