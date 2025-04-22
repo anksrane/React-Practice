@@ -40,17 +40,34 @@ export class AuthService{
         }
     }
 
-    async getCurrentUser(){
+    // async getCurrentUser(){
+    //     try {
+    //         return await this.account.get();
+    //     } catch (error) {
+    //         console.log("getCurrentUser Error: ", error);
+    //     }
+    //     return null;
+    // }
+
+    // async getCurrentUser() {
+    //     try {
+    //         return await this.account.get();
+    //     } catch (error) {
+    //         console.log("getCurrentUser Error: ", error);
+    //         return null; // <- ADD THIS inside the catch
+    //     }
+    // }    
+
+    async getCurrentUser() {
         try {
-            // let res=await this.account.get();
-            // console.log(res);
             return await this.account.get();
         } catch (error) {
-            console.log("getCurrentUser Error: ", error);
+            if (error.code !== 401) {
+                console.log("getCurrentUser Error: ", error);
+            }
+            return null;
         }
-
-        return null;
-    }
+    }    
 
     async logout(){
         try {

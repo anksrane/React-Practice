@@ -12,11 +12,16 @@ export default function Protected({children,authentication=true}) {
       // Redirect logic:
       // If authentican is true (protected route) and the user is not authenticated, redirect to /login.
       // If authentican is false (e.g., login page) and user is already authenticated, redirect to the home page.
-      if(authentication && authStatus!==authentication){
+      // if(authentication && authStatus!==authentication){
+      //   navigate("/login")
+      // }else if(!authentication && authStatus===authentication){
+      //   navigate("/")
+      // }
+      if(authentication && !authStatus){
         navigate("/login")
-      }else if(!authentication && authStatus===authentication){
+      }else if(!authentication && authStatus){
         navigate("/")
-      }
+      }      
       setLoader(false)
     },[authStatus,navigate,authentication])
 

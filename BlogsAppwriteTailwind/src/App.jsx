@@ -10,17 +10,19 @@ function App() {
   const [loading, setLoading] = useState(true);
   const dispatch=useDispatch();
 
-  useEffect(()=>{
-    authService.getCurrentUser()
-    .then((userData)=>{
-      if(userData){
-        dispatch(login({userData}))
-      }else{
-        dispatch(logout())
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userData = await authService.getCurrentUser();
+      if (userData) {
+        dispatch(login({ userData }));
+      } else {
+        dispatch(logout());
       }
-    })
-    .finally(()=>setLoading(false))
-  },[])
+      setLoading(false);
+    };
+
+    fetchUser();
+  }, [dispatch]);
 
   return !loading ?(
     <div className='min-h-screen flex flex-wrap content-between bg-slate-400'>
@@ -36,14 +38,9 @@ function App() {
     </div>
   ) : 
   <div className='min-h-screen flex flex-wrap content-between bg-slate-400'>
-  <div className='w-full block'>
-    <Header />
-      <main>
-        <Outlet />
-        {/* Loading */}
-      </main>
-    <Footer />
-  </div>
+    <div className='w-full block'>
+      <div className="min-h-screen flex items-center justify-center bg-slate-400">Loading...</div>;
+    </div>
   </div>
 }
 
