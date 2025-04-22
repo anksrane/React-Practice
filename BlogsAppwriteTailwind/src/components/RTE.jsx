@@ -15,6 +15,7 @@ export default function RTE({name, control, label, defaultValue=""}) {
             init={{
                 height: 300,
                 menubar: true,
+                readonly: false,
                 plugins: [
                     "image", "advlist", "autolink", "lists", "link", "charmap", "anchor", "charmap", "searchreplace", "wordcount", "visualblocks", "code", "fullscreen", "insertdatetime", "media", "table", "helpoption", "template"
                 ],
