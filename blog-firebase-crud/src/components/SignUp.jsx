@@ -13,7 +13,7 @@ function SignUp() {
     } = useForm();
     const navigate = useNavigate();
 
-    const onSubmit = async (data) => {
+    const onSignUp = async (data) => {
         const { name, email, password} =data;
         try {
             const userCred= await createUserWithEmailAndPassword(auth,email,password);
@@ -32,7 +32,7 @@ function SignUp() {
         <div className="max-w-md mx-auto mt-10 p-5 border rounded shadow">
             <h2 className="text-2xl font-bold mb-4">Sign Up</h2>        
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSignUp)} className="space-y-4">
                 <Input label='Full Name: ' placeholder="Enter your full name"
                     {...register("name",{
                         required:"Name is required",
