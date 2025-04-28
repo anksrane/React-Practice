@@ -1,4 +1,4 @@
-import useForm from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
 import { auth } from "../services/firebase";
 import { useNavigate } from "react-router-dom";

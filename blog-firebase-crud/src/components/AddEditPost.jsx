@@ -1,19 +1,37 @@
 import { useParams } from 'react-router-dom'
-import { Button,Input } from "./index";
 import { useForm } from 'react-hook-form';
 import { Editor } from '@tinymce/tinymce-react'
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import { Button,Input } from "./index";
 
 function AddEditPost() {
     const { id } = useParams();
     const editorRef = useRef(null);
 
+    const [isSlugEdited, setIsSlugEdited] = useState(false);
+
     const {
         register,
         handleSubmit,
+        watch,
         setValue,
         formState: { errors, isSubmitting },
     } = useForm();
+
+    const title=watch("title");
+    const slug=watch("slug");
+
+    // Slug Auto Generation
+    useEffect(() => {
+        if(title && !isSlugEdited) {
+            const generatedSlug = title.
+            toLowerCase().
+            replace(/\s+/g, '-').
+            replace(/[^a-z0-9-]/g, '');
+
+            setValue("slug", generatedSlug, { shouldValidate: true });
+        }
+    },[title, isSlugEdited,setValue]);
 
     const onPostSubmit = async (data) => {
         console.log("Form Submitted: ", data);
@@ -29,35 +47,33 @@ function AddEditPost() {
 
                 {/* Post Title */}
                 <div className='w-full'>
-                    <Input label='Post Title: ' placeholder="Enter post title"
+                    <Input label='Post Title: ' className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter post title"
                         {...register("title", {
                             required: "Title is required",
-                    })}></Input>
+                        })}></Input>
                     {errors.title && <p className="text-red-500">{errors.title.message}</p>}
                 </div>
 
                 {/* Post Slug */}
                 <div className='w-full'>
-                    <Input label='Post Slug: ' placeholder="Enter post slug"
+                    <Input label='Post Slug:' className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    type="text"
+                    placeholder="Enter post slug"
                         {...register("slug", {
                             required: "Slug is required",
-                            pattern: {
-                                value: /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-                                message: "Invalid slug format",
-                            },
+                            onChange: () => {
+                                setIsSlugEdited(true);
+                            }
                         })}></Input>
                     {errors.slug && <p className="text-red-500">{errors.slug.message}</p>}
                 </div>
 
                 {/* Image Upload */}
                 <div className='w-full'>
-                    <Input label='Image URL: ' placeholder="Enter image URL"
+                    <Input label='Image URL:' type="file" accept="image/*" className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter image URL"
                         {...register("image", {
                             required: "Image URL is required",
-                            pattern: {
-                                value: /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg))$/i,
-                                message: "Invalid image URL",
-                            },
                         })}></Input>
                     {errors.image && <p className="text-red-500">{errors.image.message}</p>}
                 </div>
@@ -93,8 +109,7 @@ function AddEditPost() {
 
                 {/* Submit Button */}
                 <div className='w-full'>
-                    <Button type="submit" disabled={isSubmitting} 
-                     className="w-full p-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                    <Button type="submit" disabled={isSubmitting}  className="w-full p-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400">
                         {isSubmitting ? 'Saving...' : (id ? 'Update Post' : 'Create Post')}
                     </Button>
                 </div>
