@@ -10,9 +10,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<AllPosts />} />
-        <Route path="/add" element={<AddPost />} />
-        <Route path="/edit/:id" element={<EditPost />} />
-        <Route path="/post/:id" element={<PostDetails />} />
+        <Route path="/addPost" element={<AddPost />} />
+        <Route path="/editPost/:id" element={<EditPost />} />
+        <Route path="/viewPost/:id" element={<PostDetails />} />
       </Routes>
     </Router>
   )

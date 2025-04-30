@@ -58,7 +58,7 @@ function ViewPost() {
                     Edit Post
                 </button>
                 <button
-                    onClick={() => alert('Post deleted')} // Implement post deletion logic here
+                    onClick={handleDelete} // Implement post deletion logic here
                     className="bg-red-500 text-white py-2 px-4 rounded"
                 >
                     Delete Post

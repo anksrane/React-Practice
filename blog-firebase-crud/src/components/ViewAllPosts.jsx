@@ -44,8 +44,8 @@ function ViewAllPosts() {
                                 {post.createdAt?.toDate()?post.createdAt.toDate().toLocaleDateString() : "N/A"}
                                 </p>
                             <div className='mt-2 space-x-2'>
-                                <Link to={`/posts/${post.id}`} className='text-blue-500 hover:underline'>View</Link>
-                                <Link to={`/posts/edit/${post.id}`} className='text-blue-500 hover:underline'>Edit</Link> 
+                                <Link to={`/viewPost/${post.id}`} className='text-blue-500 hover:underline'>View</Link>
+                                <Link to={`/postedit/${post.id}`} className='text-blue-500 hover:underline'>Edit</Link> 
 
                             </div>
                         </li>

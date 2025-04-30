@@ -1,10 +1,10 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 import { Editor } from '@tinymce/tinymce-react'
 import { useRef, useState, useEffect } from "react";
 import { Button,Input } from "./index";
 import { db } from "../services/firebase";
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, addDoc, collection, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 // import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 // import { storage } from '../services/firebase';
 // import { v4 as uuidv4 } from 'uuid'; // for generating unique file names
@@ -12,7 +12,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 function AddEditPost() {
     const { id } = useParams();
     const editorRef = useRef(null);
-
+    const navigate = useNavigate();
     const [isSlugEdited, setIsSlugEdited] = useState(false);
 
     const {
@@ -66,6 +66,7 @@ function AddEditPost() {
 
             await addDoc(collection(db, "posts"), newPost);
             alert("Post added successfully!");
+            useNavigate("/");
         } catch (error) {
             console.error("Error adding post: ", error);
             alert("Something went wrong. Please try again.");
