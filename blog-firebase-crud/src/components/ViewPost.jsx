@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { db } from '../services/firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, deleteDoc } from 'firebase/firestore'
 
 function ViewPost() {
     const { id } = useParams();
@@ -24,6 +24,19 @@ function ViewPost() {
         }
         fetchPost()
     },[id]);
+
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+        if(!confirmDelete) return;
+
+        try {
+            await deleteDoc(doc(db, "posts", id));
+            alert("Post deleted successfully!");
+            navigate("/");
+        } catch (error) {
+            console.error("Error deleting post: ", error);
+        }
+    }
 
     if(loading){
         return <h1>Loading...</h1>

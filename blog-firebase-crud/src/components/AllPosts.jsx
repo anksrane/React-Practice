@@ -3,7 +3,7 @@ import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../services/firebase'
 import { Link } from 'react-router-dom'
 
-function ViewAllPosts() {
+function AllPosts() {
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -14,7 +14,7 @@ function ViewAllPosts() {
                     id: doc.id,
                     ...doc.data(),
                 }))
-                setPosts(postsLists);
+                setPosts(postsLists)
                 setLoading(false)
             })
             .catch((error) => {
@@ -28,15 +28,14 @@ function ViewAllPosts() {
             <h1 className='text-2xl font-bold mt-10'>Loading Posts...</h1>
         </div>
     }else{
-        return <div className='max-w-4xl mx-auto mt-10'>
+        <div className='max-w-4xl mx-auto mt-10'>
             <h1 className='text-2xl font-bold mt-10'>All Posts</h1>
             {posts.length === 0 ? (
                 <p className='mt-4'>No posts available.</p>
             ) : (
-                <ul className='mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-                  {console.log("Posts: ", posts)}
+                <ul className='space-y-4 mt-4'>
                     {posts.map((post) => (
-                        <li key={post.id} className='p-4 border rounded shadow'>
+                        <li key={post.id} className='mb-4 p-4 border rounded shadow'>
                             <h3 className='font-semibold text-xl'>{post.title}</h3>
                             <p className='text-gray-600 text-sm'>Slug: {post.slug}</p>
                             <p className='text-sm text-gray-400'>
@@ -56,4 +55,4 @@ function ViewAllPosts() {
     }
 }
 
-export default ViewAllPosts
+export default AllPosts
