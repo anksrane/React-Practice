@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../services/firebase";
 import { useNavigate } from "react-router-dom";
 import { Button,Input } from "./index";
+import { toast } from "react-toastify";
 
 function Login() {
     const {
@@ -11,14 +12,21 @@ function Login() {
         formState: { errors, isSubmitting },
     } =useForm();
     const navigate = useNavigate();
+
     const onLogin = async (data) => {
         const {email, password} = data;
 
         try {
+            if(!auth){
+                toast.error("Firebase Auth not initialized");
+                return;
+            }
             await signInWithEmailAndPassword(auth,email,password);
+            toast.success("Login Successful");
             console.log("User Logged In: ",auth.currentUser);
             navigate("/");
         } catch (error) {
+            toast.error("Error logging in: " + error.message);
             console.log("Login Error: ",error.message);
         }
     }

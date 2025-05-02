@@ -45,7 +45,7 @@ function ViewAllPosts() {
                                 </p>
                             <div className='mt-2 space-x-2'>
                                 <Link to={`/viewPost/${post.id}`} className='text-blue-500 hover:underline'>View</Link>
-                                <Link to={`/postedit/${post.id}`} className='text-blue-500 hover:underline'>Edit</Link> 
+                                <Link to={`/editPost/${post.id}`} className='text-blue-500 hover:underline'>Edit</Link> 
 
                             </div>
                         </li>

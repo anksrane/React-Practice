@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
 import { auth } from "../services/firebase";
 import { useNavigate } from "react-router-dom";
 import { Button,Input } from "./index";
+import { toast } from "react-toastify";
 
 function SignUp() {
     const {
@@ -12,22 +13,30 @@ function SignUp() {
         formState: { errors, isSubmitting },
     } = useForm();
     const navigate = useNavigate();
+    const password = watch("password");
 
     const onSignUp = async (data) => {
         const { name, email, password} =data;
         try {
+            if(!auth){
+                toast.error("Firebase Auth not initialized");
+                return;
+            }
+
             const userCred= await createUserWithEmailAndPassword(auth,email,password);
             await updateProfile(userCred.user,{
                 displayName:name,
             });
+
+            toast.success("User Created Successfully");
             console.log("User Created: ",userCred.user);
             navigate("/");
         } catch (error) {
+            toast.error("Error creating user: " + error.message);
             console.log("Sign Up Error: ",error.message);
         }
     }
-
-    const password = watch("password");
+    
     return (
         <div className="max-w-md mx-auto mt-10 p-5 border rounded shadow">
             <h2 className="text-2xl font-bold mb-4">Sign Up</h2>        

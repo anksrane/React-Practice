@@ -1,21 +1,15 @@
-import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AddPost from './pages/Posts/AddPost';
-import EditPost from './pages/Posts/EditPost';
-import AllPosts from './pages/Posts/AllPosts';
-import PostDetails from './pages/Posts/PostDetails';
+import './App.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Header from './components/Header';
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<AllPosts />} />
-        <Route path="/addPost" element={<AddPost />} />
-        <Route path="/editPost/:id" element={<EditPost />} />
-        <Route path="/viewPost/:id" element={<PostDetails />} />
-      </Routes>
+      <Header />
+      <AppRoutes />
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
