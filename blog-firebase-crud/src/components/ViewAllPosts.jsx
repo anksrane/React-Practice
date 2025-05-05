@@ -8,7 +8,6 @@ function ViewAllPosts() {
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
     const user = useSelector((state) => state.auth.user)
-    console.log("User: ", user);
 
     useEffect(() => {
         getDocs(collection(db, 'posts'))
@@ -37,7 +36,6 @@ function ViewAllPosts() {
                 <p className='mt-4'>No posts available.</p>
             ) : (
                 <ul className='mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-                  {console.log("Posts: ", posts)}
                     {posts.map((post) => (
                         <li key={post.id} className='p-4 border rounded shadow flex flex-col justify-between h-auto'>
                             <div className='flex flex-col mb-2'>
