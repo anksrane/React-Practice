@@ -3,8 +3,8 @@ import AddPost from '../pages/Posts/AddPost';
 import EditPost from '../pages/Posts/EditPost';
 import AllPosts from '../pages/Posts/AllPosts';
 import PostDetails from '../pages/Posts/PostDetails';
-import Login from '../components/Login';
-import SignUp from '../components/SignUp';
+import LoginPage from '../pages/Auth/LoginPage';
+import SignUpPage from '../pages/Auth/SignUpPage';
 import PrivateRoute from '../components/PrivateRoute';
 
 function AppRoutes() {
@@ -12,8 +12,8 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<AllPosts />} />
       <Route path="/viewPost/:id" element={<PostDetails />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUpPage />} />
+      <Route path="/login" element={<LoginPage />} />
 
       {/* Protected Routes */}
       <Route

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { db } from '../services/firebase'
 import { doc, getDoc, deleteDoc } from 'firebase/firestore'
 
@@ -8,6 +9,7 @@ function ViewPost() {
     const [post, setPost] = useState({})
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
+    const user = useSelector((state) => state.auth.user)
 
     useEffect(() => {
         const fetchPost=async()=>{
@@ -39,31 +41,46 @@ function ViewPost() {
     }
 
     if(loading){
-        return <h1>Loading...</h1>
+        return (
+            <div className="max-w-4xl mx-auto mt-10 p-4 text-center">
+                <h1>Loading...</h1>
+            </div>
+        )
     }else if(!post.title){
-        return <h1>Post not found</h1>
+        return (
+            <div className="max-w-4xl mx-auto mt-10 p-4 text-center">
+                <h1>No Post Found</h1>
+            </div>
+        )
     }else if(post.title){
         return (
-            <div className="container mx-auto p-4">
+            <div className="max-w-4xl mx-auto mt-10 p-4">
                 <h1 className="text-3xl font-bold">{post.title}</h1>
                 <img src={post.imageUrl} alt={post.title} className="w-full h-auto my-4" />
                 <div className="prose" dangerouslySetInnerHTML={{ __html: post.content }}></div>
         
-                {/* Edit and Delete buttons (if the user is logged in and owns the post) */}
-                <div className="mt-4">
-                <button
-                    onClick={() => navigate(`/edit/${id}`)}
-                    className="bg-blue-500 text-white py-2 px-4 rounded mr-2"
-                >
-                    Edit Post
-                </button>
-                <button
-                    onClick={handleDelete} // Implement post deletion logic here
-                    className="bg-red-500 text-white py-2 px-4 rounded"
-                >
-                    Delete Post
-                </button>
-                </div>
+                {
+                    user && user.uid === post.userId ? (
+                        <div className="mt-4">
+                        <button
+                            onClick={() => navigate(`/editPost/${id}`)}
+                            className="bg-blue-500 text-white py-2 px-4 rounded mr-2"
+                        >
+                            Edit Post
+                        </button>
+                        <button
+                            onClick={handleDelete}
+                            className="bg-red-500 text-white py-2 px-4 rounded"
+                        >
+                            Delete Post
+                        </button>
+                    </div>
+                    ) : (
+                        <div className="mt-4">
+                            <Link to="/" className="bg-blue-500 text-white py-2 px-4 rounded">Back to All Posts</Link>
+                        </div>
+                    )
+                }
             </div>
         )
     }

@@ -1,0 +1,45 @@
+🗂️ src
+ |---🗂️ assets
+ |---🗂️ components
+ |---    |--- 📄 AddEditPost.jsx
+ |---    |--- 📄 AllPosts.jsx
+ |---    |--- 📄 Button.jsx 
+ |---    |--- 📄 Header.jsx
+ |---    |--- 📄 index.js
+ |---    |--- 📄 Input.jsx
+ |---    |--- 📄 Login.jsx
+ |---    |--- 📄 PrivateRoute.jsx
+ |---    |--- 📄 SignUp.jsx
+ |---    |--- 📄 ViewAllPosts.jsx
+ |---    |--- 📄 ViewPost.jsx
+ |---🗂️ config
+ |---    |-------config.js
+ |---🗂️ features
+ |---    |----🗂️ auth
+ |---            |--- 📄 authSlice.js
+ |---    |----🗂️ posts
+ |---            |--- 📄 postsSlice.js
+ |---🗂️ hooks
+ |---    |--- 📄 useAuthObserver.js
+ |---🗂️ pages
+ |---    |----🗂️ Auth
+ |---            |--- 📄 Login.jsx 
+ |---            |--- 📄 SignUp.jsx
+ |---    |----🗂️ Posts
+ |---            |--- 📄 AddPost.jsx
+ |---            |--- 📄 AllPosts.jsx
+ |---            |--- 📄 EditPost.jsx
+ |---            |--- 📄 PostDetails.jsx
+ |---            |--- 📄 ViewPost.jsx
+ |---    |----🗂️ Shared
+ |---🗂️ routes
+ |---    |--- 📄 AppRoutes.jsx
+ |---🗂️ services
+ |---    |--- 📄 firebase.js
+ |---🗂️ store
+ |---    |--- 📄 index.js
+ |--- 📄 App.css
+ |--- 📄 App.jsx
+ |--- 📄 index.css
+ |--- 📄 main.js
+📄 .env

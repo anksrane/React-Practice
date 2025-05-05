@@ -34,7 +34,7 @@ function Header() {
 
         {user ? (
           <>
-            <Link to="/add-post" className="text-gray-700 hover:text-blue-500">
+            <Link to="/addPost" className="text-gray-700 hover:text-blue-500">
               Add Post
             </Link>
             <span className="text-sm text-gray-500">

@@ -1,6 +1,6 @@
-import useEffect from 'react';
+import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import auth from '../services/firebase';
+import { auth } from '../services/firebase';
 import { useDispatch } from 'react-redux';
 import { setUser, clearUser } from '../features/auth/authSlice';
 

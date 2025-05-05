@@ -19,7 +19,7 @@ function AddEditPost() {
         if (!user) {
             navigate('/login');
         }
-    }, [user, navigate]);
+    }, [user]);
     
     const { id } = useParams();
     const editorRef = useRef(null);
