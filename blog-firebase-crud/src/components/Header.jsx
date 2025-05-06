@@ -1,5 +1,5 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React, { useEffect } from 'react'
+import {Link, useLocation} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
 import Logout from './Logout'
 import { openModal, closeModal } from '../features/modal/modalSlice'
@@ -8,6 +8,7 @@ function Header() {
   const user = useSelector((state) => state.auth.user)
   const isModalOpen = useSelector((state)=>state.modal.isModalOpen)
   const dispatch = useDispatch()
+  const location = useLocation()
 
   const handleOpenModal = () => {
     dispatch(openModal());
@@ -17,26 +18,30 @@ function Header() {
     dispatch(closeModal());
   };  
 
+  useEffect(() => {
+    dispatch(closeModal());
+  }, [location.pathname]);
+
   return (
-    <header className="flex justify-between items-center p-4 shadow-md bg-white">
+    <header className="flex justify-between items-center p-4 shadow-md bg-slate-900">
       <Link to="/" className="text-xl font-bold text-blue-600">
         MyBlog
       </Link>
 
       <nav className="flex items-center gap-4 relative">
-        <Link to="/" className="text-gray-700 hover:text-blue-500">
+        <Link to="/" className="text-slate-300 hover:text-blue-500">
           All Posts
         </Link>
 
         {user ? (
           <>
-            <Link to="/addPost" className="text-gray-700 hover:text-blue-500">
+            <Link to="/addPost" className="text-slate-300 hover:text-blue-500">
               Add Post
             </Link>
 
                 <button
                   onClick={handleOpenModal}
-                  className="text-gray-700 hover:text-blue-500"
+                  className="text-slate-300 hover:text-blue-500"
                 >
                   View Profile
                 </button>
@@ -48,10 +53,10 @@ function Header() {
           </>
         ) : (
           <>
-            <Link to="/signup" className="text-gray-700 hover:text-blue-500">
+            <Link to="/signup" className="text-slate-300 hover:text-blue-500">
               Sign Up
             </Link>
-            <Link to="/login" className="text-gray-700 hover:text-blue-500">
+            <Link to="/login" className="text-slate-300 hover:text-blue-500">
               Login
             </Link>
           </>
