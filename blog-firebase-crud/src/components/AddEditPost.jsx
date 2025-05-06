@@ -6,26 +6,24 @@ import { useSelector } from 'react-redux';
 import { Button,Input } from "./index";
 import { db } from "../services/firebase";
 import { doc, addDoc, collection, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-// import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-// import { storage } from '../services/firebase';
-// import { v4 as uuidv4 } from 'uuid'; // for generating unique file names
+import config from '../config/config';
 
 import { toast } from 'react-toastify';
 
 function AddEditPost() {
     const user = useSelector((state) => state.auth.user);
-
-    useEffect(() => {
-        if (!user) {
-            navigate('/login');
-        }
-    }, [user]);
-    
     const { id } = useParams();
     const editorRef = useRef(null);
     const navigate = useNavigate();
     const [isSlugEdited, setIsSlugEdited] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [previewImage,setPreviewImage]=useState('');
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/');
+        }
+    }, [user]);
 
     const {
         register,
@@ -65,6 +63,7 @@ function AddEditPost() {
                     const postData = docSnap.data();
                     console.log("Post Data: ", postData);
                     reset(postData);
+                    setPreviewImage(postData.imageUrl || "");
                     setLoading(false);
                 }else {
                     console.log("No such document!");
@@ -88,24 +87,29 @@ function AddEditPost() {
         console.log("Form Submitted: ", data);
         try {
 
-            // Upload image to Firebase Storage
-            // const file = data.image[0]; 
-            // if (!file) {
-            //     alert("Please upload an image.");
-            //     return;
-            // }
+            // upload file to cloudinary
+            let imageUrl=previewImage;
 
-            // const imageRef=ref(storage, `postImages/${uuidv4()}-${file.name}`); 
+            const file=data.image[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("upload_preset",config.uploadPreset);
+                formData.append("cloud_name",config.cloudinaryId);
 
-            // const snapshot = await uploadBytes(imageRef, file);
-
-            // const imageUrl = await getDownloadURL(snapshot.ref);
-            // console.log("Image URL: ", imageUrl);
+                const response = await fetch(`https://api.cloudinary.com/v1_1/${config.cloudinaryId}/image/upload`, {
+                    method: "POST",
+                    body: formData,
+                });
+                const result = await response.json();
+                imageUrl=result.secure_url;
+                console.log("Uploaded Image URL",imageUrl);
+            }
 
             const postData = {
                 title: data.title,
                 slug: data.slug,
-                // imageUrl,
+                imageUrl:imageUrl || '',
                 content: data.content,
 
             };
@@ -174,9 +178,22 @@ function AddEditPost() {
                         placeholder="Please upload an image"
                             {...register("image", {
                                 // required: "Image is required",
+                                validate:fileLIst=>{
+                                    if(!id && (!fileLIst || fileLIst.length === 0)){
+                                        return "Image is Required";
+                                    }
+                                }
                             })}></Input>
                         {errors.image && <p className="text-red-500">{errors.image.message}</p>}
                     </div>
+
+                    {/* 🔥 Show existing image preview */}
+                    {previewImage && (
+                        <div className="mt-2">
+                            <p className="text-sm text-gray-600 mb-1">Current Image Preview:</p>
+                            <img src={previewImage} alt="Current" className="w-full h-auto rounded" />
+                        </div>
+                    )}                    
 
                     {/* RTE Editor */}
                     <div className='w-full'>

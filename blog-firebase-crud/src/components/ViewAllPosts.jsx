@@ -26,18 +26,25 @@ function ViewAllPosts() {
     },[])
 
     if (loading) {
-        return <div className='max-w-4xl mx-auto mt-10'>
+        return <div className='max-w-7xl mx-auto mt-10'>
             <h1 className='text-2xl font-bold mt-10'>Loading Posts...</h1>
         </div>
     }else{
-        return <div className='max-w-4xl mx-auto mt-10'>
+        return <div className='max-w-7xl mx-auto mt-10'>
             <h1 className='text-2xl font-bold mt-10'>All Posts</h1>
             {posts.length === 0 ? (
                 <p className='mt-4'>No posts available.</p>
             ) : (
-                <ul className='mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+                <ul className='mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                     {posts.map((post) => (
                         <li key={post.id} className='p-4 border rounded shadow flex flex-col justify-between h-auto'>
+                            <div className='mb-2'>
+                                <img
+                                    src={post.imageUrl || 'https://placehold.co/600x400?text=No%20Image%20to%20show'}
+                                    alt={post.title}
+                                    className='w-full h-40 object-cover rounded mb-2'
+                                />
+                            </div>
                             <div className='flex flex-col mb-2'>
                                 <h3 className='font-semibold text-xl'>{post.title}</h3>
                                 <p className='text-gray-600 text-sm'>Slug: {post.slug}</p>

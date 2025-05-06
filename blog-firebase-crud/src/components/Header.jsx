@@ -43,7 +43,7 @@ function Header() {
                   onClick={handleOpenModal}
                   className="text-slate-300 hover:text-blue-500"
                 >
-                  View Profile
+                  Profile
                 </button>
 
                 {isModalOpen && (

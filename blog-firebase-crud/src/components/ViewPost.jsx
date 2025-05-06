@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { db } from '../services/firebase'
 import { doc, getDoc, deleteDoc } from 'firebase/firestore'
+import { toast } from 'react-toastify';
 
 function ViewPost() {
     const { id } = useParams();
@@ -33,10 +34,11 @@ function ViewPost() {
 
         try {
             await deleteDoc(doc(db, "posts", id));
-            alert("Post deleted successfully!");
+            toast.success("Post deleted successfully!")
             navigate("/");
         } catch (error) {
-            console.error("Error deleting post: ", error);
+            toast.error("Error deleting post: ", error)
+            // console.error("Error deleting post: ", error);
         }
     }
 
@@ -56,25 +58,44 @@ function ViewPost() {
         return (
             <div className="max-w-4xl mx-auto mt-10 p-4">
                 <h1 className="text-3xl font-bold">{post.title}</h1>
-                <img src={post.imageUrl} alt={post.title} className="w-full h-auto my-4" />
-                <div className="prose" dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                    {post.imageUrl ? (
+                        <img
+                            src={post.imageUrl}
+                            alt={post.title}
+                            className="w-full h-auto my-4 rounded"
+                        />
+                        ) : (
+                        <img
+                            src="https://placehold.co/600x400?text=No%20Image%20to%20show"
+                            alt="No Image Available"
+                            className="w-full h-64 object-cover my-4 rounded bg-gray-100"
+                        />
+                    )}
+                <div className="prose" dangerouslySetInnerHTML={{ __html: post.content }}>
+
+                </div>
         
                 {
                     user && user.uid === post.userId ? (
-                        <div className="mt-4">
-                        <button
-                            onClick={() => navigate(`/editPost/${id}`)}
-                            className="bg-blue-500 text-white py-2 px-4 rounded mr-2"
-                        >
-                            Edit Post
-                        </button>
-                        <button
-                            onClick={handleDelete}
-                            className="bg-red-500 text-white py-2 px-4 rounded"
-                        >
-                            Delete Post
-                        </button>
-                    </div>
+                        <div className="mt-4 flex gap-2 justify-between">
+                            <div className='flex gap-2'>
+                                <button
+                                    onClick={() => navigate(`/editPost/${id}`)}
+                                    className="bg-blue-500 text-white py-2 px-4 rounded"
+                                >
+                                    Edit Post
+                                </button>
+                                <button
+                                    onClick={handleDelete}
+                                    className="bg-red-500 text-white py-2 px-4 rounded"
+                                >
+                                    Delete Post
+                                </button>
+                            </div>
+                            <div>
+                                <Link to="/" className="bg-blue-500 text-white py-2 px-4 rounded block">Back to All Posts</Link>
+                            </div>
+                        </div>
                     ) : (
                         <div className="mt-4">
                             <Link to="/" className="bg-blue-500 text-white py-2 px-4 rounded">Back to All Posts</Link>
