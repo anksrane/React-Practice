@@ -35,7 +35,7 @@ function AddEditPost() {
     } = useForm();
 
     const title=watch("title");
-    const slug=watch("slug");
+    // const slug=watch("slug");
 
     // Slug Auto Generation
     useEffect(() => {

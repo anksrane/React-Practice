@@ -56,25 +56,25 @@ function ViewPost() {
         )
     }else if(post.title){
         return (
-            <div className="max-w-4xl mx-auto mt-10 p-4">
+            <div className="max-w-4xl mx-auto mt-10 p-4 border rounded shadow">
                 <h1 className="text-3xl font-bold">{post.title}</h1>
-                    {post.imageUrl ? (
-                        <img
-                            src={post.imageUrl}
-                            alt={post.title}
-                            className="w-full h-auto my-4 rounded"
-                        />
-                        ) : (
-                        <img
-                            src="https://placehold.co/600x400?text=No%20Image%20to%20show"
-                            alt="No Image Available"
-                            className="w-full h-64 object-cover my-4 rounded bg-gray-100"
-                        />
-                    )}
-                <div className="prose" dangerouslySetInnerHTML={{ __html: post.content }}>
-
-                </div>
-        
+                    <div className=''>
+                        {post.imageUrl ? (
+                            <img
+                                src={post.imageUrl}
+                                alt={post.title}
+                                className="w-auto h-auto my-4 rounded"
+                            />
+                            ) : (
+                                ""
+                            // <img
+                            //     src="https://placehold.co/600x400?text=No%20Image%20to%20show"
+                            //     alt="No Image Available"
+                            //     className="w-full h-64 object-cover my-4 rounded bg-gray-100"
+                            // />
+                        )}
+                        <div className="prose" dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                    </div>
                 {
                     user && user.uid === post.userId ? (
                         <div className="mt-4 flex gap-2 justify-between">

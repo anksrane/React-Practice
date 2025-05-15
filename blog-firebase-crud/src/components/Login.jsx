@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../services/firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button,Input } from "./index";
 import { toast } from "react-toastify";
 
@@ -53,8 +53,8 @@ function Login() {
                     })}></Input>
                 {errors.password && <p className="text-red-500">{errors.password.message}</p>}
                 <Button type="submit" disabled={isSubmitting} className="w-full">{isSubmitting ? "Logging in..." : "Login"}</Button>
-
             </form>
+            <Link className="block w-fit mt-2 ms-auto font-bold text-blue-600 hover:underline" to="/signup">Create Account</Link>
         </div>
     )
 }

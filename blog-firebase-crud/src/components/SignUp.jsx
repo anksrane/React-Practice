@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
 import { auth } from "../services/firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button,Input } from "./index";
 import { toast } from "react-toastify";
 
@@ -82,6 +82,7 @@ function SignUp() {
                 <Button type='submit' className='w-full' 
                     disabled={isSubmitting}>{isSubmitting? "Signing Up...." : "Sign Up"}</Button>               
             </form>
+            <Link className="block w-fit mt-2 ms-auto font-bold text-blue-600 hover:underline" to="/login">Login Account</Link>
         </div>
     )
 }

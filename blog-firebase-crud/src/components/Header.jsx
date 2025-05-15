@@ -25,7 +25,7 @@ function Header() {
   return (
     <header className="flex justify-between items-center p-4 shadow-md bg-slate-900">
       <Link to="/" className="text-xl font-bold text-blue-600">
-        MyBlog
+        Blogify
       </Link>
 
       <nav className="flex items-center gap-4 relative">
