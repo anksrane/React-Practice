@@ -31,7 +31,7 @@ function Login() {
         }
     }
     return (
-        <div className="max-w-md mx-auto mt-10 p-5 border rounded shadow">
+        <div className="max-w-md mx-auto mt-10 p-5 border rounded shadow bg-white">
             <h2 className="text-2xl font-bold mb-4">Login</h2> 
             <form onSubmit={handleSubmit(onLogin)} className="space-y-4">       
                 <Input label='Email: ' placeholder="Enter your email"

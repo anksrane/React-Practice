@@ -137,12 +137,12 @@ function AddEditPost() {
 
     if (loading) {
         return (
-            <div className="max-w-3xl mx-auto mt-10 p-6 border rounded shadow">
+            <div className="max-w-3xl mx-auto mt-10 p-6 border rounded shadow bg-white">
                 <div className="text-center mt-10">Loading...</div>
             </div>)
     }else{
         return (
-            <div className="max-w-3xl mx-auto mt-10 p-6 border rounded shadow">
+            <div className="max-w-3xl mx-auto mt-10 p-6 border rounded shadow bg-white">
                 <h2 className='text-2xl font-bold mb-6'>
                     {id ? 'Edit Post' : 'Add New Post'}
                 </h2>

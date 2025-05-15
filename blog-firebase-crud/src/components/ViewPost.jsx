@@ -56,7 +56,7 @@ function ViewPost() {
         )
     }else if(post.title){
         return (
-            <div className="max-w-4xl mx-auto mt-10 p-4 border rounded shadow">
+            <div className="max-w-4xl mx-auto mt-10 p-4 border rounded shadow bg-white">
                 <h1 className="text-3xl font-bold">{post.title}</h1>
                     <div className=''>
                         {post.imageUrl ? (

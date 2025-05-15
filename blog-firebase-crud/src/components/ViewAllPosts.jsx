@@ -37,7 +37,7 @@ function ViewAllPosts() {
             ) : (
                 <ul className='mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                     {posts.map((post) => (
-                        <li key={post.id} className='p-4 border rounded shadow flex flex-col justify-between h-auto'>
+                        <li key={post.id} className='p-4 border rounded shadow flex flex-col justify-between h-auto bg-slate-50'>
                             <div className='mb-2'>
                                 <img
                                     src={post.imageUrl || 'https://placehold.co/600x400?text=No%20Image%20to%20show'}
