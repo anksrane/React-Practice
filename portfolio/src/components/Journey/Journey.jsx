@@ -193,7 +193,12 @@ function Journey() {
                 <h3 className="info-title">{item.title} <i className="ri-briefcase-4-fill"></i></h3>
                 <h4 className="info-subtitle">{item.companyname}</h4>
                 <h5 className="info-subtitle">{item.title}</h5>
-                <p className="info-para">{item.description}</p>
+                {/* <p className="info-para">{item.description}</p> */}
+                <ul className="info-para">
+                  {item.description.map((point, idx) => (
+                    <li key={idx}>{point}</li>
+                  ))}
+                </ul>                
               </div>
             </div>
           </div>

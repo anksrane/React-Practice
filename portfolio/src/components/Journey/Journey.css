@@ -11,7 +11,9 @@
 .info-title{font-weight:700;font-size:1.25rem;display: flex;align-items: center;justify-content: space-between;color: var(--text-color-blue-dark);}
 .info-title i{color: var(--text-color-blue-dark);}
 .info-subtitle{font-weight:700;font-size:1.125rem;}
-.info-para{color:#4b5563;margin-top:.5rem}
+.info-para{color:#4b5563;margin-top:.5rem;}
+ul.info-para{padding: 5px;padding-left: 15px;}
+ul.info-para li{margin-bottom: 5px;}
 @media (max-width:768px){
 .page-info-journey{margin-bottom: 20px;}
 .timeline-line{display:none}
