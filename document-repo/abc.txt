@@ -1,0 +1,42 @@
+src/
+│
+├── app/
+│   └── store.js                      # Redux store config
+│
+├── assets/                           # Optional: images, icons, etc.
+│
+├── components/                       # Reusable UI components
+│   ├── ui/                           # Generic UI components
+│   │   ├── Button.jsx
+│   │   └── Input.jsx
+│   ├── layout/                       # Layout components (e.g., Header, Sidebar)
+│   │   └── Header.jsx
+│   └── post/                         # Domain-specific components
+│       ├── PostForm.jsx
+│       └── PostItem.jsx
+│
+├── features/                         # Redux features (slices, async thunks)
+│   └── posts/
+│       └── postSlice.js
+│
+├── firebase/                         # Firebase logic (read/write/auth)
+│   ├── firebaseConfig.js             # Firebase app/init
+│   ├── authService.js                # SignUp/Login/Logout logic
+│   └── postService.js                # CRUD operations for posts
+│
+├── hooks/                            # Custom hooks (optional)
+│   └── useAuth.js
+│
+├── pages/                            # Full page views (for routing)
+│   ├── Login.jsx
+│   ├── Dashboard.jsx
+│   └── EditPost.jsx
+│
+├── routes/                           # Route-level protection, config (optional)
+│   └── ProtectedRoute.jsx
+│
+├── styles/                           # Global styles if needed
+│   └── index.css
+│
+├── App.jsx
+└── main.jsx
