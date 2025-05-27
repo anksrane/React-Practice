@@ -1,11 +1,15 @@
 import './App.css'
-import { Login } from './components'
+import { MultiSelect } from './components'
 
 function App() {
 
   return (
     <>
-        <Login />
+        <MultiSelect 
+          label="Assign Coders"
+          name="coders"
+          options={["Alice", "Bob", "Charlie", "David"]}
+        />
     </>
   )
 }

@@ -3,7 +3,12 @@ import { useForm } from 'react-hook-form'
 import { Button, Input } from '../index';
 
 function Login() {
-    const { register, handleSubmit } = useForm();
+    const { 
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors, isSubmitting },
+     } = useForm();
     const login = (data) => {
         console.log(data);
     };
@@ -24,6 +29,7 @@ function Login() {
                             message: "Invalid email address"
                         }
                     })}
+                    error={errors.email && errors.email.message}
                 />
                 <Input 
                     label="Password: "
@@ -33,10 +39,15 @@ function Login() {
                         required: true,
                         minLength: 6
                     })}
+                    error={errors.password?.message}
                 />
-                <div className='flex gap-1'>
-                    <Button type="submit" className="w-full">Login</Button>
-                    <Button type="reset" className='w-full bg-red-500 hover:bg-red-700'>Reset</Button>
+                <div className='flex gap-2'>
+                    <Button type="submit" 
+                    className="w-full" 
+                    isLoading={isSubmitting}>Login</Button>
+                    <Button type="reset" 
+                    className='w-full bg-slate-50 text-red-700 hover:bg-red-700 hover:text-white border border-red-700' 
+                    onClick={()=>reset()}>Reset</Button>
                 </div>
             </form>
         </div>

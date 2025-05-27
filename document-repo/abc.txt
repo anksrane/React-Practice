@@ -1,41 +1,58 @@
 src/
 │
 ├── app/
-│   └── store.js                      # Redux store config
+│   └── store.js                      # Redux store configuration
 │
-├── assets/                           # Optional: images, icons, etc.
+├── assets/                           # Images, icons, etc.
 │
-├── components/                       # Reusable UI components
-│   ├── ui/                           # Generic UI components
+├── components/
+│   ├── layout/                       # App layout components
+│   │   ├── Header.jsx
+│   │   ├── Sidebar.jsx
+│   │   └── LoginLayout.jsx          # Layout for login screen
+│   ├── ui/                           # Generic reusable UI
 │   │   ├── Button.jsx
-│   │   └── Input.jsx
-│   ├── layout/                       # Layout components (e.g., Header, Sidebar)
-│   │   └── Header.jsx
-│   └── post/                         # Domain-specific components
-│       ├── PostForm.jsx
-│       └── PostItem.jsx
+│   │   ├── Input.jsx
+│   │   ├── InputFile.jsx
+│   │   └── Select.jsx
+│   ├── tasks/                        # Task-specific components
+│   │   ├── TaskCard.jsx
+│   │   └── TaskFormModal.jsx
+│   ├── dashboard/                    # Dashboard UI components
+│   │   ├── StatCard.jsx
+│   │   └── ChartCard.jsx
+│   └── team/                         # Team UI components
+│       └── TeamMemberCard.jsx
 │
-├── features/                         # Redux features (slices, async thunks)
-│   └── posts/
-│       └── postSlice.js
+├── features/                         # Redux slices/thunks
+│   ├── tasks/
+│   │   └── taskSlice.js
+│   ├── users/
+│   │   └── userSlice.js
+│   └── analytics/
+│       └── analyticsSlice.js
 │
-├── firebase/                         # Firebase logic (read/write/auth)
-│   ├── firebaseConfig.js             # Firebase app/init
-│   ├── authService.js                # SignUp/Login/Logout logic
-│   └── postService.js                # CRUD operations for posts
+├── firebase/                         # Firebase logic
+│   ├── firebaseConfig.js             # Firebase init
+│   ├── authService.js                # Login/Signup/Logout
+│   ├── taskService.js                # CRUD for tasks
+│   ├── userService.js                # Team members handling
+│   └── analyticsService.js          # Analytics data fetch logic
 │
-├── hooks/                            # Custom hooks (optional)
+├── hooks/
 │   └── useAuth.js
 │
-├── pages/                            # Full page views (for routing)
+├── pages/
 │   ├── Login.jsx
 │   ├── Dashboard.jsx
-│   └── EditPost.jsx
+│   ├── Tasks.jsx
+│   ├── Analytics.jsx
+│   └── Team.jsx
 │
-├── routes/                           # Route-level protection, config (optional)
+├── routes/
 │   └── ProtectedRoute.jsx
 │
-├── styles/                           # Global styles if needed
+├── styles/
 │   └── index.css
 │
 ├── App.jsx
