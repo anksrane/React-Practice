@@ -1,0 +1,5 @@
+🔐 Authentication Strategy
+Auth Type: Email & Password only
+User Registration: Disabled on frontend
+User Creation: Done manually by Admin in Firebase Console
+

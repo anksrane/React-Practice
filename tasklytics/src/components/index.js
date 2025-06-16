@@ -4,6 +4,7 @@ import InputFile from "./ui/InputFile";
 import Button from "./ui/Button";
 import DatePicker from "./ui/DatePicker";
 import MultiSelect from "./ui/MultiSelect";
+import MultiSelect_Tag from "./ui/MultiSelect_Tag";
 
 import Login from "./layout/Login";
 
@@ -14,5 +15,7 @@ export {
     Button, 
     DatePicker,
     MultiSelect,
-     
-    Login };
+    MultiSelect_Tag,
+
+    Login 
+};

@@ -46,7 +46,7 @@ function Login() {
                     className="w-full" 
                     isLoading={isSubmitting}>Login</Button>
                     <Button type="reset" 
-                    className='w-full bg-slate-50 text-red-700 hover:bg-red-700 hover:text-white border border-red-700' 
+                    className='w-full bg-slate-50 text-red-900 hover:bg-red-700 hover:text-white border border-red-700' 
                     onClick={()=>reset()}>Reset</Button>
                 </div>
             </form>

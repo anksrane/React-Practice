@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const MultiSelect = ({
+const MultiSelect_Tag = ({
   options = [],
   label = "Select Options",
   placeholder = "Select...",
@@ -46,7 +46,7 @@ const MultiSelect = ({
 
   return (
     <div className="w-full p-2 relative" ref={dropdownRef}>
-      {label && <label className="inline-block mb-1 pl-1">{label}</label>}
+      {label && <label className="inline-block mb-1 pl-1 text-white">{label}</label>}
       <div className="flex align-center rounded-lg  bg-white">
         <div
           className="px-3 py-2 bg-transparent rounded-lg text-black w-full cursor-pointer"
@@ -60,21 +60,9 @@ const MultiSelect = ({
           onClick={clearSelection}
           type="button"
         >
-          <svg
-            class="h-6 w-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
         </button>
       </div>
 
@@ -119,4 +107,4 @@ const MultiSelect = ({
   );
 };
 
-export default MultiSelect;
+export default MultiSelect_Tag;
