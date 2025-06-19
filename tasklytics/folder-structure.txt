@@ -7,9 +7,7 @@ src/
 │
 ├── components/
 │   ├── layout/                       # App layout components
-│   │   ├── Header.jsx
-│   │   ├── Sidebar.jsx
-│   │   └── LoginLayout.jsx          # Layout for login screen
+│   │   └── Login.jsx          # Layout for login screen
 │   ├── ui/                           # Generic reusable UI
 │   │   ├── Button.jsx
 │   │   ├── Input.jsx

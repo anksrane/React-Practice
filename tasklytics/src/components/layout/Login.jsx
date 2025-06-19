@@ -10,7 +10,11 @@ function Login() {
         formState: { errors, isSubmitting },
      } = useForm();
     const login = (data) => {
-        console.log(data);
+        const cleaned = {
+            email: data.email.trim(),
+            password: data.password.trim()
+        };
+        console.log(cleaned);
     };
   return (
     <div className='flex flex-col items-center justify-center h-screen'>
@@ -23,7 +27,7 @@ function Login() {
                     placeholder="Enter your Email"
                     type="email"
                     {...register("email", {
-                        required: true,
+                        required: "Email is Required",
                         pattern: {
                             value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
                             message: "Invalid email address"
@@ -36,17 +40,20 @@ function Login() {
                     placeholder="Enter your Password"
                     type="password"
                     {...register("password", {
-                        required: true,
-                        minLength: 6
+                        required: "Password is Required",
+                        minLength:  {
+                                        value: 6,
+                                        message: "Password must be at least 6 characters"
+                                    }   
                     })}
-                    error={errors.password?.message}
+                    error={errors.password && errors.password.message}
                 />
                 <div className='flex gap-2'>
                     <Button type="submit" 
                     className="w-full" 
                     isLoading={isSubmitting}>Login</Button>
                     <Button type="reset" 
-                    className='w-full bg-slate-50 text-red-900 hover:bg-red-700 hover:text-white border border-red-700' 
+                    className='w-full bg-slate-50 text-red-800 hover:bg-red-700 hover:text-white border border-red-700' 
                     onClick={()=>reset()}>Reset</Button>
                 </div>
             </form>

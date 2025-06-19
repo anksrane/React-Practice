@@ -3,3 +3,78 @@ Auth Type: Email & Password only
 User Registration: Disabled on frontend
 User Creation: Done manually by Admin in Firebase Console
 
+| Role        | Description & Permissions                              |
+| ----------- | ------------------------------------------------------ |
+| **Admin**   | Full access, manage users, tasks, and view analytics   |
+| **Manager** | Create/manage tasks, assign coders, view task progress |
+| **Coder**   | Can create tasks (self-assigned only), view & update assigned tasks. Cannot assign coders to any task |
+
+Firestore "User" Document Structure
+{
+  "name": "Ankit Rane",
+  "email": "ankit@example.com",
+  "role": "manager",         // "admin" | "manager" | "coder"
+  "createdAt": "2025-06-16T12:00:00Z"
+}
+
+🔄 Login Flow
+User logs in via Firebase Auth (email/password)
+Fetch user data from Firestore (users/{uid})
+Store role & profile info in app state (e.g., Redux)
+Redirect based on role:
+  admin: full access
+  manager: task dashboard
+  coder: assigned task view
+
+
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+🔄 Task Management Flow
+🎯 Task Status Options (Enum)
+Used in select dropdowns or pipelines:
+  Planning
+  Designing
+  Implementation
+  Testing
+  Delivered
+  Hold
+
+tasks/{taskId} Document Structure
+{
+  "title": "Implement Login Page",
+  "description": "Design and implement the login screen using React and Firebase Auth.",
+  "status": "Planning",                       // Enum: Planning | Designing | Implementation | Testing | Delivered | Hold
+  "createdBy": "uid_of_creator",             // UID from Firebase Auth
+  "createdAt": "2025-06-19T12:34:56Z",
+  "updatedAt": "2025-06-19T13:40:00Z",
+  "assignedCoders": ["uid1", "uid2"],        // UIDs of coders assigned to this task
+  "deadline": "2025-06-30T00:00:00Z",        // ISO String format
+  "tags": ["frontend", "auth"],              // Optional: for filtering
+  "priority": "High",                        // Optional: Low | Medium | High
+  "project": "Authentication",               // Optional: name/category
+  "createdByName": "Ankit Rane",             // Redundant for UI display
+  "assignedCoderNames": ["Coder A", "Coder B"] // Redundant for display, helpful for Firestore reads
+  "clientId": "client_12345",              // Optional: to link tasks to specific clients
+  "comments": []                             // Optional: array of comment objects
+}
+
+
+🔐 Operations Matrix (Role-Based Permissions)
+| Operation            | Admin | Manager |                 Coder                |
+| -------------------- | :---: | :-----: | :----------------------------------: |
+| Create Task          |   ✅   |    ✅    |        ✅ (self-assigned only)        |
+| Edit Task Title/Desc |   ✅   |    ✅    |      ✅ (only if created by self)     |
+| Assign Coders        |   ✅   |    ✅    |                   ❌                  |
+| Unassign Coders      |   ✅   |    ✅    |                   ❌                  |
+| Update Task Status   |   ✅   |    ✅    |            ✅ (if assigned)           |
+| Delete Task          |   ✅   |    ❌    |                   ❌                  |
+| View All Tasks       |   ✅   |    ✅    | ✅ (only assigned or created by self) |
+
+
+🔄 Special Logic
+When Coder creates a task, their UID is auto-added to assignedCoders.
+Coders cannot modify the assignedCoders array.
+Managers/Admins see a multi-select input to choose coders for a task.
+Task status can be updated by:
+Any assigned coder
+Managers/Admins
