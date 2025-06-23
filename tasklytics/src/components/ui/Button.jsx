@@ -8,21 +8,22 @@ function Button({
   className = '',
   ...props
 }) {
-  const base = 'px-4 py-2 rounded-lg mt-2 transition duration-200';
+  const base = 'w-full px-4 py-2 rounded-lg mt-2 transition duration-200';
   const variants = {
     primary: 'bg-black text-white hover:bg-gray-900',
     outline: 'border border-black text-black hover:bg-gray-100',
-    danger: 'bg-red-600 text-white hover:bg-red-700',
-  }; // ✨ changed
+    danger: 'bg-red-700 text-white hover:bg-red-600 border border-red-700',
+    custom: ''
+  };
 
   return (
     <button
       type={type}
-      className={`${base} ${variants[variant]} ${className}`} // ✨ changed
+      className={`${base} ${variants[variant] || ''} ${className}`} 
       disabled={isLoading}
       {...props}
     >
-      {isLoading ? 'Loading...' : children} {/* ✨ changed */}
+      {isLoading ? 'Loading...' : children}
     </button>
   );
 }

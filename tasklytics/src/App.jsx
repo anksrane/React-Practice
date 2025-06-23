@@ -1,13 +1,12 @@
 import './App.css'
-import { Login } from './components'
+import { Sidebar } from './components'
 
 function App() {
 
-  return (
-    <>
-      <Login />
-    </>
-  )
+
+    return (
+      <Sidebar />
+    )
 }
 
 export default App

@@ -50,10 +50,10 @@ function Login() {
                 />
                 <div className='flex gap-2'>
                     <Button type="submit" 
-                    className="w-full" 
+                    variant='primary' 
                     isLoading={isSubmitting}>Login</Button>
                     <Button type="reset" 
-                    className='w-full bg-slate-50 text-red-800 hover:bg-red-700 hover:text-white border border-red-700' 
+                    variant='danger'
                     onClick={()=>reset()}>Reset</Button>
                 </div>
             </form>
