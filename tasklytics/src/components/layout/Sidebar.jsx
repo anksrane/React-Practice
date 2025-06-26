@@ -1,25 +1,29 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import { Button} from '../index';
-import { TiPower } from "react-icons/ti";
-import { MdDashboardCustomize } from "react-icons/md";
 import { FaTasks } from "react-icons/fa";
+import { MdDashboardCustomize } from "react-icons/md";
+import { BiTask } from "react-icons/bi";
 import { MdGroups } from "react-icons/md";
 import { IoAnalyticsSharp } from "react-icons/io5";
+import { TiPower } from "react-icons/ti";
 
-function Sidebar() {
+function Sidebar({isOpen}) {
     const navItems=[
       { name: 'Dashboard', path:"/dashboard", icon:MdDashboardCustomize},
-      { name: 'Task', path:"/task", icon: FaTasks},
+      { name: 'Task', path:"/task", icon: BiTask},
       { name: 'Team', path: '/team', icon:MdGroups },
       { name: 'Analytics', path: '/analytics',icon:IoAnalyticsSharp },    
     ]    
   return (
-    <aside className="w-64 h-screen bg-gray-100 border-r shadow-md p-4 flex flex-col justify-between">
+    <aside className={`h-screen bg-gray-100 border-r shadow-md p-2 flex flex-col justify-between ${isOpen? 'w-64' : 'w-20'}`}>
       <div>
-        <h2 className="text-xl font-bold mb-6 text-center">Tasklytics</h2>
+        <div className={`flex justify-center items-center gap-2 text-xl font-bold text-center transition-opacity py-2 duration-300`}>
+          <FaTasks className='text-xl'/>
+          <h2 className={`text-xl font-bold text-center ${isOpen ? 'opacity-100 block' : 'opacity-0 hidden'}`}> Tasklytics</h2>
+        </div>
 
-        <nav className="space-y-2">
+        <nav className="space-y-3 mt-5">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -32,7 +36,7 @@ function Sidebar() {
                 }
               >
                 <Icon className="text-xl" />
-                {item.name}
+                {isOpen && <span>{item.name}</span>}
               </NavLink>
             );
           })}
@@ -46,7 +50,7 @@ function Sidebar() {
           onClick={() => console.log('Logout here')}
         >
           <TiPower className='text-2xl'/>
-          Logout
+          {isOpen && <span>Logout</span>}
         </Button>
       </div>
     </aside>

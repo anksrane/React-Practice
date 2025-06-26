@@ -1,9 +1,27 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { FaUser } from "react-icons/fa";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useNavigate } from 'react-router-dom';
+import { toggleSidebar } from "../../features/ui/uiSlice"
 
 function Header() {
+  const dispatch=useDispatch();
+  const navigate = useNavigate();
+  const username="Ankit Rane";
+
+  const gotoProfile=()=>{
+    navigate("/profile");
+  }
   return (
-    <div>
-      Header
+    <div className='w-full py-2 px-4 flex items-center justify-between bg-transparent border-b'>
+      <button onClick={()=>dispatch(toggleSidebar())}>
+        <GiHamburgerMenu className='text-white text-2xl' />
+      </button>
+      <div className='flex items-center justify-between gap-2 cursor-pointer' onClick={gotoProfile}>
+        <span className='text-white text-xl font-semibold'>{username}</span>
+        <FaUser className='text-white text-3xl border border-white p-[2px] rounded-[50%]'/>
+      </div>
     </div>
   )
 }
