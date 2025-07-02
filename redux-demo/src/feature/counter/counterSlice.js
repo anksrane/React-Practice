@@ -13,6 +13,9 @@ const counterSlice=createSlice({
         },
         decrement:state=>{
             state.value-=1;
+            if(state.value<0){
+                alert("Value Can't Be Negative")
+            }            
         },
         incrementByAmount:(state,action)=>{
             state.value+=action.payload

@@ -14,7 +14,7 @@ function Header() {
     navigate("/profile");
   }
   return (
-    <div className='w-full py-2 px-4 flex items-center justify-between bg-transparent border-b'>
+    <div className='w-full py-3 px-4 flex items-center justify-between bg-transparent border-b'>
       <button onClick={()=>dispatch(toggleSidebar())}>
         <GiHamburgerMenu className='text-white text-2xl' />
       </button>

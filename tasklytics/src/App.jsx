@@ -1,16 +1,25 @@
 import './App.css'
-import { AppLayout } from './components'
-import store from './app/store.js'
-import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import TaskListPage from './pages/TaskListPage';
+import { AppLayout } from './components';
+import  ProtectedRoutes  from './routes/ProtectedRoutes'
 
 function App() {
     return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <AppLayout />
-      </BrowserRouter>
-    </Provider>
+      <Routes>
+        {/* Public Route */}
+        <Route path='/login' element={<LoginPage />}></Route>
+
+        {/* Private Route */}
+        <Route element={<ProtectedRoutes />}>
+          <Route element={<AppLayout />}>
+            <Route path='/tasks' element={<TaskListPage />}/>
+          </Route>
+        </Route>
+
+        <Route path='*' element={<Navigate to="/tasks" replace />} />
+      </Routes>
     )
 }
 

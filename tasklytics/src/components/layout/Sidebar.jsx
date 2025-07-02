@@ -16,11 +16,11 @@ function Sidebar({isOpen}) {
       { name: 'Analytics', path: '/analytics',icon:IoAnalyticsSharp },    
     ]    
   return (
-    <aside className={`h-screen bg-gray-100 border-r shadow-md p-2 flex flex-col justify-between ${isOpen? 'w-64' : 'w-20'}`}>
+    <aside className={`h-screen bg-gray-100 border-r shadow-md p-2 flex flex-col justify-between duration-500 ${isOpen? 'w-64' : 'w-20'}`}>
       <div>
         <div className={`flex justify-center items-center gap-2 text-xl font-bold text-center transition-opacity py-2 duration-300`}>
-          <FaTasks className='text-xl'/>
-          <h2 className={`text-xl font-bold text-center ${isOpen ? 'opacity-100 block' : 'opacity-0 hidden'}`}> Tasklytics</h2>
+          <FaTasks className='text-xl text-gray-700'/>
+          <h2 className={`text-xl font-bold text-center text-gray-700 ${isOpen ? 'opacity-100 block' : 'opacity-0 hidden'}`}> Tasklytics</h2>
         </div>
 
         <nav className="space-y-3 mt-5">
@@ -32,10 +32,10 @@ function Sidebar({isOpen}) {
                 to={item.path}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-2 rounded-md font-medium transition 
-                  ${isActive ? 'bg-black text-white' : 'text-gray-700 hover:bg-gray-200'}`
+                  ${isActive ? 'bg-black text-white' : 'text-gray-700 hover:bg-gray-900 hover:text-white duration-300'}`
                 }
               >
-                <Icon className="text-xl" />
+                <Icon className="text-xl 'text-gray-700 hover:bg-gray-900" />
                 {isOpen && <span>{item.name}</span>}
               </NavLink>
             );

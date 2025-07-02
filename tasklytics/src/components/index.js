@@ -10,6 +10,7 @@ import Header from "./layout/Header";
 import AppLayout from "./layout/AppLayout";
 
 import Login from "./layout/Login";
+import Tasks from "./tasks/Tasks";
 
 export { 
     Input, 
@@ -21,6 +22,7 @@ export {
     MultiSelect_Tag,
 
     Login,
+    Tasks,
     Sidebar,
     Header,
     AppLayout

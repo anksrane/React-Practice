@@ -7,23 +7,22 @@ src/
 │
 ├── components/
 │   ├── layout/                       # App layout components
-│   │   └── Login.jsx          # Layout for login screen
-│   ├── ui/                           # Generic reusable UI
+│   │   └── Login.jsx                   
+│   │   └── AppLayout.jsx                 
+│   │   └── Header.jsx                 
+│   │   └── Login.jsx                 
+│   │   └── Sidebar.jsx                                 
+│   ├── ui/                           
 │   │   ├── Button.jsx
 │   │   ├── Input.jsx
 │   │   ├── InputFile.jsx
 │   │   └── Select.jsx
 │   │   └── MultiSelect_Tag.jsx
 │   │   └── MultiSelect.jsx
-│   │   └── DatePicker.jsx
 │   ├── tasks/                        # Task-specific components
-│   │   ├── TaskCard.jsx
-│   │   └── TaskFormModal.jsx
+│   │   └── Tasks.jsx 
 │   ├── dashboard/                    # Dashboard UI components
-│   │   ├── StatCard.jsx
-│   │   └── ChartCard.jsx
 │   └── team/                         # Team UI components
-│       └── TeamMemberCard.jsx
 │
 ├── features/                         # Redux slices/thunks
 │   ├── tasks/
@@ -32,6 +31,8 @@ src/
 │   │   └── userSlice.js
 │   └── analytics/
 │       └── analyticsSlice.js
+│   └── analytics/
+│       └── uiSlice.js
 │
 ├── firebase/                         # Firebase logic
 │   ├── firebaseConfig.js             # Firebase init

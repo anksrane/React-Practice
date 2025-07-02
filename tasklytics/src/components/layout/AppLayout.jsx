@@ -1,10 +1,11 @@
 import React from 'react'
 import { useSelector,useDispatch } from 'react-redux'
+import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { toggleSidebar } from '../../features/ui/uiSlice';
 
-function AppLayout({ children }) {
+function AppLayout() {
     const dispatch=useDispatch()
     const isSidebarOpen=useSelector((state)=>state.ui.isSidebarOpen);
     const handleToggleSidebar=()=>{
@@ -15,9 +16,8 @@ function AppLayout({ children }) {
             <Sidebar isOpen={isSidebarOpen}/>
             <div className='flex flex-col flex-1 overflow-hidden'>
                 <Header toggleSidebar={handleToggleSidebar}/>
-
                 <main className='flex-1 overflow-y-auto p-6'>
-                    {children}
+                    <Outlet />
                 </main>
             </div>
         </div>
