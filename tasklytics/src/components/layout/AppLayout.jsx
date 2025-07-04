@@ -16,8 +16,10 @@ function AppLayout() {
             <Sidebar isOpen={isSidebarOpen}/>
             <div className='flex flex-col flex-1 overflow-hidden'>
                 <Header toggleSidebar={handleToggleSidebar}/>
-                <main className='flex-1 overflow-y-auto p-6'>
-                    <Outlet />
+                <main className=' flex-1 overflow-y-auto p-6'>
+                    <div className='bg-white min-h-full h-fit w-full'>  {/* I want this div to take full repsonsive height */}
+                        <Outlet/>
+                    </div>
                 </main>
             </div>
         </div>

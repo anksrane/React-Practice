@@ -2,6 +2,7 @@ import './App.css'
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import TaskListPage from './pages/TaskListPage';
+import AddTaskPage from './pages/AddTaskPage';
 import { AppLayout } from './components';
 import  ProtectedRoutes  from './routes/ProtectedRoutes'
 
@@ -15,6 +16,7 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route element={<AppLayout />}>
             <Route path='/tasks' element={<TaskListPage />}/>
+            <Route path='/addtask' element={<AddTaskPage />}/>
           </Route>
         </Route>
 

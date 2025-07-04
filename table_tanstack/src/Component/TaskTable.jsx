@@ -123,46 +123,46 @@ function TaskTable() {
         autoResetPageIndex:false,
     })
 
-  const currentPage = table.getState().pagination.pageIndex; // Current page (0-indexed)
-  const pageCount = table.getPageCount(); // Total number of pages
-    
+    const currentPage = table.getState().pagination.pageIndex; // Current page (0-indexed)
+    const pageCount = table.getPageCount(); // Total number of pages
+      
 
-  // --- Start of NEW Pagination Logic Block ---
-  const pageNumbers = useMemo(() => {
-    const numbers = [];
-    const maxVisiblePages = 3; // The fixed number of page buttons to show
+    // --- Start of NEW Pagination Logic Block ---
+    const pageNumbers = useMemo(() => {
+      const numbers = [];
+      const maxVisiblePages = 3; // The fixed number of page buttons to show
 
-    // If there are no pages, return empty array
-    if (pageCount === 0) {
-      return [];
-    }
-
-    // Determine the start page number for the fixed window
-    // This logic ensures the window doesn't go below page 0 or beyond the last 3 pages
-    let startPage;
-    if (currentPage < Math.floor(maxVisiblePages / 2)) {
-      // If near the beginning, start from 0
-      startPage = 0;
-    } else if (currentPage > pageCount - 1 - Math.ceil(maxVisiblePages / 2)) {
-      // If near the end, ensure the window ends at pageCount - 1
-      startPage = Math.max(0, pageCount - maxVisiblePages);
-    } else {
-      // In the middle, center the window around currentPage
-      startPage = currentPage - Math.floor(maxVisiblePages / 2);
-    }   
-
-    // Add page numbers to the array based on the calculated window
-    for (let i = 0; i < maxVisiblePages; i++) {
-      const pageNum = startPage + i;
-      // Only add if the page number is valid
-      if (pageNum < pageCount) {
-        numbers.push(pageNum);
+      // If there are no pages, return empty array
+      if (pageCount === 0) {
+        return [];
       }
-    }
 
-    return numbers;
-  }, [currentPage, pageCount]); // Re-calculate only when currentPage or pageCount changes
-  // --- End of NEW Pagination Logic Block ---
+      // Determine the start page number for the fixed window
+      // This logic ensures the window doesn't go below page 0 or beyond the last 3 pages
+      let startPage;
+      if (currentPage < Math.floor(maxVisiblePages / 2)) {
+        // If near the beginning, start from 0
+        startPage = 0;
+      } else if (currentPage > pageCount - 1 - Math.ceil(maxVisiblePages / 2)) {
+        // If near the end, ensure the window ends at pageCount - 1
+        startPage = Math.max(0, pageCount - maxVisiblePages);
+      } else {
+        // In the middle, center the window around currentPage
+        startPage = currentPage - Math.floor(maxVisiblePages / 2);
+      }   
+
+      // Add page numbers to the array based on the calculated window
+      for (let i = 0; i < maxVisiblePages; i++) {
+        const pageNum = startPage + i;
+        // Only add if the page number is valid
+        if (pageNum < pageCount) {
+          numbers.push(pageNum);
+        }
+      }
+
+      return numbers;
+    }, [currentPage, pageCount]); // Re-calculate only when currentPage or pageCount changes
+    // --- End of NEW Pagination Logic Block ---
 
     return (
     <div className="container mx-auto p-4">
