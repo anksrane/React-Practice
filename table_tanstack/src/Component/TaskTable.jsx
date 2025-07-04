@@ -21,11 +21,13 @@ const columns = [
         header: 'Title',
         cell: info => info.getValue(),
         enableSorting: true,
+        enableGlobalFilter: true
     }),
     columnHelper.accessor('description',{
         header: 'Description',
         cell: info => info.getValue(),
         enableSorting: false,
+        enableGlobalFilter: true
     }),
     columnHelper.accessor('status',{
         header: 'Status',
@@ -60,11 +62,13 @@ const columns = [
             );
         },
         enableSorting: true,
+        enableGlobalFilter: true
     }),
     columnHelper.accessor('dueDate',{
         header: 'Due Date',
         cell: info => info.getValue(),
         enableSorting: true,
+        enableGlobalFilter: true
     }),
     // You can add more columns here, e.g., for actions like 'Edit', 'Delete'
     columnHelper.display({
@@ -121,6 +125,7 @@ function TaskTable() {
 
   const currentPage = table.getState().pagination.pageIndex; // Current page (0-indexed)
   const pageCount = table.getPageCount(); // Total number of pages
+    
 
   // --- Start of NEW Pagination Logic Block ---
   const pageNumbers = useMemo(() => {
@@ -144,7 +149,7 @@ function TaskTable() {
     } else {
       // In the middle, center the window around currentPage
       startPage = currentPage - Math.floor(maxVisiblePages / 2);
-    }
+    }   
 
     // Add page numbers to the array based on the calculated window
     for (let i = 0; i < maxVisiblePages; i++) {
@@ -234,8 +239,8 @@ function TaskTable() {
       </div>
 
         {/* Pagination Controls */}
-      <div className="flex items-center justify-between mt-4">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-center flex-col sm:flex-row sm:justify-between flex-wrap mt-4">
+        <div className="flex items-center gap-2 mb-2 hidden sm:block">
           {/* Page Size Selector */}
           <label htmlFor="pageSizeSelect" className="text-sm text-gray-700">
             Show:
@@ -256,14 +261,14 @@ function TaskTable() {
           </select>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 mb-2">
           {/* Previous Button */}
           <button
             className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            &laquo;
           </button>
 
           {/* Page Numbers */}
@@ -286,12 +291,12 @@ function TaskTable() {
             disabled={!table.getCanNextPage()}
             className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Next
+            &raquo;
           </button>
         </div>
 
         {/* Current Page and Total Pages Info */}
-        <span className="text-sm text-gray-700">
+        <span className="text-sm text-gray-700 mb-2">
           Page{' '}
           <span className="font-semibold">
             {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
