@@ -1,4 +1,4 @@
-import DownloadButton from './DownloadButton';
+// import DownloadButton from './DownloadButton';
 import "./Home.css";
 import hand from '../../assets/hand-svg.svg'
 
@@ -16,7 +16,7 @@ function Data({firstHalfRef,secondHalfRef, positionFirstRef,positionSecondRef}) 
       <h5 className="position">
       <span ref={positionFirstRef} className='firstName'>{splitText("Frontend")}</span> <span ref={positionSecondRef} className='lastName'>{splitText("Developer")}</span></h5>
       <p className='info'>I am Frontend Developer based in India, and I am very passionate and dedicated to my work</p>
-      <DownloadButton />
+      {/* <DownloadButton /> */}
     </div>
   )
 }

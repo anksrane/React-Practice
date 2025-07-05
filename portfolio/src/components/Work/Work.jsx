@@ -70,8 +70,8 @@ function Work() {
 
   useEffect(()=>{
     const mm = gsap.matchMedia();
-    console.log("GSAP Version:", gsap.version);
-    console.log("Is ScrollTrigger Registered?", gsap.core.globals().ScrollTrigger ? "Yes" : "No");    
+    // console.log("GSAP Version:", gsap.version);
+    // console.log("Is ScrollTrigger Registered?", gsap.core.globals().ScrollTrigger ? "Yes" : "No");    
 
     gsap.timeline()
     .from(".work-section",{ opacity: 0, y: 50, duration: 0.8, ease: "power2.out" })

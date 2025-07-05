@@ -109,7 +109,7 @@
     grid-area: social;
   }
 
-  .social-icons-container{flex-direction: row;}
+  .social-icons-container{flex-direction: row;padding-bottom: 30px;}
 
   .img-container {
     grid-area: img;
