@@ -11,7 +11,7 @@ const Input = React.forwardRef(function Input({
   ...props
 }, ref) {
   const id = useId();
-  const inputClass = `px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 focus:border-slate-400 duration-200 border w-full ${error ? 'border-red-500' : 'border-gray-200'} ${className}`;
+  const inputClass = `px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 focus:border-slate-400 duration-200 border w-full ${className}`;
 
   return (
     <div className="w-full h-fit">
@@ -39,8 +39,8 @@ const Input = React.forwardRef(function Input({
           placeholder={placeholder}
           {...props}
         />
-      )} {/* ✨ changed */}
-      {error && <p className="text-sm text-red-500 mt-1">{error}</p>} {/* 🆕 added */}
+      )} 
+      {error && <p className="text-sm text-red-500 mt-1">{error}</p>} 
     </div>
   );
 });

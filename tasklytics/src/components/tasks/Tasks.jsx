@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { tasksDummy } from './taskDummyData.js'
 import { ButtonWithIcon } from '../index.js'
+import { InputSearch } from '../index.js';
 import { IoMdAdd } from "react-icons/io";
 
 import {
@@ -100,6 +101,7 @@ function Tasks() {
     const [sorting,setSorting]=useState([]);
     const [globalFilter,setGlobalFilter]=useState('');
     const [pagination,setPagination]=useState({pageIndex:0,pageSize:5})  
+    const [searchText,setSearchText]=useState('');
 
     const navigate = useNavigate();
 
@@ -162,6 +164,11 @@ function Tasks() {
     }, [currentPage, pageCount]); // Re-calculate only when currentPage or pageCount changes
     // --- End of NEW Pagination Logic Block ---
 
+    const handleClearSearch = () => {
+      setSearchText('');
+      setGlobalFilter('');
+    };
+
     const addIcon=<IoMdAdd />;
 
     return (
@@ -170,18 +177,30 @@ function Tasks() {
 
       {/* Global Search Input */}
       <div className="mb-4 flex items-end justify-between">
+        {/* Add Task Button */}
+        <ButtonWithIcon icon={addIcon} iconClass={'text-xl font-bold'} iconPosition="left" variant="primary" className='text-sm mt-0' onClick={()=>navigate('/addtask')}>
+          Add Task
+        </ButtonWithIcon>
 
-      <ButtonWithIcon icon={addIcon} iconClass={'text-xl font-bold'} iconPosition="left" variant="primary" className='text-sm' onClick={()=>navigate('/addtask')}>
-        Add Task
-      </ButtonWithIcon>
+        {/* Input Search New*/}
+        <InputSearch 
+          type="text" 
+          placeholder="Search all tasks..." 
+          value={searchText} 
+          onChange={e=>setSearchText(e.target.value)} 
+          onSearch={(value)=>setGlobalFilter(value)} 
+          onClear={handleClearSearch}
+          showClear={true}
+        />        
 
-        <input
+        {/* Input Search Old */}
+        {/* <input
           type="text"
-          value={globalFilter ?? ''} // Ensure value is a string, even if null/undefined
+          value={globalFilter ?? ''}
           onChange={e => setGlobalFilter(String(e.target.value))}
           placeholder="Search all tasks..."
           className="w-auto px-3 py-1 border border-gray-300 rounded-md text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        />
+        /> */}
       </div>
 
       <div className="overflow-x-auto">
@@ -248,7 +267,7 @@ function Tasks() {
         <div className="flex items-center gap-2 mb-2 hidden sm:block">
           {/* Page Size Selector */}
           <label htmlFor="pageSizeSelect" className="text-sm text-gray-700">
-            Show:
+            Show : 
           </label>
           <select
             id="pageSizeSelect"
@@ -256,7 +275,7 @@ function Tasks() {
             onChange={e => {
               table.setPageSize(Number(e.target.value));
             }}
-            className="border border-gray-300 rounded-md py-1 px-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-300 rounded-md ms-1 py-1 px-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {[5, 10, 20, 50].map(pageSize => (
               <option key={pageSize} value={pageSize}>
