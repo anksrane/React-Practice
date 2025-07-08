@@ -26,6 +26,7 @@ function Login() {
                     label="Email: "
                     placeholder="Enter your Email"
                     type="email"
+                    className="py-2"
                     {...register("email", {
                         required: "Email is Required",
                         pattern: {

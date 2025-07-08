@@ -32,12 +32,19 @@ Redirect based on role:
 🔄 Task Management Flow
 🎯 Task Status Options (Enum)
 Used in select dropdowns or pipelines:
+*Phases*:
   Planning
   Designing
   Implementation
   Testing
   Delivered
   Hold
+
+*Status*:
+  Pending
+  Completed
+  In-Progress
+  Overdue
 
 tasks/{taskId} Document Structure
 {

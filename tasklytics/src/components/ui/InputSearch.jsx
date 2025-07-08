@@ -42,7 +42,7 @@ const InputSearch = React.forwardRef(function InputSearch({
                 >
                 <IoMdClose className="text-lg" />
                 </button>  
-{/* 
+                {/* 
                 {
                     showClear && value.length>0 && (
                         <button

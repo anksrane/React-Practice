@@ -8,7 +8,7 @@ function Button({
   className = '',
   ...props
 }) {
-  const base = 'px-4 py-2 rounded-lg mt-2 transition duration-200';
+  const base = 'px-4 rounded-lg mt-2 transition duration-200';
   const variants = {
     primary: 'bg-black text-white hover:bg-gray-900',
     outline: 'border border-black text-black hover:bg-gray-100',
