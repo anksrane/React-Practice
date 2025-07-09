@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { tasksDummy } from './taskDummyData.js'
-import { ButtonWithIcon } from '../index.js'
+import { ButtonWithIcon, AddTask } from '../index.js'
 import { InputSearch } from '../index.js';
 import { IoMdAdd } from "react-icons/io";
 
@@ -172,7 +172,9 @@ function Tasks() {
     const addIcon=<IoMdAdd />;
 
     return (
-    <div className="mx-auto p-4">
+    <>
+    <AddTask />
+    <div className="mx-auto p-4 z-10">
       <h2 className="text-2xl font-bold mb-4 text-center">Task List</h2>
 
       {/* Global Search Input */}
@@ -329,6 +331,7 @@ function Tasks() {
       </div>
 
     </div>
+    </>
     )
 }
 

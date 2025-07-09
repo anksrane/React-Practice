@@ -5,6 +5,7 @@ const MultiSelect = ({
   label = "Select Options",
   placeholder = "Select...",
   onChange,
+  labelVisible=true,
   defaultValue = [],
 }) => {
   const [selected, setSelected] = useState(defaultValue);
@@ -46,8 +47,8 @@ const MultiSelect = ({
 
   return (
     <div className="w-full p-2 relative" ref={dropdownRef}>
-      {label && <label className="inline-block mb-1 pl-1">{label}</label>}
-      <div className="flex align-center rounded-lg  bg-white">
+      {label && <label className={`${labelVisible ? 'inline-block' : 'hidden'}mb-1 pl-1`}>{label}</label>}
+      <div className="flex align-center rounded-lg bg-white border">
         <div
           className="px-3 py-2 bg-transparent rounded-lg text-black w-full cursor-pointer"
           onClick={() => setShowOptions((prev) => !prev)}

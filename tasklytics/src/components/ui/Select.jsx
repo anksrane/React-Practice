@@ -4,6 +4,7 @@ const Select = React.forwardRef(function Select({
   options = [],
   label = 'Please select an option',
   className = '',
+  labelClass='',
   defaultOption = 'Select an option', 
   error = '', 
   labelVisible=true,
@@ -14,7 +15,7 @@ const Select = React.forwardRef(function Select({
   return (
     <div className="w-full">
       {label && (
-        <label className={`${labelVisible ? 'inline-block':'hidden'} mb-1 pl-1`} htmlFor={id}>
+        <label className={`${labelVisible ? 'inline-block':'hidden'} mb-1 pl-1 ${labelClass}`} htmlFor={id}>
           {label}
         </label>
       )}
