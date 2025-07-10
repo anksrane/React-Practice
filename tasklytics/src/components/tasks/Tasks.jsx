@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { tasksDummy } from './taskDummyData.js'
 import { ButtonWithIcon, AddTask } from '../index.js'
 import { InputSearch } from '../index.js';
@@ -15,95 +14,96 @@ import {
   getPaginationRowModel,
 } from '@tanstack/react-table';
 
-const columnHelper=createColumnHelper();
-
-const columns = [
-    columnHelper.accessor('title',{
-        header: 'Title',
-        cell: info => info.getValue(),
-        enableSorting: true,
-        enableGlobalFilter: true
-    }),
-    columnHelper.accessor('description',{
-        header: 'Description',
-        cell: info => info.getValue(),
-        enableSorting: false,
-        enableGlobalFilter: true
-    }),
-    columnHelper.accessor('status',{
-        header: 'Status',
-        cell: info => {
-        // Example of custom cell rendering with Tailwind for status colors
-        const status = info.getValue();
-        let statusClass = '';
-        switch (status) {
-            case 'Pending':
-              statusClass = 'bg-yellow-200 text-yellow-800';
-            break;
-
-            case 'In Progress':
-              statusClass = 'bg-blue-200 text-blue-800';
-            break;
-
-            case 'Completed':
-              statusClass = 'bg-green-200 text-green-800';
-            break;
-
-            case 'Overdue':
-              statusClass = 'bg-red-200 text-red-800';
-            break;
-
-            default:
-              statusClass = 'bg-gray-200 text-gray-800';
-        }
-            return (
-                <span className={`px-2 py-1 rounded-full text-xs font-semibold ${statusClass}`}>
-                {status}
-                </span>
-            );
-        },
-        enableSorting: true,
-        enableGlobalFilter: true
-    }),
-    columnHelper.accessor('dueDate',{
-        header: 'Due Date',
-        cell: info => info.getValue(),
-        enableSorting: true,
-        enableGlobalFilter: true
-    }),
-    // You can add more columns here, e.g., for actions like 'Edit', 'Delete'
-    columnHelper.display({
-        id: 'actions', // Unique ID for this display column
-        header: 'Actions',
-        cell: props => (
-        <div className="flex gap-2">
-            <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs"
-            onClick={() => alert(`Editing task: ${props.row.original.id}`)}
-            >
-            Edit
-            </button>
-            <button
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs"
-            onClick={() => alert(`Deleting task: ${props.row.original.id}`)}
-            >
-            Delete
-            </button>
-        </div>
-        ),
-        enableSorting: false,
-        enableGlobalFilter: false,
-    }),    
-];
 
 function Tasks() {
+    const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+    const [editingTask, setEditingTask] = useState(null);
 
     const [sorting,setSorting]=useState([]);
     const [globalFilter,setGlobalFilter]=useState('');
-    const [pagination,setPagination]=useState({pageIndex:0,pageSize:5})  
+    const [pagination,setPagination]=useState({pageIndex:0,pageSize:10})  
     const [searchText,setSearchText]=useState('');
 
-    const navigate = useNavigate();
+    const columnHelper=createColumnHelper();
+
+    const columns = [
+        columnHelper.accessor('title',{
+            header: 'Title',
+            cell: info => info.getValue(),
+            enableSorting: true,
+            enableGlobalFilter: true
+        }),
+        columnHelper.accessor('description',{
+            header: 'Description',
+            cell: info => info.getValue(),
+            enableSorting: false,
+            enableGlobalFilter: true
+        }),
+        columnHelper.accessor('status',{
+            header: 'Status',
+            cell: info => {
+            // Example of custom cell rendering with Tailwind for status colors
+            const status = info.getValue();
+            let statusClass = '';
+            switch (status) {
+                case 'Pending':
+                  statusClass = 'bg-yellow-200 text-yellow-800';
+                break;
+
+                case 'In Progress':
+                  statusClass = 'bg-blue-200 text-blue-800';
+                break;
+
+                case 'Completed':
+                  statusClass = 'bg-green-200 text-green-800';
+                break;
+
+                case 'Overdue':
+                  statusClass = 'bg-red-200 text-red-800';
+                break;
+
+                default:
+                  statusClass = 'bg-gray-200 text-gray-800';
+            }
+                return (
+                    <span className={`px-2 py-1 rounded-full text-xs font-semibold ${statusClass}`}>
+                    {status}
+                    </span>
+                );
+            },
+            enableSorting: true,
+            enableGlobalFilter: true
+        }),
+        columnHelper.accessor('dueDate',{
+            header: 'Due Date',
+            cell: info => info.getValue(),
+            enableSorting: true,
+            enableGlobalFilter: true
+        }),
+        // You can add more columns here, e.g., for actions like 'Edit', 'Delete'
+        columnHelper.display({
+            id: 'actions', // Unique ID for this display column
+            header: 'Actions',
+            cell: props => (
+            <div className="flex gap-2">
+                <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs"
+                onClick={()=>setShowAddTaskModal(true)}
+                >
+                Edit
+                </button>
+                <button
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs"
+                onClick={() => alert(`Deleting task: ${props.row.original.id}`)}
+                >
+                Delete
+                </button>
+            </div>
+            ),
+            enableSorting: false,
+            enableGlobalFilter: false,
+        }),    
+    ];
 
     const table=useReactTable({
         data: tasksDummy,
@@ -173,14 +173,14 @@ function Tasks() {
 
     return (
     <>
-    <AddTask />
+    {showAddTaskModal && <AddTask onClose={()=>setShowAddTaskModal(false)} show={showAddTaskModal} />}
     <div className="mx-auto p-4 z-10">
       <h2 className="text-2xl font-bold mb-4 text-center">Task List</h2>
 
       {/* Global Search Input */}
       <div className="mb-4 flex items-end justify-between">
         {/* Add Task Button */}
-        <ButtonWithIcon icon={addIcon} iconClass={'text-xl font-bold'} iconPosition="left" variant="primary" className='text-sm mt-0' onClick={()=>navigate('/addtask')}>
+        <ButtonWithIcon icon={addIcon} iconClass={'text-xl font-bold'} iconPosition="left" variant="primary" className='text-sm mt-0' onClick={()=>setShowAddTaskModal(true)}>
           Add Task
         </ButtonWithIcon>
 
@@ -194,15 +194,6 @@ function Tasks() {
           onClear={handleClearSearch}
           showClear={true}
         />        
-
-        {/* Input Search Old */}
-        {/* <input
-          type="text"
-          value={globalFilter ?? ''}
-          onChange={e => setGlobalFilter(String(e.target.value))}
-          placeholder="Search all tasks..."
-          className="w-auto px-3 py-1 border border-gray-300 rounded-md text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        /> */}
       </div>
 
       <div className="overflow-x-auto">
@@ -225,8 +216,8 @@ function Tasks() {
                       {header.column.getCanSort() && (
                         <span>
                           {{
-                            asc: ' 🔼', // Up arrow for ascending
-                            desc: ' 🔽', // Down arrow for descending
+                            asc: ' 🔼', 
+                            desc: ' 🔽', 
                           }[header.column.getIsSorted()] ?? null}
                         </span>
                       )}
@@ -266,25 +257,8 @@ function Tasks() {
 
         {/* Pagination Controls */}
       <div className="flex items-center justify-center flex-col sm:flex-row sm:justify-between flex-wrap mt-4">
-        <div className="flex items-center gap-2 mb-2 hidden sm:block">
-          {/* Page Size Selector */}
-          <label htmlFor="pageSizeSelect" className="text-sm text-gray-700">
-            Show : 
-          </label>
-          <select
-            id="pageSizeSelect"
-            value={table.getState().pagination.pageSize}
-            onChange={e => {
-              table.setPageSize(Number(e.target.value));
-            }}
-            className="border border-gray-300 rounded-md ms-1 py-1 px-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {[5, 10, 20, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
+        <div className="text-sm text-gray-700 mb-2 hidden sm:block">
+          Showing <span className="font-semibold">{table.getFilteredRowModel().rows.length}</span> records
         </div>
 
         <div className="flex items-center gap-2 mb-2">

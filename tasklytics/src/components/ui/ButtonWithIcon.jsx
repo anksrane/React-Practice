@@ -11,7 +11,7 @@ function ButtonWithIcon({
     className = '',
     ...props
 }) {
-    const base = 'px-4 py-2 rounded-lg mt-2 transition duration-200 inline-flex items-center justify-center gap-2';
+    const base = 'px-4 py-2 rounded-lg transition duration-200 inline-flex items-center justify-center gap-2';
     const variants = {
         primary: 'bg-black text-white hover:bg-gray-900',
         outline: 'border border-black text-black hover:bg-gray-100',

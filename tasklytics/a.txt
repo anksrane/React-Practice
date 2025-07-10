@@ -1,0 +1,47 @@
+1. How Coders & Managers Are Created
+🔐 Firebase Auth Account Creation
+✅ Admin manually creates all users (coders, managers) via the Firebase Console under the Authentication tab.
+✅ After creating an account, the admin must also:
+Add a matching Firestore document under users/{uid}
+Set the user's role field (admin, manager, or coder)
+Optionally set metadata like name, email, createdAt
+
+
+---------------------------*********************---------------------------
+
+2. UI Screens – Role-wise Overview
+Manager UI Screens
+| Screen                     | Description                                                |
+| -------------------------- | ---------------------------------------------------------- |
+| **Dashboard**              | Overview of task stats (created vs assigned vs completed)  |
+| **Tasks Page**             | Full list of tasks; can filter by status, coder, etc.      |
+| **Task Form Modal**        | Create/edit tasks; assign coders using a `MultiSelect`     |
+| **Team Page**              | View all team members and roles                            |
+| **Analytics** *(optional)* | See task progress charts (by status, deadline, coder)      |
+| **Profile**                | Shows their info (email, name, role), maybe password reset |
+
+Key UI behavior for Managers:
+    * See all tasks
+    * Can create and assign coders to tasks
+    * Can edit any task they created
+    * Cannot delete tasks
+    * Status updates allowed on any task
+
+---------------------------*********************---------------------------
+
+Coder UI Screens
+| Screen              | Description                                    |
+| ------------------- | ---------------------------------------------- |
+| **Tasks Page**      | View tasks assigned to them or created by them |
+| **Task Form Modal** | Create new tasks (auto-assigned to self only)  |
+| **Edit Modal**      | Edit title/desc of self-created tasks only     |
+| **Profile**         | View-only screen with their details            |
+
+Key UI behavior for Coders:
+    * No ability to assign others
+    * On creating a task, they get auto-assigned
+    * Can update status only on tasks where their UID is in assignedCoders
+    * Can view only:
+        * Tasks assigned to them
+        * Tasks created by them
+✅ You can use backend filters or client-side filters to enforce these views.

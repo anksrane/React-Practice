@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { Button, Input, Select, RadioCheckbox, DatePicker, MultiSelect_Tag } from '../index';
+import { Button, Input, Select, RadioCheckbox, DatePicker, MultiSelect_Tag, ButtonWithIcon } from '../index';
+import { IoMdCloseCircle } from "react-icons/io";
 
-function AddTask() {
+function AddTask({onClose, show}) {
     const {
       register,
       handleSubmit,
@@ -12,15 +13,29 @@ function AddTask() {
 
     const login = (data) => {
         const cleaned = {
-            email: data.email.trim(),
-            password: data.password.trim()
+            title: data.title.trim(),
+            description: data.description.trim(),
+            taskPhase: data.taskPhase.trim(),
+            taskStatus: data.taskStatus.trim(),
+            startDate: data.startDate.trim(),
+            endDate: data.endDate.trim(),
+            priority: data.priority.trim(),
+            coders: data.coders,   
         };
         console.log(cleaned);
     };
 
+    const removeIcon=<IoMdCloseCircle />;
+    useEffect(() => {
+      console.log("Modal is currently", show ? "open" : "closed");
+    }, [show]);    
+
     return (
       <div className='absolute bg-black bg-opacity-50 z-20 w-full h-full'>
-        <div className='absolute bg-white top-0 right-0 min-h-full h-fit w-96 p-4'>
+        <div className='absolute bg-white top-0 right-0 h-full w-96 p-4 overflow-y-auto'>
+          <div className='flex justify-end mb-2'>
+            <ButtonWithIcon icon={removeIcon} iconClass={`rounded-[50%] text-2xl bg-white text-black`} className='px-0 py-0 mt-0 gap-0 bg-white hover:bg-white' onClick={onClose} />
+          </div>
           <h2 className="text-2xl font-bold mb-4 text-center">Add Task</h2>
 
           <form onSubmit={handleSubmit(login)} className='container mx-auto pt-5 pb-4 relative'> 
@@ -175,7 +190,7 @@ function AddTask() {
 
 
 
-            <div className='flex items-center justify-center gap-2'>
+            <div className='flex items-center justify-center gap-2 mt-3'>
                 <Button type="submit" variant='primary' className='py-2 text-sm' isLoading={isSubmitting}>Submit</Button>
                 <Button type="reset" variant='danger' className='py-2 text-sm' onClick={()=>reset()}>Reset</Button>
             </div>

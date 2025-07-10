@@ -42,7 +42,9 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
   }, []);
 
   useEffect(() => {
-    onChange && onChange(selected);
+    if (typeof onChange === 'function') {
+      onChange({ target: { name, value: selected } });
+    }
   }, [selected]);
 
   const handleSelect = (option) => {
