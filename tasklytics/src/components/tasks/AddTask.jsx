@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, Input, Select, RadioCheckbox, DatePicker, MultiSelect_Tag, ButtonWithIcon } from '../index';
 import { IoMdCloseCircle } from "react-icons/io";
@@ -11,6 +11,21 @@ function AddTask({onClose, show}) {
       formState:{ errors, isSubmitting },
     } = useForm();
 
+    const backdropRef = useRef(null);
+
+    const handleMouseDown = (e) => {
+          // Set a flag to determine if the mousedown started on the backdrop
+      setTimeout(() => {
+        backdropRef.current.clickedOnBackdrop = e.target === backdropRef.current;
+      }, 0);
+    };
+
+    const handleMouseUp = (e) => {
+      if (backdropRef.current.clickedOnBackdrop && e.target === backdropRef.current) {
+        onClose(); // Close only if mouse started & ended on backdrop
+      }
+    };
+
     const login = (data) => {
         const cleaned = {
             title: data.title.trim(),
@@ -21,20 +36,16 @@ function AddTask({onClose, show}) {
             endDate: data.endDate.trim(),
             priority: data.priority.trim(),
             coders: data.coders,   
+            client:data.client,
         };
         console.log(cleaned);
     };
 
-    const removeIcon=<IoMdCloseCircle />;
-    useEffect(() => {
-      console.log("Modal is currently", show ? "open" : "closed");
-    }, [show]);    
-
     return (
-      <div className='absolute bg-black bg-opacity-50 z-20 w-full h-full'>
-        <div className='absolute bg-white top-0 right-0 h-full w-96 p-4 overflow-y-auto'>
+      <div ref={backdropRef} className='absolute bg-black bg-opacity-50 z-20 w-full h-full cursor-pointer'   onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
+        <div className='absolute bg-white top-0 right-0 h-full w-96 p-4 overflow-y-auto cursor-auto' onMouseDown={(e) => e.stopPropagation()} onMouseUp={(e) => e.stopPropagation()} >
           <div className='flex justify-end mb-2'>
-            <ButtonWithIcon icon={removeIcon} iconClass={`rounded-[50%] text-2xl bg-white text-black`} className='px-0 py-0 mt-0 gap-0 bg-white hover:bg-white' onClick={onClose} />
+            <button onClick={onClose}><IoMdCloseCircle className='text-2xl'/></button>
           </div>
           <h2 className="text-2xl font-bold mb-4 text-center">Add Task</h2>
 
@@ -188,7 +199,24 @@ function AddTask({onClose, show}) {
               </div>
             {/* assignedCoderNames Input End */}   
 
-
+            {/* Client Input Start */}
+              <div className="w-full">
+                <Select 
+                  label="Client"
+                  defaultOption= "Select Client"
+                  className="py-1 text-sm"
+                  labelClass='font-semibold mt-2'
+                  options={[
+                    { value: 'stockholding', label: 'Stockholding' },
+                    { value: 'gmmco', label: 'Gmmco' },
+                  ]}
+                  {...register("client",{
+                    required: "Please select Client",
+                  })}
+                  error={errors.client && errors.client.message}
+                /> 
+              </div>
+            {/* Client Input End */}  
 
             <div className='flex items-center justify-center gap-2 mt-3'>
                 <Button type="submit" variant='primary' className='py-2 text-sm' isLoading={isSubmitting}>Submit</Button>

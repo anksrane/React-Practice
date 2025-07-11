@@ -64,7 +64,7 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
   );
 
   return (
-    <div className="w-full relative" ref={dropdownRef}>
+    <div className="w-full relative" ref={dropdownRef} onMouseDown={(e) => e.stopPropagation()}  onMouseUp={(e) => e.stopPropagation()} >
       {/* ✅ Hidden input to be used with `register()` */}
       <input
         type="hidden"
