@@ -40,6 +40,7 @@ function Login() {
                     label="Password: "
                     placeholder="Enter your Password"
                     type="password"
+                    className="py-2"
                     {...register("password", {
                         required: "Password is Required",
                         minLength:  {
@@ -51,10 +52,10 @@ function Login() {
                 />
                 <div className='flex gap-2'>
                     <Button type="submit" 
-                    variant='primary' className='w-full'
+                    variant='primary' className='w-full py-2'
                     isLoading={isSubmitting}>Login</Button>
                     <Button type="reset" 
-                    variant='danger' className='w-full'
+                    variant='danger' className='w-full py-2'
                     onClick={()=>reset()}>Reset</Button>
                 </div>
             </form>

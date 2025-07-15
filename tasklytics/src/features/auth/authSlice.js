@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login as firebaseLogin, logout as firebaseLogout, onAuthChange } from '../../firebase/authService';
 
 const initialState = {
     user: null,
@@ -27,3 +26,6 @@ const authSlice=createSlice({
         }
     }
 })
+
+export const { setLoading, setUser, setError, clearUser } = authSlice.actions;
+export default authSlice.reducer;

@@ -5,8 +5,17 @@ import TaskListPage from './pages/TaskListPage';
 import AddTaskPage from './pages/AddTaskPage';
 import { AppLayout } from './components';
 import  ProtectedRoutes  from './routes/ProtectedRoutes'
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { checkAuth } from './features/auth/authActions';
 
 function App() {
+    const dispatch=useDispatch();
+
+    useEffect(()=>{
+      dispatch(checkAuth());
+    },[dispatch])
+
     return (
       <Routes>
         {/* Public Route */}
