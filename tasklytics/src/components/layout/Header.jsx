@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaUser } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,9 @@ import { toggleSidebar } from "../../features/ui/uiSlice"
 function Header() {
   const dispatch=useDispatch();
   const navigate = useNavigate();
-  const username="Ankit Rane";
+
+  const {user}=useSelector((state)=>state.auth);
+  const username=user? user.username || user.email : "User";
 
   const gotoProfile=()=>{
     navigate("/profile");
