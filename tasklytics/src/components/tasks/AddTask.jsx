@@ -1,9 +1,33 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, Input, Select, RadioCheckbox, DatePicker, MultiSelect_Tag, ButtonWithIcon } from '../index';
 import { IoMdCloseCircle } from "react-icons/io";
+import { getDropdownOptions } from '../../firebase/dropdownService';
 
 function AddTask({onClose, show}) {
+    const [priorityOptions, setPriorityOptions] = useState([]);
+    const [phaseOptions, setPhaseOptions] = useState([]);
+    const [statusOptions, setStatusOptions] = useState([]);
+    const [clientOptions, setClientOptions] = useState([]);
+
+    useEffect(()=>{
+      async function fetchDropdowns(){
+        const [priorities, phases, statuses, clients] = await Promise.all([
+          getDropdownOptions('priorities','sortOrder','asc'),
+          getDropdownOptions('phases','sortOrder','asc'),
+          getDropdownOptions('statuses','sortOrder','asc'),
+          getDropdownOptions('clients','sortOrder','asc'),
+        ]);
+
+        setPriorityOptions(priorities);
+        setPhaseOptions(phases);
+        setStatusOptions(statuses);
+        setClientOptions(clients);
+      }
+
+      fetchDropdowns();
+    },[])
+
     const {
       register,
       handleSubmit,
@@ -97,14 +121,7 @@ function AddTask({onClose, show}) {
                   defaultOption= "Select Phase"
                   className="py-1 text-sm"
                   labelClass='font-semibold mt-2'
-                  options={[
-                    { value: 'planning', label: 'Planning' },
-                    { value: 'designing', label: 'Designing' },
-                    { value: 'implementation', label: 'Implementation' },
-                    { value: 'testing', label: 'Testing' },
-                    { value: 'delivered', label: 'Delivered' },
-                    { value: 'hold', label: 'Hold' }
-                  ]}
+                  options={phaseOptions}
                   {...register("taskPhase",{
                     required: "Please select Phase",
                   })}
@@ -120,13 +137,7 @@ function AddTask({onClose, show}) {
                 label="Status"
                 defaultOption= "Select Status"
                 labelClass='font-semibold mt-2'
-                options={[
-                  { value: 'pending', label: 'Pending' },
-                  { value: 'completed', label: 'Completed' },
-                  { value: 'inProgress', label: 'In-Progress' },
-                  { value: 'overdue', label: 'Overdue' }
-
-                ]}
+                options={statusOptions}
                   {...register("taskStatus",{
                     required: "Please Select Status",
                   })}
@@ -170,12 +181,7 @@ function AddTask({onClose, show}) {
                 label="Priority"
                 defaultOption= "Select Priority"
                 labelClass='font-semibold mt-2'
-                options={[
-                  { value: 'low', label: 'Low' },
-                  { value: 'medium', label: 'Medium' },
-                  { value: 'high', label: 'High' },
-
-                ]}
+                options={priorityOptions}
                   {...register("priority",{
                     required: "Please Select Priority",
                   })}
@@ -206,10 +212,7 @@ function AddTask({onClose, show}) {
                   defaultOption= "Select Client"
                   className="py-1 text-sm"
                   labelClass='font-semibold mt-2'
-                  options={[
-                    { value: 'stockholding', label: 'Stockholding' },
-                    { value: 'gmmco', label: 'Gmmco' },
-                  ]}
+                  options={clientOptions}
                   {...register("client",{
                     required: "Please select Client",
                   })}

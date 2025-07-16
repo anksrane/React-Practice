@@ -1,12 +1,30 @@
 import { setLoading, setUser, setError, clearUser } from './authSlice';
 import { login, logout, onAuthChange } from '../../firebase/authService';
+import { getUserDataByUID } from '../../firebase/userService';
 
 // Login User Method
 export const loginUser=(email, password) => async(dispatch) => {
     try {
         dispatch(setLoading(true));
+
         const result = await login(email, password);
-        dispatch(setUser(result.user));
+        const authUser=result.user;
+
+        const profile=await getUserDataByUID(authUser.uid);
+
+        if(!profile){
+            throw new Error('User Profile Not Found');
+        }
+
+        const userData = {
+            id: authUser.uid,
+            name: profile.userName,
+            email: authUser.email,
+            userRole:profile.userRole,
+        }
+        
+
+        dispatch(setUser(userData));
     } catch (err) {
         // Firebase error format
         let message = "Login failed. Please try again.";
@@ -23,6 +41,8 @@ export const loginUser=(email, password) => async(dispatch) => {
         }
 
         dispatch(setError(message));
+        dispatch(setLoading(false));
+    }finally {
         dispatch(setLoading(false));
     }
 }
@@ -41,12 +61,30 @@ export const logoutUser = () => async(dispatch) => {
 // Session Restoring
 export const checkAuth = () => async(dispatch) => {
     dispatch(setLoading(true));
-    onAuthChange((user)=>{
+
+    onAuthChange(async(user)=>{
         if(user) {
-            dispatch(setUser(user));
+            try {
+                const profile=await getUserDataByUID(user.uid);
+                if(!profile){
+                    throw new Error('User Profile Not Found');
+                }
+                const userData = {
+                id: user.uid,
+                name: profile.userName,
+                email: user.email,
+                userRole: profile.userRole,
+                };
+
+                dispatch(setUser(userData));                
+            } catch (error) {
+                dispatch(setError("Failed to load user profile"));
+                dispatch(clearUser());
+            }
         } else {
             dispatch(clearUser());
         }
+        
         dispatch(setLoading(false));
     })
 }

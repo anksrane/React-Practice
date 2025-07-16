@@ -10,8 +10,8 @@ function Header() {
   const navigate = useNavigate();
 
   const {user}=useSelector((state)=>state.auth);
-  const username=user? user.username || user.email : "User";
-
+  const username=user? user.name || user.email : "User";
+  
   const gotoProfile=()=>{
     navigate("/profile");
   }

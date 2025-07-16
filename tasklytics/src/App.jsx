@@ -6,15 +6,21 @@ import AddTaskPage from './pages/AddTaskPage';
 import { AppLayout } from './components';
 import  ProtectedRoutes  from './routes/ProtectedRoutes'
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { checkAuth } from './features/auth/authActions';
+import { Loader } from './components';
 
 function App() {
     const dispatch=useDispatch();
+    const { loading } = useSelector((state)=>state.auth);
 
     useEffect(()=>{
       dispatch(checkAuth());
     },[dispatch])
+
+    if(loading){
+      return <Loader />
+    }
 
     return (
       <Routes>
