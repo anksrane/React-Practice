@@ -9,17 +9,6 @@ export const getCodersList = async (managerId) => {
         );
         const snapshot=await getDocs(q);
 
-        // const coders=snapshot.docs.map(doc=>{
-        //     const data= doc.data();
-        //     console.log(data.manager);
-            
-        //     // return {
-        //     //     label: data.userName,
-        //     //     value: doc.id,
-        //     // };
-        //     return data;
-        // });
-
         const coders = snapshot.docs
         .map(doc => ({ id: doc.id, ...doc.data() }))
         .filter(coder => coder.manager?.includes(managerId))
