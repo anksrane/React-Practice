@@ -1,32 +1,49 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Button, Input, Select, RadioCheckbox, DatePicker, MultiSelect_Tag, ButtonWithIcon } from '../index';
+import { Button, Input, Select, DatePicker, MultiSelect_Tag } from '../index';
 import { IoMdCloseCircle } from "react-icons/io";
+import { useSelector } from 'react-redux';
 import { getDropdownOptions } from '../../firebase/dropdownService';
+import { getCodersList } from '../../firebase/codersService';
 
 function AddTask({onClose, show}) {
+    const {user}=useSelector((state)=>state.auth);
+    // console.log(user.id);
     const [priorityOptions, setPriorityOptions] = useState([]);
     const [phaseOptions, setPhaseOptions] = useState([]);
     const [statusOptions, setStatusOptions] = useState([]);
     const [clientOptions, setClientOptions] = useState([]);
+    const [codersOptions, setCodersOptions] = useState([]);
 
     useEffect(()=>{
       async function fetchDropdowns(){
-        const [priorities, phases, statuses, clients] = await Promise.all([
+        const results = await Promise.allSettled([
           getDropdownOptions('priorities','sortOrder','asc'),
           getDropdownOptions('phases','sortOrder','asc'),
           getDropdownOptions('statuses','sortOrder','asc'),
           getDropdownOptions('clients','sortOrder','asc'),
+          getCodersList(user.id),
         ]);
 
-        setPriorityOptions(priorities);
-        setPhaseOptions(phases);
-        setStatusOptions(statuses);
-        setClientOptions(clients);
+        if (results[0].status === 'fulfilled') setPriorityOptions(results[0].value);
+        if (results[1].status === 'fulfilled') setPhaseOptions(results[1].value);
+        if (results[2].status === 'fulfilled') setStatusOptions(results[2].value);
+        if (results[3].status === 'fulfilled') setClientOptions(results[3].value);
+        if (results[4].status === 'fulfilled') setCodersOptions(results[4].value);
+
+        results.forEach((res, i) => {
+          if (res.status === 'rejected') {
+            console.error(`Dropdown fetch failed [${i}]:`, res.reason);
+          }
+        });
       }
 
       fetchDropdowns();
     },[])
+
+    useEffect(() => {
+      console.log("Updated codersOptions:", codersOptions);
+    }, [codersOptions]);
 
     const {
       register,
@@ -196,7 +213,8 @@ function AddTask({onClose, show}) {
                     label="Coders"
                     className='p-1 text-sm'
                     labelClass='font-semibold mt-2'
-                    options={["React", "JavaScript", "HTML", "CSS"]}   
+                    options={codersOptions}   
+                    // options={["React", "JavaScript", "HTML", "CSS"]}  
                     {...register("coders",{
                       required:"Please Select Coders"
                     })} 

@@ -21,7 +21,7 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
   },
   ref
 ) {
-  const [selected, setSelected] = useState(defaultValue);
+  const [selected, setSelected] = useState(defaultValue.map(d => d.value));
   const [showOptions, setShowOptions] = useState(false);
   const [search, setSearch] = useState("");
   const dropdownRef = useRef(null);
@@ -47,20 +47,24 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
     }
   }, [selected]);
 
+  const selectedLabels = options
+    .filter((opt) => selected.includes(opt.value))
+    .map((opt) => opt.label);     
+
   const handleSelect = (option) => {
-    if (selected.includes(option)) {
-      setSelected(selected.filter((item) => item !== option));
+    if (selected.includes(option.value)) {
+      setSelected(selected.filter((val) => val !== option.value));
     } else {
-      setSelected([...selected, option]);
+      setSelected([...selected, option.value]);
     }
   };
 
   const clearSelection = () => {
     setSelected([]);
   };
-
+  
   const filteredOptions = options.filter((opt) =>
-    opt.toLowerCase().includes(search.toLowerCase())
+    opt.label.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -70,7 +74,7 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
         type="hidden"
         name={name}
         ref={hiddenInputRef}
-        value={selected.join(",")}
+        value={JSON.stringify(selected)}
         readOnly
       />
 
@@ -88,7 +92,7 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
           className={`px-3 bg-transparent rounded-lg text-black w-full cursor-pointer flex ${className}`}
           onClick={() => setShowOptions((prev) => !prev)}
         >
-          {selected.length > 0 ? selected.join(", ") : placeholder}
+          {selected.length > 0 ? selectedLabels.join(", ") : placeholder}
         </div>
         <button
           className="text-sm w-fit font-bold p-1 bg-red-500 w-100 rounded-e text-white hover:underline"
@@ -124,17 +128,17 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option) => (
                 <li
-                  key={option}
+                  key={option.value}
                   onClick={() => handleSelect(option)}
                   className="px-3 py-2 text-sm hover:bg-gray-100 flex items-center gap-2 cursor-pointer"
                 >
                   <input
                     type="checkbox"
-                    checked={selected.includes(option)}
+                    checked={selected.includes(option.value)}
                     onClick={(e) => e.stopPropagation()}
                     onChange={() => handleSelect(option)}
                   />
-                  <span>{option}</span>
+                  <span>{option.label}</span>
                 </li>
               ))
             ) : (
