@@ -1,8 +1,9 @@
-import React, { useState, useMemo } from 'react'
-import { tasksDummy } from './taskDummyData.js'
+import React, { useState, useMemo, useEffect } from 'react'
+// import { tasksDummy } from './taskDummyData.js'
 import { ButtonWithIcon, AddTask } from '../index.js'
 import { InputSearch } from '../index.js';
 import { IoMdAdd } from "react-icons/io";
+import { getAllTaskFirebase } from '../../firebase/getAllTaskService';
 
 import {
   useReactTable,
@@ -16,6 +17,8 @@ import {
 
 
 function Tasks() {
+    const [tasksData, setTasksData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
     const [editingTask, setEditingTask] = useState(null);
 
@@ -25,6 +28,21 @@ function Tasks() {
     const [searchText,setSearchText]=useState('');
 
     const columnHelper=createColumnHelper();
+
+    useEffect(() => {
+      const fetchTasks = async () => {
+        setLoading(true);
+        const response = await getAllTaskFirebase();
+        if (response.success) {
+          setTasksData(response.data);
+        } else {
+          console.error("Failed to fetch tasks:", response.error);
+        }
+        setLoading(false);
+      };
+
+      fetchTasks();
+    }, []);
 
     const columns = [
         columnHelper.accessor('title',{
@@ -39,7 +57,7 @@ function Tasks() {
             enableSorting: false,
             enableGlobalFilter: true
         }),
-        columnHelper.accessor('status',{
+        columnHelper.accessor('taskStatus',{
             header: 'Status',
             cell: info => {
             // Example of custom cell rendering with Tailwind for status colors
@@ -106,7 +124,7 @@ function Tasks() {
     ];
 
     const table=useReactTable({
-        data: tasksDummy,
+        data: tasksData,
         columns: columns,
         state:{
           sorting,
