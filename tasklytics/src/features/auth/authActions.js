@@ -21,8 +21,8 @@ export const loginUser=(email, password) => async(dispatch) => {
             name: profile.userName,
             email: authUser.email,
             userRole:profile.userRole,
-        }
-        
+            manager:profile.manager
+        }   
 
         dispatch(setUser(userData));
     } catch (err) {
@@ -70,15 +70,16 @@ export const checkAuth = () => async(dispatch) => {
                     throw new Error('User Profile Not Found');
                 }
                 const userData = {
-                id: user.uid,
-                name: profile.userName,
-                email: user.email,
-                userRole: profile.userRole,
+                    id: user.uid,
+                    name: profile.userName,
+                    email: user.email,
+                    userRole: profile.userRole,
+                    manager:profile.manager
                 };
 
                 dispatch(setUser(userData));                
             } catch (error) {
-                dispatch(setError("Failed to load user profile"));
+                dispatch(setError("Failed to load user profile", error));
                 dispatch(clearUser());
             }
         } else {

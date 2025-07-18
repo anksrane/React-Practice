@@ -5,10 +5,11 @@ import { IoMdCloseCircle } from "react-icons/io";
 import { useSelector } from 'react-redux';
 import { getDropdownOptions } from '../../firebase/dropdownService';
 import { getCodersList } from '../../firebase/codersService';
+import { addTaskFirebase } from '../../firebase/addTaskService';
+import { toast } from 'react-toastify';
 
 function AddTask({onClose, show}) {
     const {user}=useSelector((state)=>state.auth);
-    // console.log(user.id);
     const [priorityOptions, setPriorityOptions] = useState([]);
     const [phaseOptions, setPhaseOptions] = useState([]);
     const [statusOptions, setStatusOptions] = useState([]);
@@ -41,21 +42,18 @@ function AddTask({onClose, show}) {
       fetchDropdowns();
     },[])
 
-    useEffect(() => {
-      console.log("Updated codersOptions:", codersOptions);
-    }, [codersOptions]);
-
     const {
       register,
       handleSubmit,
       reset,
+      watch,
       formState:{ errors, isSubmitting },
     } = useForm();
+    const startDateValue = watch("startDate");
 
     const backdropRef = useRef(null);
 
     const handleMouseDown = (e) => {
-          // Set a flag to determine if the mousedown started on the backdrop
       setTimeout(() => {
         backdropRef.current.clickedOnBackdrop = e.target === backdropRef.current;
       }, 0);
@@ -63,11 +61,21 @@ function AddTask({onClose, show}) {
 
     const handleMouseUp = (e) => {
       if (backdropRef.current.clickedOnBackdrop && e.target === backdropRef.current) {
-        onClose(); // Close only if mouse started & ended on backdrop
+        onClose(); 
       }
     };
 
-    const login = (data) => {
+    const onSubmit = async (data) => {
+        let selectedCoders;
+        if(user.userRole=="Coder"){
+          selectedCoders = [{ id: user.id, name: user.name }];
+        }else{
+          selectedCoders = data.coders.map(coderId => {
+            const match = codersOptions.find(opt => opt.value === coderId);
+            return { id: coderId, name: match?.label || "" };
+          }); 
+        }   
+        
         const cleaned = {
             title: data.title.trim(),
             description: data.description.trim(),
@@ -76,10 +84,29 @@ function AddTask({onClose, show}) {
             startDate: data.startDate.trim(),
             endDate: data.endDate.trim(),
             priority: data.priority.trim(),
-            coders: data.coders,   
+            coders: selectedCoders,   
             client:data.client,
+            createdBy:user.id,
+            updatedBy:user.id,
+            createdByName:user.name,
+            updatedByName:user.name,
+            managerId: user.userRole == "Manager" ? user.id : user.manager,
         };
-        console.log(cleaned);
+
+        try {
+          const response=await addTaskFirebase(cleaned);
+          if(response.success){
+            toast.success("Task Created Successfully");
+            onClose();
+            reset();
+          }else{
+            toast.error("Error Creating Task");
+            throw response.error;
+          }
+        } catch (error) {
+            console.error("Add Task Error:", error);
+            toast.error("Failed to add task. Please try again.");
+        }
     };
 
     return (
@@ -90,7 +117,7 @@ function AddTask({onClose, show}) {
           </div>
           <h2 className="text-2xl font-bold mb-4 text-center">Add Task</h2>
 
-          <form onSubmit={handleSubmit(login)} className='container mx-auto pt-5 pb-4 relative'> 
+          <form onSubmit={handleSubmit(onSubmit)} className='container mx-auto pt-5 pb-4 relative'> 
             {/* Title Input Start */}
               <div className="w-full">
                 <Input 
@@ -182,8 +209,18 @@ function AddTask({onClose, show}) {
                     label="End Date"
                     labelClass='font-semibold mt-2'
                     className="py-1 text-sm"
+                    disabled={!startDateValue}
+                    placeholder={!startDateValue ? "Please select Start Date first" : ""}
+                    min={startDateValue}
                     {...register("endDate",{
-                      required:"Please Select End Date"
+                      required:"Please Select End Date",
+                      validate: value => {
+                        if (!startDateValue) return true; // skip check if start not selected yet
+                        if (new Date(value) < new Date(startDateValue)) {
+                          return "End Date cannot be before Start Date";
+                        }
+                        return true;
+                      }                      
                     })} 
                     error={errors.endDate && errors.endDate.message}                   
                   />
@@ -208,6 +245,7 @@ function AddTask({onClose, show}) {
             {/* Priority Input End */}  
 
             {/* assignedCoderNames Input Start */}
+            {user.userRole !== "Coder" && (
               <div className="w-full">
                   <MultiSelect_Tag 
                     label="Coders"
@@ -221,6 +259,7 @@ function AddTask({onClose, show}) {
                     error={errors.coders && errors.coders.message}                                      
                   />
               </div>
+            )}
             {/* assignedCoderNames Input End */}   
 
             {/* Client Input Start */}

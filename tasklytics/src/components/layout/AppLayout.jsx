@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { toggleSidebar } from '../../features/ui/uiSlice';
+import { ToastContainer} from 'react-toastify';
 
 function AppLayout() {
     const dispatch=useDispatch()
@@ -12,17 +13,20 @@ function AppLayout() {
         dispatch(toggleSidebar)
     }
     return (
-        <div className='flex h-screen w-screen overflow-hidden'>
-            <Sidebar isOpen={isSidebarOpen}/>
-            <div className='flex flex-col flex-1 overflow-hidden'>
-                <Header toggleSidebar={handleToggleSidebar}/>
-                <main className=' flex-1 overflow-y-auto relative'>
-                    <div className='bg-white min-h-full h-fit w-full'> 
-                        <Outlet/>
-                    </div>
-                </main>
+        <>
+        <ToastContainer position="top-center" autoClose={2500} />
+            <div className='flex h-screen w-screen overflow-hidden'>
+                <Sidebar isOpen={isSidebarOpen}/>
+                <div className='flex flex-col flex-1 overflow-hidden'>
+                    <Header toggleSidebar={handleToggleSidebar}/>
+                    <main className=' flex-1 overflow-y-auto relative'>
+                        <div className='bg-white min-h-full h-fit w-full'> 
+                            <Outlet/>
+                        </div>
+                    </main>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 
