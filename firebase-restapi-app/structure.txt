@@ -1,0 +1,25 @@
+src/
+├── app/                  # Redux store
+│   └── store.js
+│
+├── features/             # Redux slices and async thunks
+│   ├── auth/
+│   │   ├── authSlice.js
+│   │   └── authThunks.js
+│   └── tasks/
+│       ├── taskSlice.js
+│       └── taskThunks.js
+│
+├── firebase/             # Firebase setup and services
+│   ├── firebaseConfig.js
+│   └── authService.js
+│
+├── pages/                # Page components (Login, Dashboard)
+│   ├── Login.jsx
+│   └── Dashboard.jsx
+│
+├── routes/               # Route protection
+│   └── ProtectedRoute.jsx
+│
+├── App.jsx
+└── main.jsx
