@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
-// import { tasksDummy } from './taskDummyData.js'
 import { ButtonWithIcon, AddTask } from '../index.js'
 import { InputSearch, Loader } from '../index.js';
 import { IoMdAdd } from "react-icons/io";
@@ -324,7 +323,12 @@ function Tasks() {
             showClear={true}
           />        
         </div>
-
+        {loading ?(
+          <div className="flex justify-center items-center h-40">
+            <Loader color='text-blue' />
+          </div>
+        ) :
+        (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-sm">
             {/* Table Header (<thead>) */}
@@ -383,6 +387,8 @@ function Tasks() {
             </tbody>
           </table>
         </div>
+        )}
+
 
         {/* Pagination Controls */}
         <div className="flex items-center justify-center flex-col sm:flex-row sm:justify-between flex-wrap mt-4">
@@ -451,6 +457,7 @@ function Tasks() {
             </span>
           </span>
         </div>
+
       </div>
     </div>
     </>
