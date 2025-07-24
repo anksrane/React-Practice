@@ -8,7 +8,7 @@ import { getCodersList } from '../../firebase/codersService';
 import { addTaskFirebase } from '../../firebase/addTaskService';
 import { toast } from 'react-toastify';
 
-function AddTask({onClose, show}) {
+function AddTask({onClose, show, onTaskAdded }) {
     const {user}=useSelector((state)=>state.auth);
     const [priorityOptions, setPriorityOptions] = useState([]);
     const [phaseOptions, setPhaseOptions] = useState([]);
@@ -32,6 +32,8 @@ function AddTask({onClose, show}) {
         if (results[3].status === 'fulfilled') setClientOptions(results[3].value);
         if (results[4].status === 'fulfilled') setCodersOptions(results[4].value);
 
+        console.log(results);
+        
         results.forEach((res, i) => {
           if (res.status === 'rejected') {
             console.error(`Dropdown fetch failed [${i}]:`, res.reason);
@@ -99,6 +101,7 @@ function AddTask({onClose, show}) {
             toast.success("Task Created Successfully");
             onClose();
             reset();
+            onTaskAdded?.();
           }else{
             toast.error("Error Creating Task");
             throw response.error;

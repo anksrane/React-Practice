@@ -1,9 +1,9 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect, useCallback } from 'react'
 // import { tasksDummy } from './taskDummyData.js'
 import { ButtonWithIcon, AddTask } from '../index.js'
-import { InputSearch } from '../index.js';
+import { InputSearch, Loader } from '../index.js';
 import { IoMdAdd } from "react-icons/io";
-import { getAllTaskFirebase } from '../../firebase/getAllTaskService';
+import { getAllTaskFirebase } from '../../firebase/getAllTasksWithFilter.js';
 
 import {
   useReactTable,
@@ -24,40 +24,71 @@ function Tasks() {
 
     const [sorting,setSorting]=useState([]);
     const [globalFilter,setGlobalFilter]=useState('');
-    const [pagination,setPagination]=useState({pageIndex:0,pageSize:10})  
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize] = useState(10);
+    const [cursors, setCursors] = useState([null]); 
     const [searchText,setSearchText]=useState('');
+    const [hasMorePages, setHasMorePages] = useState(false);
+    const [filters, setFilters] = useState({
+      phase: '',
+      status: '',
+      priority: ''
+    });
 
-    const columnHelper=createColumnHelper();
+    const fetchTasksWith = useCallback(async (customFilters = filters, targetPage = currentPage) => {
+      setLoading(true);
+
+      const sortBy = sorting[0]?.id || 'created_at';
+      const sortOrder = sorting[0]?.desc ? 'desc' : 'asc';
+
+      // Get the cursor for the targetPage (which means to start *after* this document)
+      const cursorForQuery = cursors[targetPage] || null      
+
+      const response = await getAllTaskFirebase(
+        searchText,
+        customFilters,
+        sortBy,
+        sortOrder,
+        pageSize,
+        cursorForQuery           
+      );
+
+      if (response.success) {
+        setTasksData(response.data);
+        setHasMorePages(response.hasMore);
+
+        if (response.nextCursor && cursors.length === targetPage + 1) {
+          setCursors(prev => [...prev, response.nextCursor]);
+        }     
+      } else {
+        console.error("Failed to fetch tasks:", response.error);
+        setTasksData([]); 
+        setHasMorePages(false);
+      }
+
+      setLoading(false);
+    },[filters, sorting, searchText, pageSize, cursors, currentPage]);
+
 
     useEffect(() => {
-      const fetchTasks = async () => {
-        setLoading(true);
-        const response = await getAllTaskFirebase();
-        if (response.success) {
-          setTasksData(response.data);
-        } else {
-          console.error("Failed to fetch tasks:", response.error);
-        }
-        setLoading(false);
-      };
+      fetchTasksWith(filters);
+    }, [searchText, sorting, filters, currentPage, fetchTasksWith]);
 
-      fetchTasks();
-    }, []);
-
+    const columnHelper=createColumnHelper();
     const columns = [
-        columnHelper.accessor('title',{
-            header: 'Title',
+        columnHelper.accessor('client',{
+            header: 'client',
             cell: info => info.getValue(),
             enableSorting: true,
             enableGlobalFilter: true
-        }),
-        columnHelper.accessor('description',{
-            header: 'Description',
+        }),      
+        columnHelper.accessor('title',{
+            header: 'Title',
             cell: info => info.getValue(),
             enableSorting: false,
             enableGlobalFilter: true
         }),
-        columnHelper.accessor('taskStatus',{
+        columnHelper.accessor('taskStatusLabel',{
             header: 'Status',
             cell: info => {
             // Example of custom cell rendering with Tailwind for status colors
@@ -92,7 +123,19 @@ function Tasks() {
             enableSorting: true,
             enableGlobalFilter: true
         }),
-        columnHelper.accessor('dueDate',{
+        columnHelper.accessor('taskPhaseLabel',{
+            header: 'Phase',
+            cell: info => info.getValue(),
+            enableSorting: true,
+            enableGlobalFilter: true
+        }),
+        columnHelper.accessor('priorityLabel',{
+            header: 'Priority',
+            cell: info => info.getValue(),
+            enableSorting: true,
+            enableGlobalFilter: true
+        }),
+        columnHelper.accessor('endDate',{
             header: 'Due Date',
             cell: info => info.getValue(),
             enableSorting: true,
@@ -106,13 +149,16 @@ function Tasks() {
             <div className="flex gap-2">
                 <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs"
-                onClick={()=>setShowAddTaskModal(true)}
+                  onClick={() => {
+                      setEditingTask(props.row.original); // Set task for editing
+                      setShowAddTaskModal(true);
+                  }}
                 >
                 Edit
                 </button>
                 <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs"
-                onClick={() => alert(`Deleting task: ${props.row.original.id}`)}
+                  onClick={() => alert(`Deleting task: ${props.row.original.id}`)}
                 >
                 Delete
                 </button>
@@ -123,205 +169,289 @@ function Tasks() {
         }),    
     ];
 
-    const table=useReactTable({
+    const table = useReactTable({
         data: tasksData,
         columns: columns,
-        state:{
-          sorting,
-          globalFilter,
-          pagination
+        state: {
+            sorting,
+            globalFilter,
+            pagination: {
+                pageIndex: currentPage,
+                pageSize: pageSize
+            }
         },
+        onSortingChange: setSorting,
+        onGlobalFilterChange: setGlobalFilter,
+        // Manual pagination settings
+        manualPagination: true,
+        pageCount: hasMorePages ? currentPage + 2 : currentPage + 1, // Dynamically determines page count
         getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel:getSortedRowModel(),
-        getFilteredRowModel:getFilteredRowModel(),
-        getPaginationRowModel:getPaginationRowModel(),
-        onSortingChange:setSorting,
-        onGlobalFilterChange:setGlobalFilter,
-        onPaginationChange:setPagination,
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(), // This is for client-side filtering on `tasksData`
+    });
 
-        autoResetPageIndex:false,
-    })
-
-    const currentPage = table.getState().pagination.pageIndex; // Current page (0-indexed)
-    const pageCount = table.getPageCount(); // Total number of pages
+    const pageCount = table.getPageCount(); 
       
-    // --- Start of NEW Pagination Logic Block ---
     const pageNumbers = useMemo(() => {
-      const numbers = [];
-      const maxVisiblePages = 3; // The fixed number of page buttons to show
+        const numbers = [];
+        const maxVisiblePages = 3; 
 
-      // If there are no pages, return empty array
-      if (pageCount === 0) {
-        return [];
-      }
-
-      // Determine the start page number for the fixed window
-      // This logic ensures the window doesn't go below page 0 or beyond the last 3 pages
-      let startPage;
-      if (currentPage < Math.floor(maxVisiblePages / 2)) {
-        // If near the beginning, start from 0
-        startPage = 0;
-      } else if (currentPage > pageCount - 1 - Math.ceil(maxVisiblePages / 2)) {
-        // If near the end, ensure the window ends at pageCount - 1
-        startPage = Math.max(0, pageCount - maxVisiblePages);
-      } else {
-        // In the middle, center the window around currentPage
-        startPage = currentPage - Math.floor(maxVisiblePages / 2);
-      }   
-
-      // Add page numbers to the array based on the calculated window
-      for (let i = 0; i < maxVisiblePages; i++) {
-        const pageNum = startPage + i;
-        // Only add if the page number is valid
-        if (pageNum < pageCount) {
-          numbers.push(pageNum);
+        if (pageCount === 0) {
+            return [];
         }
-      }
 
-      return numbers;
-    }, [currentPage, pageCount]); // Re-calculate only when currentPage or pageCount changes
-    // --- End of NEW Pagination Logic Block ---
+        let startPage;
+        if (currentPage < Math.floor(maxVisiblePages / 2)) {
+            startPage = 0;
+        } else if (currentPage > pageCount - 1 - Math.ceil(maxVisiblePages / 2)) {
+            startPage = Math.max(0, pageCount - maxVisiblePages);
+        } else {
+            startPage = currentPage - Math.floor(maxVisiblePages / 2);
+        }
+
+        for (let i = 0; i < maxVisiblePages; i++) {
+            const pageNum = startPage + i;
+            if (pageNum < pageCount) {
+                numbers.push(pageNum);
+            }
+        }
+        return numbers;
+    }, [currentPage, pageCount]);
 
     const handleClearSearch = () => {
-      setSearchText('');
-      setGlobalFilter('');
+        setSearchText('');
+        setGlobalFilter(''); // Clears client-side filter
+    };    
+
+    const handleFilterChange = (filterName, value) => {
+        // Reset current page and cursors when filters change to start from beginning
+        setCurrentPage(0);
+        setCursors([null]);
+        setFilters(prev => {
+            const updated = { ...prev, [filterName]: value };
+            // fetchTasksWith will be called by useEffect after state update
+            return updated;
+        });
     };
 
     const addIcon=<IoMdAdd />;
 
     return (
     <>
-    {showAddTaskModal && <AddTask onClose={()=>setShowAddTaskModal(false)} show={showAddTaskModal} />}
+    {showAddTaskModal && <AddTask onClose={()=>setShowAddTaskModal(false)} show={showAddTaskModal} onTaskAdded={() => fetchTasksWith(filters)} />}
     <div className="mx-auto p-4 z-10">
       <h2 className="text-2xl font-bold mb-4 text-center">Task List</h2>
+      
+      <div>
+          {/* Add Task Button */}
+          <ButtonWithIcon icon={addIcon} iconClass={'text-xl font-bold'} iconPosition="left" variant="primary" className='text-sm mt-0' onClick={()=>setShowAddTaskModal(true)}>
+            Add Task
+          </ButtonWithIcon>        
+        {/* Global Search Input */}
+        <div className="mb-4 flex items-end justify-between">
 
-      {/* Global Search Input */}
-      <div className="mb-4 flex items-end justify-between">
-        {/* Add Task Button */}
-        <ButtonWithIcon icon={addIcon} iconClass={'text-xl font-bold'} iconPosition="left" variant="primary" className='text-sm mt-0' onClick={()=>setShowAddTaskModal(true)}>
-          Add Task
-        </ButtonWithIcon>
+          <div className='flex gap-1'>
+            <select
+              className="border px-2 py-1 text-sm rounded"
+              value={filters.phase}
+              // onChange={(e) => setFilters(prev => ({ ...prev, phase: e.target.value }))}
+              onChange={(e) => {
+                const newPhase = e.target.value;
+                setFilters(prev => {
+                  const updated = { ...prev, phase: newPhase };
+                  fetchTasksWith(updated);
+                  return updated;
+                });
+              }}              
+            >
+              <option value="">All Phases</option>
+              <option value="planning">Planning</option>
+              <option value="designing">Designing</option>
+              <option value="implementation">Implementation</option>
+              <option value="testing">Testing</option>
+              <option value="delivery">Delivery</option>
+              <option value="hold">Hold</option>
+            </select>
 
-        {/* Input Search New*/}
-        <InputSearch 
-          type="text" 
-          placeholder="Search all tasks..." 
-          value={searchText} 
-          onChange={e=>setSearchText(e.target.value)} 
-          onSearch={(value)=>setGlobalFilter(value)} 
-          onClear={handleClearSearch}
-          showClear={true}
-        />        
-      </div>
+            <select
+              className="border px-2 py-1 text-sm rounded"
+              value={filters.status}
+              // onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
+              onChange={(e) => {
+                const newStatus = e.target.value;
+                setFilters(prev => {
+                  const updated = { ...prev, status: newStatus };
+                  fetchTasksWith(updated); 
+                  return updated;
+                });
+              }}              
+            >
+              <option value="">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="inProgress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="overdue">Overdue</option>
+            </select>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-sm">
-          {/* Table Header (<thead>) */}
-          <thead className="bg-gray-100">
-            {table.getHeaderGroups().map(headerGroup => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
-                  <th
-                    key={header.id}
-                    scope="col"
-                    className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider select-none ${header.column.getCanSort()? 'cursor-pointer' : ''}`}
-                    // Add onClick handler for sorting if the column is sortable
-                    onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
-                  >
-                    <div className="flex items-center gap-1">
-                      {flexRender(header.column.columnDef.header, header.getContext())}
-                      {/* Sort indicator */}
-                      {header.column.getCanSort() && (
-                        <span>
-                          {{
-                            asc: ' 🔼', 
-                            desc: ' 🔽', 
-                          }[header.column.getIsSorted()] ?? null}
-                        </span>
-                      )}
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
+            <select
+              className="border px-2 py-1 text-sm rounded"
+              value={filters.priority}
+              // onChange={(e) => setFilters(prev => ({ ...prev, priority: e.target.value }))}
+              onChange={(e) => {
+                const newPriority = e.target.value;
+                setFilters(prev => {
+                  const updated = { ...prev, priority: newPriority };
+                  fetchTasksWith(updated); 
+                  return updated;
+                });
+              }}                 
+            >
+              <option value="">All Priorities</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
 
-          {/* Table Body (<tbody>) */}
-          <tbody className="divide-y divide-gray-200">
-            {/* Display "No results" if filtered rows are empty */}
-            {table.getRowModel().rows.length === 0 ? (
-              <tr>
-                <td colSpan={columns.length} className="px-6 py-4 text-center text-gray-500">
-                  No tasks found.
-                </td>
-              </tr>
-            ) : (
-              table.getRowModel().rows.map(row => (
-                <tr key={row.id}>
-                  {row.getVisibleCells().map(cell => (
-                    <td
-                      key={cell.id}
-                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-left"
+          {/* Input Search New*/}
+          <InputSearch 
+            type="text" 
+            placeholder="Search all tasks..." 
+            value={searchText} 
+            onChange={e=>setSearchText(e.target.value)} 
+            onSearch={(value)=>setGlobalFilter(value)} 
+            onClear={handleClearSearch}
+            showClear={true}
+          />        
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-sm">
+            {/* Table Header (<thead>) */}
+            <thead className="bg-gray-100">
+              {table.getHeaderGroups().map(headerGroup => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map(header => (
+                    <th
+                      key={header.id}
+                      scope="col"
+                      className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider select-none ${header.column.getCanSort()? 'cursor-pointer' : ''}`}
+                      // Add onClick handler for sorting if the column is sortable
+                      onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
                     >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
+                      <div className="flex items-center gap-1">
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {/* Sort indicator */}
+                        {header.column.getCanSort() && (
+                          <span>
+                            {{
+                              asc: ' 🔼', 
+                              desc: ' 🔽', 
+                            }[header.column.getIsSorted()] ?? null}
+                          </span>
+                        )}
+                      </div>
+                    </th>
                   ))}
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+              ))}
+            </thead>
+
+            {/* Table Body (<tbody>) */}
+            <tbody className="divide-y divide-gray-200">
+              {/* Display "No results" if filtered rows are empty */}
+              {table.getRowModel().rows.length === 0 ? (
+                <tr>
+                  <td colSpan={columns.length} className="px-6 py-4 text-center text-gray-500">
+                    No tasks found.
+                  </td>
+                </tr>
+              ) : (
+                table.getRowModel().rows.map(row => (
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map(cell => (
+                      <td
+                        key={cell.id}
+                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-left"
+                      >
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {/* Pagination Controls */}
-      <div className="flex items-center justify-center flex-col sm:flex-row sm:justify-between flex-wrap mt-4">
-        <div className="text-sm text-gray-700 mb-2 hidden sm:block">
-          Showing <span className="font-semibold">{table.getFilteredRowModel().rows.length}</span> records
-        </div>
+        <div className="flex items-center justify-center flex-col sm:flex-row sm:justify-between flex-wrap mt-4">
+          <div className="text-sm text-gray-700 mb-2 hidden sm:block">
+            Showing <span className="font-semibold">{table.getFilteredRowModel().rows.length}</span> records
+          </div>
 
-        <div className="flex items-center gap-2 mb-2">
-          {/* Previous Button */}
-          <button
-            className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            &laquo;
-          </button>
+          <div className="flex items-center gap-2 mb-2">
+            {/* Previous Button */}
+            <button
+              className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+              // onClick={() => table.previousPage()}
+              onClick={() => {
+                setCurrentPage(prev => {
+                  const newPage = Math.max(prev - 1, 0);
+                  fetchTasksWith(filters, newPage); // fetch that page
+                  return newPage;
+                });
+              }}
+              // disabled={!table.getCanPreviousPage()}
+              disabled={currentPage === 0}
+            >
+              &laquo;
+            </button>
 
-          {/* Page Numbers */}
-          {pageNumbers.map((pageNumber, index) => (
-            <React.Fragment key={index}> {/* Use index for keys for ellipses */}
-              {typeof pageNumber === 'number' ? (
-                <button
-                  onClick={() => table.setPageIndex(pageNumber)}
-                  className={`px-3 py-1 border border-gray-300 rounded-md text-sm font-medium ${currentPage === pageNumber ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-white text-gray-700 hover:bg-gray-50' }`} >
-                  {pageNumber + 1} {/* Display 1-indexed page number */}
-                </button>
-              ) : (
-                <span className="px-3 py-1 text-gray-700">...</span>
-              )}
-            </React.Fragment>
-          ))}
+            {/* Page Numbers */}
+            {pageNumbers.map((pageNumber, index) => (
+              <React.Fragment key={index}> {/* Use index for keys for ellipses */}
+                {typeof pageNumber === 'number' ? (
+                  <button
+                    onClick={() => {
+                      setCurrentPage(pageNumber);
+                      fetchTasksWith(filters, pageNumber);
+                    }}
+                    className={`px-3 py-1 border border-gray-300 rounded-md text-sm font-medium ${currentPage === pageNumber ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-white text-gray-700 hover:bg-gray-50' }`} >
+                    {pageNumber + 1} {/* Display 1-indexed page number */}
+                  </button>
+                ) : (
+                  <span className="px-3 py-1 text-gray-700">...</span>
+                )}
+              </React.Fragment>
+            ))}
 
-          <button
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-            className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            &raquo;
-          </button>
-        </div>
+            <button
+              // onClick={() => table.nextPage()}
+              onClick={() => {
+                setCurrentPage(prev => {
+                  const newPage = prev + 1;
+                  fetchTasksWith(filters, newPage);
+                  return newPage;
+                });
+              }}
+              // disabled={!table.getCanNextPage()}
+              disabled={!hasMorePages}
+              className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              &raquo;
+            </button>
+          </div>
 
-        {/* Current Page and Total Pages Info */}
-        <span className="text-sm text-gray-700 mb-2">
-          Page{' '}
-          <span className="font-semibold">
-            {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+          {/* Current Page and Total Pages Info */}
+          <span className="text-sm text-gray-700 mb-2">
+            Page{' '}
+            <span className="font-semibold">
+              {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+            </span>
           </span>
-        </span>
+        </div>
       </div>
-
     </div>
     </>
     )
