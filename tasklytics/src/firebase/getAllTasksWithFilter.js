@@ -1,30 +1,6 @@
 import { collection, getDocs, query, orderBy, limit, startAfter, where } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
-// Labels for Map
-const taskPhases = [
-    { value: "planning", "label": "Planning" },
-    { value: "designing", "label": "Designing" },
-    { value: "implementation", "label": "Implementation" },
-    { value: "testing", "label": "Testing" },
-    { value: "delivery", "label": "Delivery" },
-    { value: "hold", "label": "Hold" }
-];
-
-const taskPriorities = [
-    { value: "high", "label": "High" },
-    { value: "medium", "label": "Medium" },
-    { value: "low", "label": "Low" }
-];
-
-const statuses = [
-    { value: "pending", "label": "Pending" },
-    { value: "completed", "label": "Completed" },
-    { value: "inProgress", "label": "In Progress" },
-    { value: "overdue", "label": "Overdue" }
-];
-
-
 const getLabel=(list,value)=>list.find(item=>item.value===value)?.label || value;
 
 export const getAllTaskFirebase = async (
@@ -34,6 +10,9 @@ export const getAllTaskFirebase = async (
     sortOrder = "asc",
     pageSize = 10,
     cursor = null,
+    taskPhasesList,      
+    taskPrioritiesList,  
+    statusesList   
 ) => {
     try {
         const colRef= collection (db,'tasksTable');
@@ -49,13 +28,6 @@ export const getAllTaskFirebase = async (
         if (filters.priority) {
             conditions.push(where("priority", "==", filters.priority));
         }
-        // let q = query(
-        //     colRef,
-        //     ...conditions,
-        //     orderBy(sortBy, sortOrder),
-        //     ...(cursor ? [startAfter(cursor)] : []),
-        //     limit(pageSize+1)
-        // );    
 
         let baseQuery = query(
             colRef,
@@ -92,9 +64,9 @@ export const getAllTaskFirebase = async (
                 id: doc.id,
                 ...data,
                 // Apply human-readable labels
-                taskPhaseLabel: getLabel(taskPhases, data.taskPhase),
-                taskStatusLabel: getLabel(statuses, data.taskStatus),
-                priorityLabel: getLabel(taskPriorities, data.priority)
+                taskPhaseLabel: getLabel(taskPhasesList, data.taskPhase),
+                taskStatusLabel: getLabel(statusesList, data.taskStatus),
+                priorityLabel: getLabel(taskPrioritiesList, data.priority)
             };
         }); 
 

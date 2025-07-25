@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import { ButtonWithIcon, AddTask } from '../index.js'
 import { InputSearch, Loader } from '../index.js';
 import { IoMdAdd } from "react-icons/io";
+import { fetchAllDropdowns } from '../../firebase/dropdownService.js';
 import { getAllTaskFirebase } from '../../firebase/getAllTasksWithFilter.js';
 
 import {
@@ -17,7 +18,8 @@ import {
 
 function Tasks() {
     const [tasksData, setTasksData] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loadingTasks, setLoadingTasks] = useState(true);
+    const [loadingDropdowns, setLoadingDropdowns] = useState(true);
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
     const [editingTask, setEditingTask] = useState(null);
 
@@ -34,8 +36,32 @@ function Tasks() {
       priority: ''
     });
 
+    const [dropdowns, setDropdowns] = useState({
+        taskPhases: [],
+        taskPriorities: [],
+        statuses: []
+    });
+
+    // Fetch all dropdown options
+    useEffect(() => {
+        const getDropdownData = async () => {
+          setLoadingDropdowns(true);
+            try {
+                const data = await fetchAllDropdowns();
+                setDropdowns(data);
+            } catch (error) {
+                console.error("Error fetching dropdown data:", error);
+                setDropdowns({ taskPhases: [], taskPriorities: [], statuses: [] });
+            } finally {
+              setLoadingDropdowns(false);
+            }
+        };
+        getDropdownData();
+    }, []);    
+
+    // Fetch all task with data
     const fetchTasksWith = useCallback(async (customFilters = filters, targetPage = currentPage) => {
-      setLoading(true);
+      setLoadingTasks(true);
 
       const sortBy = sorting[0]?.id || 'created_at';
       const sortOrder = sorting[0]?.desc ? 'desc' : 'asc';
@@ -49,13 +75,15 @@ function Tasks() {
         sortBy,
         sortOrder,
         pageSize,
-        cursorForQuery           
+        cursorForQuery,
+        dropdowns.taskPhases, 
+        dropdowns.taskPriorities,
+        dropdowns.statuses     
       );
 
       if (response.success) {
         setTasksData(response.data);
         setHasMorePages(response.hasMore);
-
         if (response.nextCursor && cursors.length === targetPage + 1) {
           setCursors(prev => [...prev, response.nextCursor]);
         }     
@@ -65,13 +93,16 @@ function Tasks() {
         setHasMorePages(false);
       }
 
-      setLoading(false);
-    },[filters, sorting, searchText, pageSize, cursors, currentPage]);
+      setLoadingTasks(false);
+    },[filters, sorting, searchText, pageSize, cursors, currentPage, dropdowns]);
 
 
     useEffect(() => {
-      fetchTasksWith(filters);
-    }, [searchText, sorting, filters, currentPage, fetchTasksWith]);
+      // Only fetch tasks if dropdowns are loaded (or if they are empty, which is a valid state)
+      if (!loadingDropdowns) {
+          fetchTasksWith(filters);
+      }
+    }, [searchText, sorting, filters, currentPage, fetchTasksWith, loadingDropdowns]);
 
     const columnHelper=createColumnHelper();
     const columns = [
@@ -98,7 +129,7 @@ function Tasks() {
                   statusClass = 'bg-yellow-200 text-yellow-800';
                 break;
 
-                case 'In Progress':
+                case 'In-Progress':
                   statusClass = 'bg-blue-200 text-blue-800';
                 break;
 
@@ -228,16 +259,27 @@ function Tasks() {
         setCursors([null]);
         setFilters(prev => {
             const updated = { ...prev, [filterName]: value };
-            // fetchTasksWith will be called by useEffect after state update
+            fetchTasksWith(updated);
             return updated;
         });
     };
 
-    const addIcon=<IoMdAdd />;
+    const addIcon=<IoMdAdd />;  
 
     return (
     <>
-    {showAddTaskModal && <AddTask onClose={()=>setShowAddTaskModal(false)} show={showAddTaskModal} onTaskAdded={() => fetchTasksWith(filters)} />}
+
+    {showAddTaskModal && (
+
+      <AddTask 
+        onClose={() => setShowAddTaskModal(false)} 
+        show={showAddTaskModal} 
+        onTaskAdded={() => fetchTasksWith(filters)} 
+        taskPhasesOptions={dropdowns.taskPhases} // Pass as prop
+        taskPrioritiesOptions={dropdowns.taskPriorities} // Pass as prop
+        statusesOptions={dropdowns.statuses} // Pass as prop
+      />
+    )}
     <div className="mx-auto p-4 z-10">
       <h2 className="text-2xl font-bold mb-4 text-center">Task List</h2>
       
@@ -264,12 +306,9 @@ function Tasks() {
               }}              
             >
               <option value="">All Phases</option>
-              <option value="planning">Planning</option>
-              <option value="designing">Designing</option>
-              <option value="implementation">Implementation</option>
-              <option value="testing">Testing</option>
-              <option value="delivery">Delivery</option>
-              <option value="hold">Hold</option>
+              {dropdowns.taskPhases.map(option => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
             </select>
 
             <select
@@ -286,10 +325,9 @@ function Tasks() {
               }}              
             >
               <option value="">All Status</option>
-              <option value="pending">Pending</option>
-              <option value="inProgress">In Progress</option>
-              <option value="completed">Completed</option>
-              <option value="overdue">Overdue</option>
+              {dropdowns.statuses.map(option => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
             </select>
 
             <select
@@ -306,9 +344,9 @@ function Tasks() {
               }}                 
             >
               <option value="">All Priorities</option>
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
+              {dropdowns.taskPriorities.map(option => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
             </select>
           </div>
 
@@ -323,7 +361,7 @@ function Tasks() {
             showClear={true}
           />        
         </div>
-        {loading ?(
+        {loadingTasks || loadingDropdowns ?(
           <div className="flex justify-center items-center h-40">
             <Loader color='text-blue' />
           </div>

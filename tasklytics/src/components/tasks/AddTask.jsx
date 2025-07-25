@@ -8,29 +8,20 @@ import { getCodersList } from '../../firebase/codersService';
 import { addTaskFirebase } from '../../firebase/addTaskService';
 import { toast } from 'react-toastify';
 
-function AddTask({onClose, show, onTaskAdded }) {
+function AddTask({onClose, show, onTaskAdded, taskPhasesOptions, taskPrioritiesOptions, statusesOptions }) {
     const {user}=useSelector((state)=>state.auth);
-    const [priorityOptions, setPriorityOptions] = useState([]);
-    const [phaseOptions, setPhaseOptions] = useState([]);
-    const [statusOptions, setStatusOptions] = useState([]);
     const [clientOptions, setClientOptions] = useState([]);
     const [codersOptions, setCodersOptions] = useState([]);
 
     useEffect(()=>{
       async function fetchDropdowns(){
         const results = await Promise.allSettled([
-          getDropdownOptions('priorities','sortOrder','asc'),
-          getDropdownOptions('phases','sortOrder','asc'),
-          getDropdownOptions('statuses','sortOrder','asc'),
           getDropdownOptions('clients','sortOrder','asc'),
           getCodersList(user.id),
         ]);
 
-        if (results[0].status === 'fulfilled') setPriorityOptions(results[0].value);
-        if (results[1].status === 'fulfilled') setPhaseOptions(results[1].value);
-        if (results[2].status === 'fulfilled') setStatusOptions(results[2].value);
-        if (results[3].status === 'fulfilled') setClientOptions(results[3].value);
-        if (results[4].status === 'fulfilled') setCodersOptions(results[4].value);
+        if (results[0].status === 'fulfilled') setClientOptions(results[0].value);
+        if (results[1].status === 'fulfilled') setCodersOptions(results[1].value);
 
         console.log(results);
         
@@ -168,7 +159,7 @@ function AddTask({onClose, show, onTaskAdded }) {
                   defaultOption= "Select Phase"
                   className="py-1 text-sm"
                   labelClass='font-semibold mt-2'
-                  options={phaseOptions}
+                  options={taskPhasesOptions}
                   {...register("taskPhase",{
                     required: "Please select Phase",
                   })}
@@ -184,7 +175,7 @@ function AddTask({onClose, show, onTaskAdded }) {
                 label="Status"
                 defaultOption= "Select Status"
                 labelClass='font-semibold mt-2'
-                options={statusOptions}
+                options={statusesOptions}
                   {...register("taskStatus",{
                     required: "Please Select Status",
                   })}
@@ -238,7 +229,7 @@ function AddTask({onClose, show, onTaskAdded }) {
                 label="Priority"
                 defaultOption= "Select Priority"
                 labelClass='font-semibold mt-2'
-                options={priorityOptions}
+                options={taskPrioritiesOptions}
                   {...register("priority",{
                     required: "Please Select Priority",
                   })}
