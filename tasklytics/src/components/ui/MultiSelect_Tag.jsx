@@ -21,14 +21,14 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
   },
   ref
 ) {
-  const [selected, setSelected] = useState(defaultValue.map(d => d.value));
+  const [selected, setSelected] = useState(Array.isArray(defaultValue) ? defaultValue : []);
   const [showOptions, setShowOptions] = useState(false);
   const [search, setSearch] = useState("");
   const dropdownRef = useRef(null);
   const hiddenInputRef = useRef();
 
   // Pass the ref from react-hook-form to the hidden input
-  useImperativeHandle(ref, () => hiddenInputRef.current);
+  // useImperativeHandle(ref, () => hiddenInputRef.current);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -46,6 +46,10 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
       onChange({ target: { name, value: selected } });
     }
   }, [selected]);
+
+  useEffect(() => {
+    setSelected(Array.isArray(defaultValue) ? defaultValue : []);
+  }, [defaultValue]);  
 
   const selectedLabels = options
     .filter((opt) => selected.includes(opt.value))
@@ -73,7 +77,8 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
       <input
         type="hidden"
         name={name}
-        ref={hiddenInputRef}
+        // ref={hiddenInputRef}
+        ref={ref}
         value={JSON.stringify(selected)}
         readOnly
       />

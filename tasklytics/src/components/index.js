@@ -17,6 +17,7 @@ import AppLayout from "./layout/AppLayout";
 import Login from "./layout/Login";
 import Tasks from "./tasks/Tasks";
 import AddTask from "./tasks/AddTask";
+import EditTask from "./tasks/EditTask";
 
 export { 
     Loader,
@@ -34,6 +35,7 @@ export {
     Login,
     Tasks,
     AddTask,
+    EditTask,
 
     Sidebar,
     Header,

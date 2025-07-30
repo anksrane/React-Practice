@@ -21,7 +21,8 @@ function Tasks() {
     const [loadingTasks, setLoadingTasks] = useState(true);
     const [loadingDropdowns, setLoadingDropdowns] = useState(true);
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
-    const [editingTask, setEditingTask] = useState(null);
+    const [singleTask, setSingleTask] = useState({});
+    const [editingMode,setEditingMode]= useState(false);
 
     const [sorting,setSorting]=useState([]);
     const [globalFilter,setGlobalFilter]=useState('');
@@ -180,7 +181,8 @@ function Tasks() {
                 <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs"
                   onClick={() => {
-                      setEditingTask(props.row.original); // Set task for editing
+                      setSingleTask(props.row.original); // Set task for editing
+                      setEditingMode(true);
                       setShowAddTaskModal(true);
                   }}
                 >
@@ -274,6 +276,8 @@ function Tasks() {
       <AddTask 
         onClose={() => setShowAddTaskModal(false)} 
         show={showAddTaskModal} 
+        singleTask= {singleTask}
+        editingMode={editingMode}
         onTaskAdded={() => fetchTasksWith(filters)} 
         taskPhasesOptions={dropdowns.taskPhases} // Pass as prop
         taskPrioritiesOptions={dropdowns.taskPriorities} // Pass as prop
@@ -285,7 +289,12 @@ function Tasks() {
       
       <div>
           {/* Add Task Button */}
-          <ButtonWithIcon icon={addIcon} iconClass={'text-xl font-bold'} iconPosition="left" variant="primary" className='text-sm mt-0' onClick={()=>setShowAddTaskModal(true)}>
+          <ButtonWithIcon icon={addIcon} iconClass={'text-xl font-bold'} iconPosition="left" variant="primary" className='text-sm mt-0' 
+          onClick={()=>{
+            setShowAddTaskModal(true);
+            setEditingMode(false);
+            setSingleTask(null);
+            }}>
             Add Task
           </ButtonWithIcon>        
         {/* Global Search Input */}

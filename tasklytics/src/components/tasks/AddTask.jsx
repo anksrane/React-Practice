@@ -1,17 +1,28 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Button, Input, Select, DatePicker, MultiSelect_Tag } from '../index';
+import { Button, Input, Select, DatePicker, MultiSelect_Tag, Loader } from '../index';
 import { IoMdCloseCircle } from "react-icons/io";
 import { useSelector } from 'react-redux';
 import { getDropdownOptions } from '../../firebase/dropdownService';
 import { getCodersList } from '../../firebase/codersService';
 import { addTaskFirebase } from '../../firebase/addTaskService';
+import { updateTaskFirebase } from '../../firebase/updateTaskService';
 import { toast } from 'react-toastify';
 
-function AddTask({onClose, show, onTaskAdded, taskPhasesOptions, taskPrioritiesOptions, statusesOptions }) {
+function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptions, taskPrioritiesOptions, statusesOptions }) {
     const {user}=useSelector((state)=>state.auth);
     const [clientOptions, setClientOptions] = useState([]);
     const [codersOptions, setCodersOptions] = useState([]);
+    const [loading,setLoading] = useState(true);
+
+    const {
+      register,
+      handleSubmit,
+      reset,
+      watch,
+      formState:{ errors, isSubmitting },
+    } = useForm();
+    const startDateValue = watch("startDate");    
 
     useEffect(()=>{
       async function fetchDropdowns(){
@@ -23,26 +34,35 @@ function AddTask({onClose, show, onTaskAdded, taskPhasesOptions, taskPrioritiesO
         if (results[0].status === 'fulfilled') setClientOptions(results[0].value);
         if (results[1].status === 'fulfilled') setCodersOptions(results[1].value);
 
-        console.log(results);
+        // console.log(results);
         
         results.forEach((res, i) => {
           if (res.status === 'rejected') {
             console.error(`Dropdown fetch failed [${i}]:`, res.reason);
           }
         });
+        setLoading(false);
       }
 
       fetchDropdowns();
     },[])
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      watch,
-      formState:{ errors, isSubmitting },
-    } = useForm();
-    const startDateValue = watch("startDate");
+    useEffect(() => {
+      if (editingMode && singleTask) {
+        reset({
+          title: singleTask.title || '',
+          description: singleTask.description || '',
+          taskPhase: singleTask.taskPhase || '',
+          taskStatus: singleTask.taskStatus || '',
+          startDate: singleTask.startDate || '',
+          endDate: singleTask.endDate || '',
+          priority: singleTask.priority || '',
+          coders: singleTask.coders?.map(coder => coder.id) || [],
+          client: singleTask.client || '',
+        });
+        setLoading(false);
+      }
+    }, [editingMode, singleTask, reset]);    
 
     const backdropRef = useRef(null);
 
@@ -59,6 +79,7 @@ function AddTask({onClose, show, onTaskAdded, taskPhasesOptions, taskPrioritiesO
     };
 
     const onSubmit = async (data) => {
+      setLoading(true);
         let selectedCoders;
         if(user.userRole=="Coder"){
           selectedCoders = [{ id: user.id, name: user.name }];
@@ -84,23 +105,48 @@ function AddTask({onClose, show, onTaskAdded, taskPhasesOptions, taskPrioritiesO
             createdByName:user.name,
             updatedByName:user.name,
             managerId: user.userRole == "Manager" ? user.id : user.manager,
+            trash:false
         };
 
-        try {
-          const response=await addTaskFirebase(cleaned);
-          if(response.success){
-            toast.success("Task Created Successfully");
+        if (editingMode && singleTask) {
+          cleaned.id = singleTask.id; // required for update
+          cleaned.createdBy = singleTask.createdBy;
+          cleaned.createdByName = singleTask.createdByName;
+          const response = await updateTaskFirebase(singleTask.id, cleaned);
+
+          if (response.success) {
+            setLoading(false)
+            toast.success("Task Updated Successfully");
             onClose();
             reset();
-            onTaskAdded?.();
-          }else{
-            toast.error("Error Creating Task");
-            throw response.error;
-          }
-        } catch (error) {
-            console.error("Add Task Error:", error);
-            toast.error("Failed to add task. Please try again.");
-        }
+            onTaskAdded?.();            
+          } else {
+              toast.error("Error Updating Task");
+              throw response.error;
+          }          
+        } else {
+          const createPayload = {
+            ...cleaned,
+            createdBy: user.id,
+            createdByName: user.name,
+          };
+          try {
+            const response=await addTaskFirebase(createPayload);
+            if(response.success){
+              setLoading(false);
+              toast.success("Task Created Successfully");
+              onClose();
+              reset();
+              onTaskAdded?.();
+            }else{
+              toast.error("Error Creating Task");
+              throw response.error;
+            }
+          } catch (error) {
+              console.error("Add Task Error:", error);
+              toast.error("Failed to add task. Please try again.");
+          }          
+        }        
     };
 
     return (
@@ -109,174 +155,189 @@ function AddTask({onClose, show, onTaskAdded, taskPhasesOptions, taskPrioritiesO
           <div className='flex justify-end mb-2'>
             <button onClick={onClose}><IoMdCloseCircle className='text-2xl'/></button>
           </div>
-          <h2 className="text-2xl font-bold mb-4 text-center">Add Task</h2>
+          <h2 className="text-2xl font-bold mb-4 text-center">{editingMode?"Edit Task" : "Add Task"}</h2>
 
-          <form onSubmit={handleSubmit(onSubmit)} className='container mx-auto pt-5 pb-4 relative'> 
-            {/* Title Input Start */}
-              <div className="w-full">
-                <Input 
-                    label="Title"
-                    placeholder="Enter Task Title"
-                    type="text"
-                    className="py-1 text-sm"
-                    labelClass='font-semibold'
-                    {...register("title", {
-                        required: "Title is Required",
-                        pattern: {
-                            value: /^[a-zA-Z0-9 _.-]{1,100}$/,
-                            message: "Title can only contain letters, numbers, spaces, -, _, and ."
-                        }
-                    })}
-                    error={errors.title && errors.title.message}
-                />  
+          {loading?(
+            <>
+              <div>
+                <Loader color='text-blue' height='h-64'/>
               </div>
-            {/* Title Input End */}
+            </>
+          ):(
+            <>
+              <form onSubmit={handleSubmit(onSubmit)} className='container mx-auto pt-5 pb-4 relative'> 
+                {/* Title Input Start */}
+                  <div className="w-full">
+                    <Input 
+                        label="Title"
+                        placeholder="Enter Task Title"
+                        type="text"
+                        className="py-1 text-sm"
+                        labelClass='font-semibold'
+                        {...register("title", {
+                            required: "Title is Required",
+                            pattern: {
+                                value: /^[a-zA-Z0-9 _.-]{1,100}$/,
+                                message: "Title can only contain letters, numbers, spaces, -, _, and ."
+                            }
+                        })}
+                        error={errors.title && errors.title.message}
+                    />  
+                  </div>
+                {/* Title Input End */}
 
-            {/* Description Input Start */}
-              <div className="w-full">
-                <Input 
-                    label="Description"
-                    placeholder="Enter Task Description"
-                    isTextarea = {true}
+                {/* Description Input Start */}
+                  <div className="w-full">
+                    <Input 
+                        label="Description"
+                        placeholder="Enter Task Description"
+                        isTextarea = {true}
+                        className="py-1 text-sm"
+                        labelClass='font-semibold mt-2'
+                        {...register("description", {
+                            required: "Description is Required",
+                            pattern: {
+                                value: /^[a-zA-Z0-9 _.-]{1,100}$/,
+                                message: "Description can only contain letters, numbers, spaces, -, _, and ."
+                            }
+                        })}
+                        error={errors.description && errors.description.message}
+                    />  
+                  </div>
+                {/* Description Input End */}  
+
+                {/* Task Phase Input Start */}
+                  <div className="w-full">
+                    <Select 
+                      label="Phase"
+                      defaultOption= "Select Phase"
+                      className="py-1 text-sm"
+                      labelClass='font-semibold mt-2'
+                      options={taskPhasesOptions}
+                      {...register("taskPhase",{
+                        required: "Please select Phase",
+                      })}
+                      error={errors.taskPhase && errors.taskPhase.message}
+                    /> 
+                  </div>
+                {/* Task Phase Input End */}  
+
+                {/* Task Status Input Start */}
+                  <div className="w-full">
+                    <Select 
                     className="py-1 text-sm"
+                    label="Status"
+                    defaultOption= "Select Status"
                     labelClass='font-semibold mt-2'
-                    {...register("description", {
-                        required: "Description is Required",
-                        pattern: {
-                            value: /^[a-zA-Z0-9 _.-]{1,100}$/,
-                            message: "Description can only contain letters, numbers, spaces, -, _, and ."
-                        }
-                    })}
-                    error={errors.description && errors.description.message}
-                />  
-              </div>
-            {/* Description Input End */}  
+                    options={statusesOptions}
+                      {...register("taskStatus",{
+                        required: "Please Select Status",
+                      })}
+                      error={errors.taskStatus && errors.taskStatus.message}
+                    /> 
+                  </div>
+                {/* Task Status Input End */}  
 
-            {/* Task Phase Input Start */}
-              <div className="w-full">
-                <Select 
-                  label="Phase"
-                  defaultOption= "Select Phase"
-                  className="py-1 text-sm"
-                  labelClass='font-semibold mt-2'
-                  options={taskPhasesOptions}
-                  {...register("taskPhase",{
-                    required: "Please select Phase",
-                  })}
-                  error={errors.taskPhase && errors.taskPhase.message}
-                /> 
-              </div>
-            {/* Task Phase Input End */}  
+                {/* Date Input Start */}
+                <div className='flex gap-2'>
+                    <div className="w-full">
+                      <DatePicker
+                        label="Start Date"
+                        labelClass='font-semibold mt-2'
+                        className="py-1 text-sm"
+                        {...register("startDate",{
+                          required:"Please Select Start Date"
+                        })}
+                        error={errors.startDate && errors.startDate.message}
+                      />
+                    </div>
 
-            {/* Task Status Input Start */}
-              <div className="w-full">
-                <Select 
-                className="py-1 text-sm"
-                label="Status"
-                defaultOption= "Select Status"
-                labelClass='font-semibold mt-2'
-                options={statusesOptions}
-                  {...register("taskStatus",{
-                    required: "Please Select Status",
-                  })}
-                  error={errors.taskStatus && errors.taskStatus.message}
-                /> 
-              </div>
-            {/* Task Status Input End */}  
-
-            {/* Date Input Start */}
-            <div className='flex gap-2'>
-                <div className="w-full">
-                  <DatePicker
-                    label="Start Date"
-                    labelClass='font-semibold mt-2'
-                    className="py-1 text-sm"
-                    {...register("startDate",{
-                      required:"Please Select Start Date"
-                    })}
-                    error={errors.startDate && errors.startDate.message}
-                  />
+                    <div className="w-full">
+                      <DatePicker
+                        label="End Date"
+                        labelClass='font-semibold mt-2'
+                        className="py-1 text-sm"
+                        disabled={!startDateValue}
+                        placeholder={!startDateValue ? "Please select Start Date first" : ""}
+                        min={startDateValue}
+                        {...register("endDate",{
+                          required:"Please Select End Date",
+                          validate: value => {
+                            if (!startDateValue) return true; // skip check if start not selected yet
+                            if (new Date(value) < new Date(startDateValue)) {
+                              return "End Date cannot be before Start Date";
+                            }
+                            return true;
+                          }                      
+                        })} 
+                        error={errors.endDate && errors.endDate.message}                   
+                      />
+                    </div>
                 </div>
+                {/* Date Input End */}  
 
-                <div className="w-full">
-                  <DatePicker
-                    label="End Date"
-                    labelClass='font-semibold mt-2'
+                {/* Priority Input Start */}
+                  <div className="w-full">
+                    <Select 
                     className="py-1 text-sm"
-                    disabled={!startDateValue}
-                    placeholder={!startDateValue ? "Please select Start Date first" : ""}
-                    min={startDateValue}
-                    {...register("endDate",{
-                      required:"Please Select End Date",
-                      validate: value => {
-                        if (!startDateValue) return true; // skip check if start not selected yet
-                        if (new Date(value) < new Date(startDateValue)) {
-                          return "End Date cannot be before Start Date";
-                        }
-                        return true;
-                      }                      
-                    })} 
-                    error={errors.endDate && errors.endDate.message}                   
-                  />
-                </div>
-            </div>
-            {/* Date Input End */}  
-
-            {/* Priority Input Start */}
-              <div className="w-full">
-                <Select 
-                className="py-1 text-sm"
-                label="Priority"
-                defaultOption= "Select Priority"
-                labelClass='font-semibold mt-2'
-                options={taskPrioritiesOptions}
-                  {...register("priority",{
-                    required: "Please Select Priority",
-                  })}
-                  error={errors.priority && errors.priority.message}
-                /> 
-              </div>
-            {/* Priority Input End */}  
-
-            {/* assignedCoderNames Input Start */}
-            {user.userRole !== "Coder" && (
-              <div className="w-full">
-                  <MultiSelect_Tag 
-                    label="Coders"
-                    className='p-1 text-sm'
+                    label="Priority"
+                    defaultOption= "Select Priority"
                     labelClass='font-semibold mt-2'
-                    options={codersOptions}   
-                    // options={["React", "JavaScript", "HTML", "CSS"]}  
-                    {...register("coders",{
-                      required:"Please Select Coders"
-                    })} 
-                    error={errors.coders && errors.coders.message}                                      
-                  />
-              </div>
-            )}
-            {/* assignedCoderNames Input End */}   
+                    options={taskPrioritiesOptions}
+                      {...register("priority",{
+                        required: "Please Select Priority",
+                      })}
+                      error={errors.priority && errors.priority.message}
+                    /> 
+                  </div>
+                {/* Priority Input End */}  
 
-            {/* Client Input Start */}
-              <div className="w-full">
-                <Select 
-                  label="Client"
-                  defaultOption= "Select Client"
-                  className="py-1 text-sm"
-                  labelClass='font-semibold mt-2'
-                  options={clientOptions}
-                  {...register("client",{
-                    required: "Please select Client",
-                  })}
-                  error={errors.client && errors.client.message}
-                /> 
-              </div>
-            {/* Client Input End */}  
+                {/* assignedCoderNames Input Start */}
+                {user.userRole !== "Coder" && (
+                  <div className="w-full">
+                      <MultiSelect_Tag 
+                        label="Coders"
+                        className='p-1 text-sm'
+                        labelClass='font-semibold mt-2'
+                        options={codersOptions}   
+                        defaultValue={watch("coders") || []}
+                        // options={["React", "JavaScript", "HTML", "CSS"]}  
+                        {...register("coders",{
+                          required:"Please Select Coders"
+                        })} 
+                        error={errors.coders && errors.coders.message}                                      
+                      />
+                  </div>
+                )}
+                {/* assignedCoderNames Input End */}   
 
-            <div className='flex items-center justify-center gap-2 mt-3'>
-                <Button type="submit" variant='primary' className='py-2 text-sm' isLoading={isSubmitting}>Submit</Button>
-                <Button type="reset" variant='danger' className='py-2 text-sm' onClick={()=>reset()}>Reset</Button>
-            </div>
-          </form>
+                {/* Client Input Start */}
+                  <div className="w-full">
+                    <Select 
+                      label="Client"
+                      defaultOption= "Select Client"
+                      className="py-1 text-sm"
+                      labelClass='font-semibold mt-2'
+                      options={clientOptions}
+                      // defaultValue={watch("client") || ""}
+                      value={watch("client") || ""}
+                      {...register("client",{
+                        required: "Please select Client",
+                      })}
+                      error={errors.client && errors.client.message}
+                    /> 
+                  </div>
+                {/* Client Input End */}  
+
+                <div className='flex items-center justify-center gap-2 mt-3'>
+                    <Button type="submit" variant='primary' className='py-2 text-sm' isLoading={isSubmitting}>
+                      {isSubmitting ? 'Submitting...' : editingMode ? 'Update Task' : 'Create Task'}
+                    </Button>
+                    <Button type="reset" variant='danger' className='py-2 text-sm' onClick={()=>reset()}>Reset</Button>
+                </div>
+              </form>            
+            </>
+          )}
         </div>
       </div>
     )
