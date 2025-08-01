@@ -150,7 +150,7 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
     };
 
     return (
-      <div ref={backdropRef} className='absolute bg-black bg-opacity-50 z-20 w-full h-full cursor-pointer'   onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
+      <div ref={backdropRef} className='absolute bg-black bg-opacity-50 z-20 w-full h-full cursor-pointer'  onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
         <div className='absolute bg-white top-0 right-0 h-full w-96 p-4 overflow-y-auto cursor-auto' onMouseDown={(e) => e.stopPropagation()} onMouseUp={(e) => e.stopPropagation()} >
           <div className='flex justify-end mb-2'>
             <button onClick={onClose}><IoMdCloseCircle className='text-2xl'/></button>

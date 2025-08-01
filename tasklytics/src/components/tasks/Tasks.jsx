@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
-import { ButtonWithIcon, AddTask } from '../index.js'
+import { ButtonWithIcon, AddTask, ConfirmTrashModal } from '../index.js'
 import { InputSearch, Loader } from '../index.js';
 import { IoMdAdd } from "react-icons/io";
 import { fetchAllDropdowns } from '../../firebase/dropdownService.js';
@@ -12,7 +12,6 @@ import {
   flexRender,
   getFilteredRowModel,
   getSortedRowModel,
-  getPaginationRowModel,
 } from '@tanstack/react-table';
 
 
@@ -23,6 +22,8 @@ function Tasks() {
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
     const [singleTask, setSingleTask] = useState({});
     const [editingMode,setEditingMode]= useState(false);
+    const [showDeleteModal,setShowDeleteModal] = useState(false);
+    const [deleteData, setDeleteData] = useState({});
 
     const [sorting,setSorting]=useState([]);
     const [globalFilter,setGlobalFilter]=useState('');
@@ -34,7 +35,8 @@ function Tasks() {
     const [filters, setFilters] = useState({
       phase: '',
       status: '',
-      priority: ''
+      priority: '',
+      trash: false
     });
 
     const [dropdowns, setDropdowns] = useState({
@@ -190,7 +192,11 @@ function Tasks() {
                 </button>
                 <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs"
-                  onClick={() => alert(`Deleting task: ${props.row.original.id}`)}
+                  onClick={() => {
+                    // alert(`Deleting task: ${props.row.original.id}`)
+                    setDeleteData(props.row.original);
+                    setShowDeleteModal(true);
+                  }}
                 >
                 Delete
                 </button>
@@ -255,16 +261,16 @@ function Tasks() {
         setGlobalFilter(''); // Clears client-side filter
     };    
 
-    const handleFilterChange = (filterName, value) => {
-        // Reset current page and cursors when filters change to start from beginning
-        setCurrentPage(0);
-        setCursors([null]);
-        setFilters(prev => {
-            const updated = { ...prev, [filterName]: value };
-            fetchTasksWith(updated);
-            return updated;
-        });
-    };
+    // const handleFilterChange = (filterName, value) => {
+    //     // Reset current page and cursors when filters change to start from beginning
+    //     setCurrentPage(0);
+    //     setCursors([null]);
+    //     setFilters(prev => {
+    //         const updated = { ...prev, [filterName]: value };
+    //         fetchTasksWith(updated);
+    //         return updated;
+    //     });
+    // };
 
     const addIcon=<IoMdAdd />;  
 
@@ -284,6 +290,15 @@ function Tasks() {
         statusesOptions={dropdowns.statuses} // Pass as prop
       />
     )}
+    
+    {showDeleteModal && (
+      <ConfirmTrashModal
+       onClose={()=>setShowDeleteModal(false)}
+       deleteData={deleteData}
+       onTaskAdded={() => fetchTasksWith(filters)}
+       />
+    )}
+
     <div className="mx-auto p-4 z-10">
       <h2 className="text-2xl font-bold mb-4 text-center">Task List</h2>
       

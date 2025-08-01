@@ -7,7 +7,7 @@ export const getAllTaskFirebase = async (
     searchTerm="",
     filters={},
     sortBy = "created_at",
-    sortOrder = "asc",
+    sortOrder = "dsc",
     pageSize = 10,
     cursor = null,
     taskPhasesList,      
@@ -27,6 +27,9 @@ export const getAllTaskFirebase = async (
         }
         if (filters.priority) {
             conditions.push(where("priority", "==", filters.priority));
+        }
+        if(typeof filters.trash === "boolean") {
+            conditions.push(where("trash", "==", filters.trash));
         }
 
         let baseQuery = query(

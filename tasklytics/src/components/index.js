@@ -13,11 +13,11 @@ import Loader from "./ui/Loader";
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
 import AppLayout from "./layout/AppLayout";
+import ConfirmTrashModal from "./layout/ConfirmTrashModal";
 
 import Login from "./layout/Login";
 import Tasks from "./tasks/Tasks";
 import AddTask from "./tasks/AddTask";
-import EditTask from "./tasks/EditTask";
 
 export { 
     Loader,
@@ -35,9 +35,9 @@ export {
     Login,
     Tasks,
     AddTask,
-    EditTask,
 
     Sidebar,
     Header,
-    AppLayout
+    AppLayout,
+    ConfirmTrashModal
 };

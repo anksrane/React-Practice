@@ -12,7 +12,7 @@ function Button({
   const variants = {
     primary: 'bg-black text-white hover:bg-gray-900',
     outline: 'border border-black text-black hover:bg-gray-100',
-    danger: 'bg-red-700 text-white hover:bg-red-600 border border-red-700',
+    danger: 'bg-red-500 text-white hover:bg-red-600 border border-red-500',
     custom: ''
   };
 
