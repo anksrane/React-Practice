@@ -80,6 +80,15 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
 
     const onSubmit = async (data) => {
       setLoading(true);
+
+        const generateKeywords = (title, client) => {
+          const words = (title + ' ' + (client || '')).toLowerCase().split(/\s+/);
+          const cleaned = words
+            .map(word => word.replace(/[^a-z0-9]/gi, '')) // remove punctuation
+            .filter(word => word.length > 1);             // keep meaningful words only
+          return Array.from(new Set(cleaned));            // unique keywords only
+        }; 
+
         let selectedCoders;
         if(user.userRole=="Coder"){
           selectedCoders = [{ id: user.id, name: user.name }];
@@ -112,6 +121,7 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
           cleaned.id = singleTask.id; // required for update
           cleaned.createdBy = singleTask.createdBy;
           cleaned.createdByName = singleTask.createdByName;
+          cleaned.keywords = generateKeywords(cleaned.title, cleaned.client);
           const response = await updateTaskFirebase(singleTask.id, cleaned);
 
           if (response.success) {
@@ -129,6 +139,7 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
             ...cleaned,
             createdBy: user.id,
             createdByName: user.name,
+            keywords: generateKeywords(cleaned.title, cleaned.client)          
           };
           try {
             const response=await addTaskFirebase(createPayload);

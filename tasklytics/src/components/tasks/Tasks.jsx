@@ -4,6 +4,7 @@ import { InputSearch, Loader } from '../index.js';
 import { IoMdAdd } from "react-icons/io";
 import { fetchAllDropdowns } from '../../firebase/dropdownService.js';
 import { getAllTaskFirebase } from '../../firebase/getAllTasksWithFilter.js';
+import { MdOutlineClear } from "react-icons/md";
 
 import {
   useReactTable,
@@ -31,6 +32,7 @@ function Tasks() {
     const [pageSize] = useState(10);
     const [cursors, setCursors] = useState([null]); 
     const [searchText,setSearchText]=useState('');
+    const [appliedSearchText, setAppliedSearchText] = useState('');
     const [hasMorePages, setHasMorePages] = useState(false);
     const [filters, setFilters] = useState({
       phase: '',
@@ -73,7 +75,8 @@ function Tasks() {
       const cursorForQuery = cursors[targetPage] || null      
 
       const response = await getAllTaskFirebase(
-        searchText,
+        // searchText,
+        appliedSearchText,
         customFilters,
         sortBy,
         sortOrder,
@@ -97,7 +100,7 @@ function Tasks() {
       }
 
       setLoadingTasks(false);
-    },[filters, sorting, searchText, pageSize, cursors, currentPage, dropdowns]);
+    },[filters, sorting, appliedSearchText, pageSize, cursors, currentPage, dropdowns]);
 
 
     useEffect(() => {
@@ -105,7 +108,7 @@ function Tasks() {
       if (!loadingDropdowns) {
           fetchTasksWith(filters);
       }
-    }, [searchText, sorting, filters, currentPage, fetchTasksWith, loadingDropdowns]);
+    }, [appliedSearchText, sorting, filters, currentPage, fetchTasksWith, loadingDropdowns]);
 
     const columnHelper=createColumnHelper();
     const columns = [
@@ -261,17 +264,6 @@ function Tasks() {
         setGlobalFilter(''); // Clears client-side filter
     };    
 
-    // const handleFilterChange = (filterName, value) => {
-    //     // Reset current page and cursors when filters change to start from beginning
-    //     setCurrentPage(0);
-    //     setCursors([null]);
-    //     setFilters(prev => {
-    //         const updated = { ...prev, [filterName]: value };
-    //         fetchTasksWith(updated);
-    //         return updated;
-    //     });
-    // };
-
     const addIcon=<IoMdAdd />;  
 
     return (
@@ -316,74 +308,123 @@ function Tasks() {
         <div className="mb-4 flex items-end justify-between">
 
           <div className='flex gap-1'>
-            <select
-              className="border px-2 py-1 text-sm rounded"
-              value={filters.phase}
-              // onChange={(e) => setFilters(prev => ({ ...prev, phase: e.target.value }))}
-              onChange={(e) => {
-                const newPhase = e.target.value;
-                setFilters(prev => {
-                  const updated = { ...prev, phase: newPhase };
-                  fetchTasksWith(updated);
-                  return updated;
-                });
-              }}              
-            >
-              <option value="">All Phases</option>
-              {dropdowns.taskPhases.map(option => (
-                <option key={option.value} value={option.value}>{option.label}</option>
-              ))}
-            </select>
+            <div className='flex border rounded'>
+              <select
+                className="px-2 py-1 text-sm rounded"
+                value={filters.phase}
+                // onChange={(e) => setFilters(prev => ({ ...prev, phase: e.target.value }))}
+                onChange={(e) => {
+                  const newPhase = e.target.value;
+                  setFilters(prev => {
+                    const updated = { ...prev, phase: newPhase };
+                    fetchTasksWith(updated);
+                    return updated;
+                  });
+                }}              
+              >
+                <option value="">All Phases</option>
+                {dropdowns.taskPhases.map(option => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
+              <button className='bg-red-500 p-1 rounded-e text-white'><MdOutlineClear /></button>
+            </div>
 
-            <select
-              className="border px-2 py-1 text-sm rounded"
-              value={filters.status}
-              // onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
-              onChange={(e) => {
-                const newStatus = e.target.value;
-                setFilters(prev => {
-                  const updated = { ...prev, status: newStatus };
-                  fetchTasksWith(updated); 
-                  return updated;
-                });
-              }}              
-            >
-              <option value="">All Status</option>
-              {dropdowns.statuses.map(option => (
-                <option key={option.value} value={option.value}>{option.label}</option>
-              ))}
-            </select>
+            <div className='flex border rounded'>
+              <select
+                className="px-2 py-1 text-sm rounded"
+                value={filters.status}
+                // onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
+                onChange={(e) => {
+                  const newStatus = e.target.value;
+                  setFilters(prev => {
+                    const updated = { ...prev, status: newStatus };
+                    fetchTasksWith(updated); 
+                    return updated;
+                  });
+                }}              
+              >
+                <option value="">All Status</option>
+                {dropdowns.statuses.map(option => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
+              <button className='bg-red-500 p-1 rounded-e text-white'><MdOutlineClear /></button>              
+            </div>
 
-            <select
-              className="border px-2 py-1 text-sm rounded"
-              value={filters.priority}
-              // onChange={(e) => setFilters(prev => ({ ...prev, priority: e.target.value }))}
-              onChange={(e) => {
-                const newPriority = e.target.value;
-                setFilters(prev => {
-                  const updated = { ...prev, priority: newPriority };
-                  fetchTasksWith(updated); 
-                  return updated;
-                });
-              }}                 
-            >
-              <option value="">All Priorities</option>
-              {dropdowns.taskPriorities.map(option => (
-                <option key={option.value} value={option.value}>{option.label}</option>
-              ))}
-            </select>
+            <div className='flex border rounded'>
+              <select
+                className="px-2 py-1 text-sm rounded"
+                value={filters.priority}
+                // onChange={(e) => setFilters(prev => ({ ...prev, priority: e.target.value }))}
+                onChange={(e) => {
+                  const newPriority = e.target.value;
+                  setFilters(prev => {
+                    const updated = { ...prev, priority: newPriority };
+                    fetchTasksWith(updated); 
+                    return updated;
+                  });
+                }}                 
+              >
+                <option value="">All Priorities</option>
+                {dropdowns.taskPriorities.map(option => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
+              <button className='bg-red-500 p-1 rounded-e text-white'><MdOutlineClear /></button>
+            </div>
           </div>
 
           {/* Input Search New*/}
-          <InputSearch 
+          {/* <InputSearch 
             type="text" 
             placeholder="Search all tasks..." 
             value={searchText} 
             onChange={e=>setSearchText(e.target.value)} 
             onSearch={(value)=>setGlobalFilter(value)} 
-            onClear={handleClearSearch}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                // Reset to first page & fetch
+                setCurrentPage(0);
+                setCursors([null]);
+                fetchTasksWith(filters, 0);
+              }
+            }}
+            onClear={() => {
+              setSearchText('');
+              setGlobalFilter('');
+              setCurrentPage(0);
+              setCursors([null]);
+              fetchTasksWith(filters, 0);
+            }}
             showClear={true}
-          />        
+          />         */}
+            <InputSearch 
+              type="text" 
+              placeholder="Search all tasks..." 
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)} 
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setAppliedSearchText(searchText); // Apply the current input
+                  setCurrentPage(0);
+                  setCursors([null]);
+                  fetchTasksWith(filters, 0);
+                }
+              }}
+              onSearch={(value) => {
+                setSearchText(value); // update input
+              }}
+              onClear={() => {
+                setSearchText('');
+                setAppliedSearchText('');
+                setGlobalFilter('');
+                setCurrentPage(0);
+                setCursors([null]);
+                fetchTasksWith(filters, 0);
+              }}
+              showClear={true}
+            />
         </div>
         {loadingTasks || loadingDropdowns ?(
           <div className="flex justify-center items-center h-40">

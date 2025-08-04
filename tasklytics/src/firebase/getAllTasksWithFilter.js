@@ -19,6 +19,10 @@ export const getAllTaskFirebase = async (
         const conditions = [];
 
         // Filters (phase, status, priority)
+        if (searchTerm) {
+            const searchTermLower = searchTerm.toLowerCase();
+            conditions.push(where("keywords", "array-contains", searchTermLower));
+        }        
         if (filters.phase) {
             conditions.push(where("taskPhase", "==", filters.phase));
         }
@@ -47,12 +51,12 @@ export const getAllTaskFirebase = async (
 
         const querySnapshot = await getDocs(finalQuery);
         const docs = querySnapshot.docs;    // All documents fetched by Firebase (up to pageSize + 1)
-
+        
         // Determine if there are more documents than the requested pageSize
         const hasMore = docs.length > pageSize;
 
         // The actual documents to return for the current page 
-        const tasksToReturn = docs.slice(0, pageSize);       
+        const tasksToReturn = docs.slice(0, pageSize);      
 
         // The next cursor should be the last document snapshot of the *current page's returned data*.
         // This is crucial for the `startAfter` logic on the next fetch.
