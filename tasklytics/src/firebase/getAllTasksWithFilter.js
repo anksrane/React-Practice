@@ -4,6 +4,7 @@ import { db } from "./firebaseConfig";
 const getLabel=(list,value)=>list.find(item=>item.value===value)?.label || value;
 
 export const getAllTaskFirebase = async (
+    user,
     searchTerm="",
     filters={},
     sortBy = "created_at",
@@ -12,11 +13,23 @@ export const getAllTaskFirebase = async (
     cursor = null,
     taskPhasesList,      
     taskPrioritiesList,  
-    statusesList   
+    statusesList,
+    clientsList   
 ) => {
+    console.log("user: ",user);
     try {
         const colRef= collection (db,'tasksTable');
         const conditions = [];
+
+        if (user.userRole === "Manager") {
+            conditions.push(
+                where("managerId", "array-contains", user.id)
+            );
+        } else if (user.userRole === "Coder") {
+            conditions.push(
+                where("coderIds", "array-contains", user.id)
+            );
+        }        
 
         // Filters (phase, status, priority)
         if (searchTerm) {
@@ -73,7 +86,8 @@ export const getAllTaskFirebase = async (
                 // Apply human-readable labels
                 taskPhaseLabel: getLabel(taskPhasesList, data.taskPhase),
                 taskStatusLabel: getLabel(statusesList, data.taskStatus),
-                priorityLabel: getLabel(taskPrioritiesList, data.priority)
+                priorityLabel: getLabel(taskPrioritiesList, data.priority),
+                clientLabel:getLabel(clientsList,data.client)
             };
         }); 
 

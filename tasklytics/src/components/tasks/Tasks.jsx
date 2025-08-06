@@ -5,6 +5,7 @@ import { IoMdAdd } from "react-icons/io";
 import { fetchAllDropdowns } from '../../firebase/dropdownService.js';
 import { getAllTaskFirebase } from '../../firebase/getAllTasksWithFilter.js';
 import { MdOutlineClear } from "react-icons/md";
+import { useSelector } from 'react-redux';
 
 import {
   useReactTable,
@@ -17,6 +18,8 @@ import {
 
 
 function Tasks() {
+    const {user}=useSelector((state)=>state.auth);
+
     const [tasksData, setTasksData] = useState([]);
     const [loadingTasks, setLoadingTasks] = useState(true);
     const [loadingDropdowns, setLoadingDropdowns] = useState(true);
@@ -44,7 +47,8 @@ function Tasks() {
     const [dropdowns, setDropdowns] = useState({
         taskPhases: [],
         taskPriorities: [],
-        statuses: []
+        statuses: [],
+        clients:[]
     });
 
     // Fetch all dropdown options
@@ -56,7 +60,7 @@ function Tasks() {
                 setDropdowns(data);
             } catch (error) {
                 console.error("Error fetching dropdown data:", error);
-                setDropdowns({ taskPhases: [], taskPriorities: [], statuses: [] });
+                setDropdowns({ taskPhases: [], taskPriorities: [], statuses: [],clients:[] });
             } finally {
               setLoadingDropdowns(false);
             }
@@ -66,6 +70,7 @@ function Tasks() {
 
     // Fetch all task with data
     const fetchTasksWith = useCallback(async (customFilters = filters, targetPage = currentPage) => {
+      setTasksData([]);
       setLoadingTasks(true);
 
       const sortBy = sorting[0]?.id || 'created_at';
@@ -75,7 +80,7 @@ function Tasks() {
       const cursorForQuery = cursors[targetPage] || null      
 
       const response = await getAllTaskFirebase(
-        // searchText,
+        user,
         appliedSearchText,
         customFilters,
         sortBy,
@@ -84,11 +89,13 @@ function Tasks() {
         cursorForQuery,
         dropdowns.taskPhases, 
         dropdowns.taskPriorities,
-        dropdowns.statuses     
+        dropdowns.statuses,
+        dropdowns.clients
       );
 
       if (response.success) {
         setTasksData(response.data);
+        console.log(response.data);
         setHasMorePages(response.hasMore);
         if (response.nextCursor && cursors.length === targetPage + 1) {
           setCursors(prev => [...prev, response.nextCursor]);
@@ -112,7 +119,7 @@ function Tasks() {
 
     const columnHelper=createColumnHelper();
     const columns = [
-        columnHelper.accessor('client',{
+        columnHelper.accessor('clientLabel',{
             header: 'client',
             cell: info => info.getValue(),
             enableSorting: true,
@@ -184,7 +191,7 @@ function Tasks() {
             cell: props => (
             <div className="flex gap-2">
                 <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs"
+                className="bg-black text-white font-bold py-1 px-2 rounded text-xs"
                   onClick={() => {
                       setSingleTask(props.row.original); // Set task for editing
                       setEditingMode(true);
@@ -193,6 +200,7 @@ function Tasks() {
                 >
                 Edit
                 </button>
+
                 <button
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs"
                   onClick={() => {
@@ -257,12 +265,7 @@ function Tasks() {
             }
         }
         return numbers;
-    }, [currentPage, pageCount]);
-
-    const handleClearSearch = () => {
-        setSearchText('');
-        setGlobalFilter(''); // Clears client-side filter
-    };    
+    }, [currentPage, pageCount]);  
 
     const addIcon=<IoMdAdd />;  
 
@@ -280,6 +283,7 @@ function Tasks() {
         taskPhasesOptions={dropdowns.taskPhases} // Pass as prop
         taskPrioritiesOptions={dropdowns.taskPriorities} // Pass as prop
         statusesOptions={dropdowns.statuses} // Pass as prop
+        clientOptions={dropdowns.clients}
       />
     )}
     
@@ -297,10 +301,10 @@ function Tasks() {
       <div>
           {/* Add Task Button */}
           <ButtonWithIcon icon={addIcon} iconClass={'text-xl font-bold'} iconPosition="left" variant="primary" className='text-sm mt-0' 
-          onClick={()=>{
-            setShowAddTaskModal(true);
-            setEditingMode(false);
-            setSingleTask(null);
+            onClick={()=>{
+              setShowAddTaskModal(true);
+              setEditingMode(false);
+              setSingleTask(null);
             }}>
             Add Task
           </ButtonWithIcon>        
@@ -327,7 +331,11 @@ function Tasks() {
                   <option key={option.value} value={option.value}>{option.label}</option>
                 ))}
               </select>
-              <button className='bg-red-500 p-1 rounded-e text-white'><MdOutlineClear /></button>
+              <button className='bg-red-500 hover:bg-red-700 p-1 rounded-e text-white'
+                onClick={()=>{
+                  setFilters(prev => ({ ...prev, phase: '' }));
+                }}
+              ><MdOutlineClear /></button>
             </div>
 
             <div className='flex border rounded'>
@@ -349,7 +357,11 @@ function Tasks() {
                   <option key={option.value} value={option.value}>{option.label}</option>
                 ))}
               </select>
-              <button className='bg-red-500 p-1 rounded-e text-white'><MdOutlineClear /></button>              
+              <button className='bg-red-500 hover:bg-red-700 p-1 rounded-e text-white'
+                onClick={()=>{
+                  setFilters(prev => ({ ...prev, status: '' }));
+                }}
+              ><MdOutlineClear /></button>              
             </div>
 
             <div className='flex border rounded'>
@@ -371,37 +383,18 @@ function Tasks() {
                   <option key={option.value} value={option.value}>{option.label}</option>
                 ))}
               </select>
-              <button className='bg-red-500 p-1 rounded-e text-white'><MdOutlineClear /></button>
+              <button className='bg-red-500 hover:bg-red-700 p-1 rounded-e text-white'
+                onClick={()=>{
+                  setFilters(prev => ({ ...prev, priority: '' }));
+                }}
+              ><MdOutlineClear /></button>
             </div>
           </div>
 
           {/* Input Search New*/}
-          {/* <InputSearch 
-            type="text" 
-            placeholder="Search all tasks..." 
-            value={searchText} 
-            onChange={e=>setSearchText(e.target.value)} 
-            onSearch={(value)=>setGlobalFilter(value)} 
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                // Reset to first page & fetch
-                setCurrentPage(0);
-                setCursors([null]);
-                fetchTasksWith(filters, 0);
-              }
-            }}
-            onClear={() => {
-              setSearchText('');
-              setGlobalFilter('');
-              setCurrentPage(0);
-              setCursors([null]);
-              fetchTasksWith(filters, 0);
-            }}
-            showClear={true}
-          />         */}
             <InputSearch 
               type="text" 
-              placeholder="Search all tasks..." 
+              placeholder="Search Client Name, Title" 
               value={searchText}
               onChange={e => setSearchText(e.target.value)} 
               onKeyDown={(e) => {
@@ -426,6 +419,7 @@ function Tasks() {
               showClear={true}
             />
         </div>
+
         {loadingTasks || loadingDropdowns ?(
           <div className="flex justify-center items-center h-40">
             <Loader color='text-blue' />

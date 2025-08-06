@@ -9,9 +9,8 @@ import { addTaskFirebase } from '../../firebase/addTaskService';
 import { updateTaskFirebase } from '../../firebase/updateTaskService';
 import { toast } from 'react-toastify';
 
-function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptions, taskPrioritiesOptions, statusesOptions }) {
+function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptions, taskPrioritiesOptions, statusesOptions, clientOptions }) {
     const {user}=useSelector((state)=>state.auth);
-    const [clientOptions, setClientOptions] = useState([]);
     const [codersOptions, setCodersOptions] = useState([]);
     const [loading,setLoading] = useState(true);
 
@@ -27,12 +26,10 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
     useEffect(()=>{
       async function fetchDropdowns(){
         const results = await Promise.allSettled([
-          getDropdownOptions('clients','sortOrder','asc'),
           getCodersList(user.id),
         ]);
 
-        if (results[0].status === 'fulfilled') setClientOptions(results[0].value);
-        if (results[1].status === 'fulfilled') setCodersOptions(results[1].value);
+        if (results[0].status === 'fulfilled') setCodersOptions(results[0].value);
 
         // console.log(results);
         
@@ -108,12 +105,16 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
             endDate: data.endDate.trim(),
             priority: data.priority.trim(),
             coders: selectedCoders,   
+            coderIds: selectedCoders.map(c => c.id),
             client:data.client,
             createdBy:user.id,
             updatedBy:user.id,
             createdByName:user.name,
             updatedByName:user.name,
-            managerId: user.userRole == "Manager" ? user.id : user.manager,
+            // managerId: user.userRole == "Manager" ? user.id : user.manager,
+            managerId: user.userRole === "Manager"
+              ? [user.id]
+              : Array.isArray(user.manager) ? user.manager: [user.manager],            
             trash:false
         };
 

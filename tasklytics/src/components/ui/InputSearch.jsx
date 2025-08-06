@@ -15,7 +15,7 @@ const InputSearch = React.forwardRef(function InputSearch({
     ...props        
 },ref) {
     const id=React.useId();
-    const inputClass = `w-full px-3 py-1 rounded-md text-sm focus:outline-none focus:border-transparent ${className}`;
+    const inputClass = `w-full pl-2 py-1 rounded-md text-sm focus:outline-none focus:border-transparent z-0 ${className}`;
     return (
         <div className="flex items-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 <input
@@ -38,7 +38,7 @@ const InputSearch = React.forwardRef(function InputSearch({
                 <button
                 type="button"
                 onClick={onClear}
-                className={`p-2 text-gray-400 hover:text-gray-600 ${showClear && value.length>0 ? 'opacity-100 cursor-pointer': 'opacity-0 cursor-auto'}`}
+                className={`p-1 text-gray-400 hover:text-gray-600 ${showClear && value.length>0 ? 'opacity-100 z-20 cursor-pointer': 'opacity-0 -z-20 cursor-auto'}`}
                 >
                 <IoMdClose className="text-lg" />
                 </button>  

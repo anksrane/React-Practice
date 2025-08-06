@@ -31,15 +31,16 @@ export const getDropdownOptions = async (collectionName, columnForSort = 'label'
 
 export const fetchAllDropdowns = async () => {
     try {
-        const [taskPhases, taskPriorities, statuses] = await Promise.all([
+        const [taskPhases, taskPriorities, statuses, clients] = await Promise.all([
             getDropdownOptions('phases', 'sortOrder', 'asc'), // Assuming 'sortOrder' field
             getDropdownOptions('priorities', 'sortOrder', 'asc'),
-            getDropdownOptions('statuses', 'sortOrder', 'asc')
+            getDropdownOptions('statuses', 'sortOrder', 'asc'),
+            getDropdownOptions('clients','sortOrder','asc'),
         ]);
         // console.log("taskPhases:", taskPhases);
         // console.log("taskPriorities:", taskPriorities);
         // console.log("statuses:", statuses);
-        return { taskPhases, taskPriorities, statuses };
+        return { taskPhases, taskPriorities, statuses, clients };
     } catch (error) {
         console.error("Error fetching all dropdown options:", error);
         // Provide default empty arrays or rethrow
