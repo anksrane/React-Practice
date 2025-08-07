@@ -18,6 +18,7 @@ import ConfirmTrashModal from "./layout/ConfirmTrashModal";
 import Login from "./layout/Login";
 import Tasks from "./tasks/Tasks";
 import AddTask from "./tasks/AddTask";
+import ViewTask from "./tasks/ViewTask";
 
 export { 
     Loader,
@@ -35,6 +36,7 @@ export {
     Login,
     Tasks,
     AddTask,
+    ViewTask,
 
     Sidebar,
     Header,

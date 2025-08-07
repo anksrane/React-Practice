@@ -1,10 +1,13 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
-import { ButtonWithIcon, AddTask, ConfirmTrashModal } from '../index.js'
+import { ButtonWithIcon, AddTask, ViewTask, ConfirmTrashModal } from '../index.js'
 import { InputSearch, Loader } from '../index.js';
 import { IoMdAdd } from "react-icons/io";
 import { fetchAllDropdowns } from '../../firebase/dropdownService.js';
 import { getAllTaskFirebase } from '../../firebase/getAllTasksWithFilter.js';
 import { MdOutlineClear } from "react-icons/md";
+import { TbEdit } from "react-icons/tb";
+import { IoEyeSharp } from "react-icons/io5";
+import { GoTrash } from "react-icons/go";
 import { useSelector } from 'react-redux';
 
 import {
@@ -28,6 +31,8 @@ function Tasks() {
     const [editingMode,setEditingMode]= useState(false);
     const [showDeleteModal,setShowDeleteModal] = useState(false);
     const [deleteData, setDeleteData] = useState({});
+    const [showViewModal,setShowViewModal] = useState(false);
+    const [viewData, setViewData] = useState({});
 
     const [sorting,setSorting]=useState([]);
     const [globalFilter,setGlobalFilter]=useState('');
@@ -132,36 +137,7 @@ function Tasks() {
         }),
         columnHelper.accessor('taskStatusLabel',{
             header: 'Status',
-            cell: info => {
-            // Example of custom cell rendering with Tailwind for status colors
-            const status = info.getValue();
-            let statusClass = '';
-            switch (status) {
-                case 'Pending':
-                  statusClass = 'bg-yellow-200 text-yellow-800';
-                break;
-
-                case 'In-Progress':
-                  statusClass = 'bg-blue-200 text-blue-800';
-                break;
-
-                case 'Completed':
-                  statusClass = 'bg-green-200 text-green-800';
-                break;
-
-                case 'Overdue':
-                  statusClass = 'bg-red-200 text-red-800';
-                break;
-
-                default:
-                  statusClass = 'bg-gray-200 text-gray-800';
-            }
-                return (
-                    <span className={`px-2 py-1 rounded-full text-xs font-semibold ${statusClass}`}>
-                    {status}
-                    </span>
-                );
-            },
+            cell: info => info.getValue(),
             enableSorting: true,
             enableGlobalFilter: true
         }),
@@ -173,7 +149,29 @@ function Tasks() {
         }),
         columnHelper.accessor('priorityLabel',{
             header: 'Priority',
-            cell: info => info.getValue(),
+            cell: info => {
+              // Example of custom cell rendering with Tailwind for status colors
+              const priority = info.getValue();
+              let priorityClass = '';
+              switch (priority) {
+                  case 'Medium':
+                    priorityClass = 'bg-orange-200 text-orange-800';
+                  break;
+
+                  case 'Low':
+                    priorityClass = 'bg-green-200 text-green-800';
+                  break;
+
+                  case 'High':
+                    priorityClass = 'bg-red-200 text-red-800';
+                  break;
+              }
+                  return (
+                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${priorityClass}`}>
+                      {priority}
+                      </span>
+                  );
+            },
             enableSorting: true,
             enableGlobalFilter: true
         }),
@@ -188,27 +186,36 @@ function Tasks() {
             id: 'actions', // Unique ID for this display column
             header: 'Actions',
             cell: props => (
-            <div className="flex gap-2">
+            <div className="flex gap-3">
                 <button
-                className="bg-black text-white font-bold py-1 px-2 rounded text-xs"
+                className="border border-slate-500 font-bold p-1 hover:delay-100 hover:bg-black hover:text-white rounded text-xs"
                   onClick={() => {
                       setSingleTask(props.row.original); // Set task for editing
                       setEditingMode(true);
                       setShowAddTaskModal(true);
                   }}
                 >
-                Edit
+                <TbEdit className='text-xl font-bold'/>
                 </button>
 
                 <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs"
+                className="border border-slate-500 font-bold p-1 hover:delay-100 hover:bg-black hover:text-white rounded text-xs"
                   onClick={() => {
-                    // alert(`Deleting task: ${props.row.original.id}`)
+                    setViewData(props.row.original);
+                    setShowViewModal(true);
+                  }}
+                >
+                <IoEyeSharp className='text-xl font-bold'/>
+                </button>
+
+                <button
+                className="border border-red-500 font-bold p-1 hover:delay-100 hover:bg-red-500 text-red-500 hover:text-white rounded text-xs"
+                  onClick={() => {
                     setDeleteData(props.row.original);
                     setShowDeleteModal(true);
                   }}
                 >
-                Delete
+                <GoTrash className='text-lg font-bold'/>
                 </button>
             </div>
             ),
@@ -283,6 +290,14 @@ function Tasks() {
         taskPrioritiesOptions={dropdowns.taskPriorities} // Pass as prop
         statusesOptions={dropdowns.statuses} // Pass as prop
         clientOptions={dropdowns.clients}
+      />
+    )}
+
+    {showViewModal && (
+      <ViewTask
+        onClose={()=> setShowViewModal(false)}
+        show={showViewModal}
+        viewData={viewData}
       />
     )}
     
