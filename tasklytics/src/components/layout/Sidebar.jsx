@@ -28,7 +28,7 @@ function Sidebar({isOpen}) {
       { name: 'Tasks', path:"/tasks", icon: BiTask},
       { name: 'Team', path: '/team', icon:MdGroups },
       { name: 'Analytics', path: '/analytics',icon:IoAnalyticsSharp },    
-      { name: 'Deleted Items', path: '/tasks/deleted',icon:GoTrash },    
+      { name: 'Deleted Items', path: '/deleted',icon:GoTrash },    
     ]    
 
     return (

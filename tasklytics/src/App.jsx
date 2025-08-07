@@ -2,7 +2,7 @@ import './App.css'
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import TaskListPage from './pages/TaskListPage';
-import AddTaskPage from './pages/AddTaskPage';
+import DeletedListPage from './pages/DeletedListPage';
 import { AppLayout } from './components';
 import  ProtectedRoutes  from './routes/ProtectedRoutes'
 import { useEffect } from 'react';
@@ -31,7 +31,7 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route element={<AppLayout />}>
             <Route path='/tasks' element={<TaskListPage />}/>
-            <Route path='/tasks' element={<TaskListPage />}/>
+            <Route path='/deleted' element={<DeletedListPage />}/>
           </Route>
         </Route>
 
