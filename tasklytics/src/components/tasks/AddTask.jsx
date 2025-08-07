@@ -79,13 +79,52 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
     const onSubmit = async (data) => {
       setLoading(true);
 
-        const generateKeywords = (title, client) => {
-          const words = (title + ' ' + (client || '')).toLowerCase().split(/\s+/);
-          const cleaned = words
-            .map(word => word.replace(/[^a-z0-9]/gi, '')) // remove punctuation
-            .filter(word => word.length > 1);             // keep meaningful words only
-          return Array.from(new Set(cleaned));            // unique keywords only
-        }; 
+        const generateKeywords = (...args) => {
+          const processPhrase = (phrase) => {
+            const cleaned = phrase
+              .toLowerCase()
+              .replace(/[-_]/g, ' ')           // Replace - and _ with space
+              .replace(/[^\w\s]/gi, '');       // Remove punctuation
+
+            const words = cleaned.split(/\s+/).filter(w => w.length > 1);
+            const keywords = new Set(words);
+
+            // Incremental space-joined combinations (like n-grams)
+            for (let i = 0; i < words.length; i++) {
+              let combined = words[i];
+              for (let j = i + 1; j < words.length; j++) {
+                combined += ' ' + words[j];
+                keywords.add(combined);
+              }
+            }
+
+            // Full joined version (no spaces)
+            if (words.length > 1) {
+              keywords.add(words.join(''));
+            }
+
+            return Array.from(keywords);
+          };
+
+          const allKeywords = args.flatMap(arg => {
+            if (typeof arg === 'string') {
+              return processPhrase(arg);
+            }
+
+            // Handle array of objects like selectedCoders
+            if (Array.isArray(arg)) {
+              return arg.flatMap(item => {
+                if (typeof item === 'string') return processPhrase(item);
+                if (typeof item?.name === 'string') return processPhrase(item.name);
+                return [];
+              });
+            }
+
+            return [];
+          });
+
+          return Array.from(new Set(allKeywords));
+        };
 
         let selectedCoders;
         if(user.userRole=="Coder"){
@@ -138,7 +177,8 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
           cleaned.id = singleTask.id; // required for update
           cleaned.createdBy = singleTask.createdBy;
           cleaned.createdByName = singleTask.createdByName;
-          cleaned.keywords = generateKeywords(cleaned.title, cleaned.client);
+          cleaned.keywords = generateKeywords(cleaned.title, cleaned.client, selectedCoders);
+          console.log("cleaned",cleaned);
           const response = await updateTaskFirebase(singleTask.id, cleaned);
 
           if (response.success) {
@@ -156,8 +196,9 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
             ...cleaned,
             createdBy: user.id,
             createdByName: user.name,
-            keywords: generateKeywords(cleaned.title, cleaned.client)          
+            keywords: generateKeywords(cleaned.title, cleaned.client, selectedCoders)        
           };
+          console.log("createPayload",createPayload);
           try {
             const response=await addTaskFirebase(createPayload);
             if(response.success){

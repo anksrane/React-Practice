@@ -7,6 +7,7 @@ import { BiTask } from "react-icons/bi";
 import { MdGroups } from "react-icons/md";
 import { IoAnalyticsSharp } from "react-icons/io5";
 import { TiPower } from "react-icons/ti";
+import { GoTrash } from "react-icons/go";
 
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -24,9 +25,10 @@ function Sidebar({isOpen}) {
   
     const navItems=[
       { name: 'Dashboard', path:"/dashboard", icon:MdDashboardCustomize},
-      { name: 'Task', path:"/task", icon: BiTask},
+      { name: 'Tasks', path:"/tasks", icon: BiTask},
       { name: 'Team', path: '/team', icon:MdGroups },
       { name: 'Analytics', path: '/analytics',icon:IoAnalyticsSharp },    
+      { name: 'Deleted Items', path: '/tasks/deleted',icon:GoTrash },    
     ]    
 
     return (

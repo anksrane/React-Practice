@@ -31,7 +31,7 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route element={<AppLayout />}>
             <Route path='/tasks' element={<TaskListPage />}/>
-            <Route path='/addtask' element={<AddTaskPage />}/>
+            <Route path='/tasks' element={<TaskListPage />}/>
           </Route>
         </Route>
 
