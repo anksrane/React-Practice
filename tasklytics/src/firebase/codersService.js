@@ -1,7 +1,7 @@
 import { db } from './firebaseConfig';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
-export const getCodersList = async (managerId) => {
+export const getCodersList = async (user) => {   
     try {
         const q= query(
             collection(db, "users"),
@@ -11,11 +11,17 @@ export const getCodersList = async (managerId) => {
 
         const coders = snapshot.docs
         .map(doc => ({ id: doc.id, ...doc.data() }))
-        .filter(coder => coder.manager?.includes(managerId))
-        .map(coder => ({
-            label: coder.userName,
-            value: coder.id
-        }));      
+        .filter(coder => {
+            if (user.userRole=="Admin"){
+                return true;
+            }else{
+                return coder.manager?.includes(user.id);    
+            }
+        });
+        // .map(coder => ({
+        //     label: coder.userName,
+        //     value: coder.id
+        // }));          
         
         return coders;
     }catch(error){

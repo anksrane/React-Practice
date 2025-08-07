@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 import { Button, Input, Select, DatePicker, MultiSelect_Tag, Loader } from '../index';
 import { IoMdCloseCircle } from "react-icons/io";
 import { useSelector } from 'react-redux';
-import { getDropdownOptions } from '../../firebase/dropdownService';
 import { getCodersList } from '../../firebase/codersService';
 import { addTaskFirebase } from '../../firebase/addTaskService';
 import { updateTaskFirebase } from '../../firebase/updateTaskService';
@@ -12,6 +11,7 @@ import { toast } from 'react-toastify';
 function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptions, taskPrioritiesOptions, statusesOptions, clientOptions }) {
     const {user}=useSelector((state)=>state.auth);
     const [codersOptions, setCodersOptions] = useState([]);
+    const [coders, setCoders] = useState([]);
     const [loading,setLoading] = useState(true);
 
     const {
@@ -24,24 +24,25 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
     const startDateValue = watch("startDate");    
 
     useEffect(()=>{
-      async function fetchDropdowns(){
-        const results = await Promise.allSettled([
-          getCodersList(user.id),
-        ]);
+      async function fetchCoders() {
+        let coders = [];
 
-        if (results[0].status === 'fulfilled') setCodersOptions(results[0].value);
-
-        // console.log(results);
-        
-        results.forEach((res, i) => {
-          if (res.status === 'rejected') {
-            console.error(`Dropdown fetch failed [${i}]:`, res.reason);
-          }
-        });
-        setLoading(false);
+        try {
+          const result = await getCodersList(user);
+          coders = result; // do not directly set here
+          setCoders(coders);
+          let codersDropdown=coders.map( (coder) => ({
+            label: coder.userName,
+            value: coder.id            
+          }))
+          setCodersOptions(codersDropdown);
+          setLoading(false);
+        } catch (error) {
+          console.error("Failed to fetch coders:", error);
+        }
       }
 
-      fetchDropdowns();
+      fetchCoders();
     },[])
 
     useEffect(() => {
@@ -110,11 +111,26 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
             createdBy:user.id,
             updatedBy:user.id,
             createdByName:user.name,
-            updatedByName:user.name,
-            // managerId: user.userRole == "Manager" ? user.id : user.manager,
-            managerId: user.userRole === "Manager"
-              ? [user.id]
-              : Array.isArray(user.manager) ? user.manager: [user.manager],            
+            updatedByName:user.name,    
+            managerId: (() => {
+              if (user.userRole === "Manager") {
+                return [user.id];
+              } else if (user.userRole === "Admin") {
+                // collect unique manager IDs from selected coders
+                const selectedManagerIds = new Set();
+                selectedCoders.forEach(coder => {
+                  const coderObj = coders.find(c => c.id === coder.id);
+                  if (coderObj?.manager) {
+                    const managers = Array.isArray(coderObj.manager) ? coderObj.manager : [coderObj.manager];
+                    managers.forEach(m => selectedManagerIds.add(m));
+                  }
+                });
+                return Array.from(selectedManagerIds); // unique manager IDs
+              } else {
+                // if Coder, fallback to their own manager(s)
+                return Array.isArray(user.manager) ? user.manager : [user.manager];
+              }
+            })(),                  
             trash:false
         };
 

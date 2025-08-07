@@ -95,7 +95,6 @@ function Tasks() {
 
       if (response.success) {
         setTasksData(response.data);
-        console.log(response.data);
         setHasMorePages(response.hasMore);
         if (response.nextCursor && cursors.length === targetPage + 1) {
           setCursors(prev => [...prev, response.nextCursor]);

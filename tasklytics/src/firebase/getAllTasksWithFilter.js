@@ -16,7 +16,6 @@ export const getAllTaskFirebase = async (
     statusesList,
     clientsList   
 ) => {
-    console.log("user: ",user);
     try {
         const colRef= collection (db,'tasksTable');
         const conditions = [];
