@@ -1,17 +1,19 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
-export const getAllTaskFirebase = async () => {
+export const getAllTaskFirebase = async (trashStatus) => {
     try {
-        const q = collection(db, "tasksTable");
+        const tasksRef = collection(db, "tasksTable");
+        const q = trashStatus
+            ? tasksRef
+            : query(tasksRef, where("trash", "==", false));        
+
         const querySnapshot = await getDocs(q);
 
         const allTasks=querySnapshot.docs.map(doc=>({
             id:doc.id,
             ...doc.data()
-        }))
-        console.log(allTasks);
-        
+        }))        
 
         return {success:true, data:allTasks};
     }catch(error){

@@ -21,7 +21,7 @@ function Login() {
 
     useEffect(()=>{
         if(user){
-            navigate('/tasks');
+            navigate('/dashboard');
         }
     },[user,navigate])
 

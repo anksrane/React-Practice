@@ -6,65 +6,72 @@ src/
 ├── assets/                           # Images, icons, etc.
 │
 ├── components/
-│   ├── layout/                       # App layout components
-│   │   └── Login.jsx                   
+│   ├── layout/                       # App layout components                  
 │   │   └── AppLayout.jsx                 
-│   │   └── Header.jsx                              
+│   │   └── ConfirmDeleteModal.jsx                
+│   │   └── ConfirmTrashModal.jsx               
+│   │   └── Header.jsx 
+│   │   └── Login.jsx                              
+│   │   └── RestoreTrashModal.jsx                              
 │   │   └── Sidebar.jsx                                 
+│   ├── tasks/                        # Task-specific components
+│   │   └── Tasks.jsx                   # List of tasks
+│   │   └── AddTask.jsx                 # Add / Edit new task
+│   │   └── Deleted.jsx                 # List of Deleted tasks 
+│   │   └── ViewTask.jsx                # View task details 
+│   ├── dashboard/                    # Dashboard UI components
+│   ├── team/                         # Team UI components
 │   ├── ui/                           
-│   │   ├── Button.jsx
-│   │   ├── ButtonWithIcon.jsx
-│   │   ├── DatePicker.jsx
-│   │   ├── Input.jsx
-│   │   ├── InputFile.jsx
-│   │   ├── InputSearch.jsx
-│   │   ├── Loader.jsx
-│   │   └── Select.jsx
+│   │   └── Button.jsx
+│   │   └── ButtonWithIcon.jsx
+│   │   └── DatePicker.jsx
+│   │   └── Input.jsx
+│   │   └── InputFile.jsx
+│   │   └── InputSearch.jsx
+│   │   └── Loader.jsx
 │   │   └── MultiSelect_Tag.jsx
 │   │   └── MultiSelect.jsx
 │   │   └── RadioCheckbox.jsx
-│   ├── tasks/                        # Task-specific components
-│   │   └── Tasks.jsx 
-│   │   └── AddTask.jsx 
-│   ├── dashboard/                    # Dashboard UI components
-│   └── team/                         # Team UI components
+│   │   └── Select.jsx
+│   ├── index.js                    # Exports all components for easier imports
 │
 ├── config/                          # Config Import of environment variables
 │   ├── config/
 │
 ├── features/                         # Redux slices/thunks
-│   ├── tasks/
-│   ├── users/
-│   ├── analytics/
-│   ├── ui/
-│       └── uiSlice.js
+│   ├── analytics/                    # Analytics related logic
 │   ├── auth/
 │       └── authActions.js
 │       └── authSlice.js
+│   ├── tasks/
+│   ├── ui/
+│       └── uiSlice.js
+│   ├── users/
 │
 ├── firebase/                         # Firebase logic
-│   ├── firebaseConfig.js             # Firebase init
-│   ├── authService.js                # Login/Signup/Logout
-│   ├── taskService.js                # CRUD for tasks
-│   ├── userService.js                # get Coders
-│   └── analyticsService.js          # Analytics data fetch logic
-│   └── codersService.js          # Analytics data fetch logic
+│   ├── addTaskService.js                   # Service to add a task
+│   ├── authService.js                      # Service for authentication
+│   ├── codersService.js                    # Service for get codersList
+│   ├── deleteTaskService.js                # Service to delete a task
+│   ├── dropdownService.js                  # Service for dropdowns
+│   ├── firebaseConfig.js                   # Firebase configuration
+│   ├── getAllTaskService.js                # Service to get all tasks         
+│   ├── getAllTasksWithFilter.js            # Service to get tasks with filters         
+│   ├── updateTaskService.js                # Service to update a task          
+│   ├── userService.js                      # Service for user details     
 │
 ├── hooks/
-│   └── useAuth.js
 │
 ├── pages/
-│   ├── Login.jsx
-│   ├── Dashboard.jsx
-│   ├── Tasks.jsx
-│   ├── Analytics.jsx
-│   └── Team.jsx
+│   ├── AddTaskPage.jsx
+│   ├── DeletedListPage.jsx
+│   ├── LoginPage.jsx
+│   ├── TaskListPage.jsx
 │
 ├── routes/
 │   └── ProtectedRoute.jsx
 │
-├── styles/
-│   └── index.css
-│
 ├── App.jsx
+├── App.css                                 # Entry point of the application
+├── index.css                               # Global styles
 └── main.jsx

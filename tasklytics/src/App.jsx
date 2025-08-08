@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import TaskListPage from './pages/TaskListPage';
 import DeletedListPage from './pages/DeletedListPage';
+import DashboardPage from './pages/DashboardPage';
 import { AppLayout } from './components';
 import  ProtectedRoutes  from './routes/ProtectedRoutes'
 import { useEffect } from 'react';
@@ -32,10 +33,11 @@ function App() {
           <Route element={<AppLayout />}>
             <Route path='/tasks' element={<TaskListPage />}/>
             <Route path='/deleted' element={<DeletedListPage />}/>
+            <Route path='/dashboard' element={<DashboardPage />}/>
           </Route>
         </Route>
 
-        <Route path='*' element={<Navigate to="/tasks" replace />} />
+        <Route path='*' element={<Navigate to="/dashboard" replace />} />
       </Routes>
     )
 }

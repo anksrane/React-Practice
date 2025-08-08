@@ -10,18 +10,20 @@ import MultiSelect_Tag from "./ui/MultiSelect_Tag";
 import ButtonWithIcon from "./ui/ButtonWithIcon";
 import Loader from "./ui/Loader";
 
-import Sidebar from "./layout/Sidebar";
-import Header from "./layout/Header";
-import AppLayout from "./layout/AppLayout";
-import ConfirmTrashModal from "./layout/ConfirmTrashModal";
-import ConfirmDeleteModal from "./layout/ConfirmDeleteModal";
-import RestoreTrashModal from "./layout/RestoreTrashModal";
-
-import Login from "./layout/Login";
 import Tasks from "./tasks/Tasks";
 import AddTask from "./tasks/AddTask";
 import ViewTask from "./tasks/ViewTask";
 import Deleted from "./tasks/Deleted";
+import ConfirmTrashModal from "./tasks/ConfirmTrashModal";
+import ConfirmDeleteModal from "./tasks/ConfirmDeleteModal";
+import RestoreTrashModal from "./tasks/RestoreTrashModal";
+
+import Dashboard from './dashboard/Dashboard'
+
+import Sidebar from "./layout/Sidebar";
+import Header from "./layout/Header";
+import AppLayout from "./layout/AppLayout";
+import Login from "./layout/Login";
 
 export { 
     Loader,
@@ -41,11 +43,13 @@ export {
     AddTask,
     ViewTask,
     Deleted,
+    ConfirmTrashModal,
+    ConfirmDeleteModal,
+    RestoreTrashModal,    
+
+    Dashboard,
 
     Sidebar,
     Header,
     AppLayout,
-    ConfirmTrashModal,
-    ConfirmDeleteModal,
-    RestoreTrashModal
 };
