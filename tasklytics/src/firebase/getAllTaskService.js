@@ -1,12 +1,25 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
-export const getAllTaskFirebase = async (trashStatus) => {
+const getLabel=(list,value)=>list.find(item=>item.value===value)?.label || value;
+
+export const getAllTaskFirebase = async (user, trashStatus) => {
     try {
         const tasksRef = collection(db, "tasksTable");
-        const q = trashStatus
-            ? tasksRef
-            : query(tasksRef, where("trash", "==", false));        
+        const conditions = [];
+
+        if (!trashStatus) {
+            conditions.push(where("trash", "==", false));
+        }    
+        
+        // Role-based filters
+        if (user.userRole === "Manager") {
+            conditions.push(where("managerId", "array-contains", user.id));
+        }else if (user.userRole === "Coder") {
+            conditions.push(where("coderIds", "array-contains", user.id));
+        }        
+
+        const q = conditions.length > 0 ? query(tasksRef, ...conditions) : tasksRef;      
 
         const querySnapshot = await getDocs(q);
 

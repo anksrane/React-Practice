@@ -19,6 +19,8 @@ import ConfirmDeleteModal from "./tasks/ConfirmDeleteModal";
 import RestoreTrashModal from "./tasks/RestoreTrashModal";
 
 import Dashboard from './dashboard/Dashboard'
+import CountCard from "./dashboard/CountCard";
+import StackedBarChart from "./charts/StackedBarChart";
 
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
@@ -48,6 +50,8 @@ export {
     RestoreTrashModal,    
 
     Dashboard,
+    CountCard,
+    StackedBarChart,
 
     Sidebar,
     Header,
