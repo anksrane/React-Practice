@@ -1,18 +1,17 @@
 import React from "react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
-function StackedBarChart({data}) {
+function StackedBarChart({data, masterData}) {
   return (
     <ResponsiveContainer width="100%" height={300}>
-      <BarChart data={data}>
+      <BarChart data={data} barSize={40}   barCategoryGap="25%" barGap={2}>
         <XAxis dataKey="client" />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="completed" stackId="a" fill="#4caf50" />
-        <Bar dataKey="pending" stackId="a" fill="#ff9800" />
-        <Bar dataKey="overdue" stackId="a" fill="#f44336" />
-        <Bar dataKey="wip" stackId="a" fill="#f2f3f5" />
+        {masterData.map((item)=>(
+          <Bar key={item.value} dataKey={item.value} stackId="a" fill={item.color} name={item.label} />
+        ))}
       </BarChart>
     </ResponsiveContainer>
   )

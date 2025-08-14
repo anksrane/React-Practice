@@ -1,5 +1,6 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "./firebaseConfig";
+import { getAllMasterFirebase } from "./getAllMasterService";
 
 const getLabel=(list,value)=>list.find(item=>item.value===value)?.label || value;
 
@@ -20,13 +21,26 @@ export const getAllTaskFirebase = async (user, trashStatus) => {
         }        
 
         const q = conditions.length > 0 ? query(tasksRef, ...conditions) : tasksRef;      
-
         const querySnapshot = await getDocs(q);
-
-        const allTasks=querySnapshot.docs.map(doc=>({
+        let allTasks=querySnapshot.docs.map(doc=>({
             id:doc.id,
             ...doc.data()
-        }))        
+        })) 
+        
+        const [statusMaster, priorityMaster, phaseMaster] = await Promise.all([
+            getAllMasterFirebase(false, "statuses"),
+            getAllMasterFirebase(false, "priorities"),
+            getAllMasterFirebase(false, "phases"),
+        ]);  
+        
+        if (statusMaster.success && priorityMaster.success && phaseMaster.success) {
+            allTasks = allTasks.map(task => ({
+                ...task,
+                statusLabel: getLabel(statusMaster.data, task.taskStatus),
+                priorityLabel: getLabel(priorityMaster.data, task.priority),
+                phaseLabel: getLabel(phaseMaster.data, task.taskPhase),
+            }));
+        }        
 
         return {success:true, data:allTasks};
     }catch(error){
