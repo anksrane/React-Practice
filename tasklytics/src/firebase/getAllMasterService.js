@@ -1,7 +1,7 @@
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
-export const getAllMasterFirebase = async (trashStatus,tableName) =>{
+export const getAllMasterFirebase = async (tableName) =>{
     try {
         const mastersRef = collection(db, tableName);  
         

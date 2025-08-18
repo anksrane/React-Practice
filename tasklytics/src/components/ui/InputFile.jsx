@@ -20,7 +20,7 @@ const InputFile = React.forwardRef(function InputFile({
       )}
       <input
         type="file"
-        className={`px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border w-full ${error ? 'border-red-500' : 'border-gray-200'} ${className}`} // ✨ changed
+        className={`px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border w-full ${error ? 'border-red-500' : 'border-gray-400'} ${className}`} // ✨ changed
         name={name}
         ref={ref}
         id={id}

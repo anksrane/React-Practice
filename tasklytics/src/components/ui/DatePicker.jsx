@@ -18,7 +18,7 @@ const DatePicker= React.forwardRef (function DatePicker({
                 id={id}
                 name={name}
                 ref={ref}
-                className={`px-3 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border ${error ? 'border-red-500' : 'border-gray-200'} w-full ${className}`}
+                className={`px-3 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border ${error ? 'border-red-500' : 'border-gray-400'} w-full ${className}`}
                 {...props}
             />
             {error && <p className="text-sm text-red-500 mt-1">{error}</p>}

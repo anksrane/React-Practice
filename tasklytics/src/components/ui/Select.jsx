@@ -8,12 +8,15 @@ const Select = React.forwardRef(function Select({
   defaultOption = 'Select an option', 
   error = '', 
   labelVisible=true,
+  showDefaultOption = true,
   ...props
 }, ref) {
   const id = useId();
 
+  const hasCustomPlaceholder = options.some(opt => typeof opt === 'object' && opt.disabled);
+
   return (
-    <div className="w-full">
+    <div className="">
       {label && (
         <label className={`${labelVisible ? 'inline-block':'hidden'} mb-1 pl-1 ${labelClass}`} htmlFor={id}>
           {label}
@@ -22,13 +25,18 @@ const Select = React.forwardRef(function Select({
       <select
         id={id}
         ref={ref}
-        className={`px-3 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border w-full ${error ? 'border-red-500' : 'border-gray-200'} ${className}`}
+        className={`px-3 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border w-full ${error ? 'border-red-500' : 'border-gray-400'} ${className}`}
         {...props}
       >
-        <option value="" className='text-gray-400'>{defaultOption}</option>
+        {/* Only add defaultOption if user hasn't provided their own placeholder */}
+        {showDefaultOption && !hasCustomPlaceholder && (
+          <option value="" className="text-gray-400">
+            {defaultOption}
+          </option>
+        )}
         {options?.map((option) =>
           typeof option === 'object' ? (
-            <option key={option.value} value={option.value}>
+            <option key={option.value} value={option.value} disabled={option.disabled}>
               {option.label}
             </option>
           ) : (

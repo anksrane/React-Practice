@@ -92,7 +92,7 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
           {label}
         </label>
       )}
-      <div className={`flex align-center rounded-lg bg-white border ${error ? 'border-red-500' : 'border-gray-200'}`}>
+      <div className={`flex align-center rounded-lg bg-white border ${error ? 'border-red-500' : 'border-gray-400'}`}>
         <div
           className={`px-3 bg-transparent rounded-lg text-black w-full cursor-pointer flex ${className}`}
           onClick={() => setShowOptions((prev) => !prev)}

@@ -27,18 +27,20 @@ export const getAllTaskFirebase = async (user, trashStatus) => {
             ...doc.data()
         })) 
         
-        const [statusMaster, priorityMaster, phaseMaster] = await Promise.all([
-            getAllMasterFirebase(false, "statuses"),
-            getAllMasterFirebase(false, "priorities"),
-            getAllMasterFirebase(false, "phases"),
+        const [statusMaster, priorityMaster, phaseMaster, clientMaster] = await Promise.all([
+            getAllMasterFirebase("statuses"),
+            getAllMasterFirebase("priorities"),
+            getAllMasterFirebase("phases"),
+            getAllMasterFirebase("clients"),
         ]);  
         
-        if (statusMaster.success && priorityMaster.success && phaseMaster.success) {
+        if (statusMaster.success && priorityMaster.success && phaseMaster.success && clientMaster.success) {
             allTasks = allTasks.map(task => ({
                 ...task,
                 statusLabel: getLabel(statusMaster.data, task.taskStatus),
                 priorityLabel: getLabel(priorityMaster.data, task.priority),
                 phaseLabel: getLabel(phaseMaster.data, task.taskPhase),
+                clientLabel: getLabel(clientMaster.data, task.client),
             }));
         }        
 

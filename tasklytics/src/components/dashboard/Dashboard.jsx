@@ -7,20 +7,21 @@ import { FaStopwatch } from "react-icons/fa6";
 import { MdLocalFireDepartment } from "react-icons/md";
 import { IoMdRocket } from "react-icons/io";
 import CountCard from './CountCard';
-import {StackedBarChart} from '../index';
+import {StackedBarChart, Select} from '../index';
 
 function Dashboard() {
     const {user}=useSelector((state)=>state.auth);
     const [allTasks, setAllTasks] = useState([]);
-    const [statusMaster, setStatusMaster] = useState([]);
+    const [masterData, setMasterData] = useState([]);
+    const [filterType, setFilterType] = useState("status");
    
+    // Get All TAsk Which are Trash False
     useEffect(()=>{
         const getAllTasks = async () =>{
             try {
                 const response = await getAllTaskFirebase(user, false);
                 if(response.success){
                     setAllTasks(response.data);
-                    console.log(response.data);
                 }
             } catch (error) {
                 console.error("Error in Task Fetching: ", error);
@@ -28,6 +29,7 @@ function Dashboard() {
         }
         getAllTasks();
     },[user])
+
 
     // for task Count
     const counts = useMemo (()=>{
@@ -47,39 +49,50 @@ function Dashboard() {
 
     // fetxch Master Running Function
     const fetchMasters = async (tableName, setVarName) => {
-        const res = await getAllMasterFirebase(false, tableName);
+        const res = await getAllMasterFirebase(tableName);
         if (res.success) setVarName(res.data);
     }; 
 
-    useEffect(()=>{
-        fetchMasters("statuses", setStatusMaster);
-    },[])
+    // Get Master List by status/ priority/ phase
+    useEffect(() => {
+        const tableMap = {
+            status: "statuses",
+            phase: "phases",
+            priority: "priorities"
+        };
+        fetchMasters(tableMap[filterType], setMasterData);
+    }, [filterType]);
 
     // Bar Chart
     const chartData = useMemo(() => {
+        if (!masterData.length) return [];
         const grouped = {};
 
         for (let task of allTasks) {
-            const client = task.client || "Unknown";
+            const client = task.clientLabel || "Unknown";
+            const key =
+                    filterType == "phase" ? task.taskPhase :
+                    filterType == "priority" ? task.priority :
+                    task.taskStatus;            
 
             // If this client isn't in grouped yet, initialize it dynamically from master
             if (!grouped[client]) {
                 grouped[client] = { client };
 
                 // Add each status key from master data with initial count = 0
-                statusMaster.forEach(status => {
-                    grouped[client][status.value] = 0;
+                masterData.forEach(item => {
+                    grouped[client][item.value] = 0;
                 });
             }
 
             // Increment the correct status key
-            if (grouped[client][task.taskStatus] !== undefined) {
-                grouped[client][task.taskStatus] += 1;
+            if (grouped[client][key] !== undefined) {
+                grouped[client][key] += 1;
             }
         }
-
+        
         return Object.values(grouped);
-    }, [allTasks, statusMaster]);
+    }, [allTasks, masterData, filterType]);
 
     return (
         <>
@@ -106,9 +119,24 @@ function Dashboard() {
             </div>
 
             {/* Chart */}
-            <div className="bg-white p-4 rounded-lg shadow w-1/2">
-                <h3 className="text-lg font-semibold mb-4">Tasks by Client</h3>
-                <StackedBarChart data={chartData} masterData={statusMaster}/>
+            <div className="bg-white p-4 rounded-lg shadow w-full">
+                <div className="flex gap-2 align-center justify-between">
+                    <h3 className="text-lg font-semibold mb-4">Task {filterType.toUpperCase()} by Client</h3>
+                    <Select 
+                        labelVisible={false}
+                        // defaultValue="status"
+                        value={filterType} 
+                        onChange={(e)=> setFilterType(e.target.value)}
+                        className="w-48 p-1"
+                        options={[
+                            { value: "", label: "Filter Tasks", disabled: true },
+                            { value: "status", label: "By Status" },
+                            { value: "phase", label: "By Phase" },
+                            { value: "priority", label: "By Priority" },
+                        ]}                        
+                    />
+                </div>
+                <StackedBarChart data={chartData} masterData={masterData}/>
             </div>            
         </div>    
         </>

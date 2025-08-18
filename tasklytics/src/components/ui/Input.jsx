@@ -13,7 +13,7 @@ const Input = React.forwardRef(function Input({
   ...props
 }, ref) {
   const id = useId();
-  const inputClass = `px-3 rounded-lg bg-white text-black outline-none focus:bg-gray-50 ${error ? 'border-red-500' : 'border-gray-200'} focus:border-slate-400 duration-200 border w-full ${className}`;
+  const inputClass = `px-3 rounded-lg bg-white text-black outline-none focus:bg-gray-50 ${error ? 'border-red-500' : 'border-gray-400'} focus:border-slate-400 duration-200 border w-full ${className}`;
 
   return (
     <div className="w-full h-fit">
