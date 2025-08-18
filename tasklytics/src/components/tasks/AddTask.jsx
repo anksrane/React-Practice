@@ -7,6 +7,7 @@ import { getCodersList } from '../../firebase/codersService';
 import { addTaskFirebase } from '../../firebase/addTaskService';
 import { updateTaskFirebase } from '../../firebase/updateTaskService';
 import { toast } from 'react-toastify';
+import { Timestamp } from "firebase/firestore";
 
 function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptions, taskPrioritiesOptions, statusesOptions, clientOptions }) {
     const {user}=useSelector((state)=>state.auth);
@@ -22,6 +23,8 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
       formState:{ errors, isSubmitting },
     } = useForm();
     const startDateValue = watch("startDate");    
+
+    const formatDate = (val) => val?.toDate?.().toISOString().slice(0, 10) || "";
 
     useEffect(()=>{
       async function fetchCoders() {
@@ -52,8 +55,8 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
           description: singleTask.description || '',
           taskPhase: singleTask.taskPhase || '',
           taskStatus: singleTask.taskStatus || '',
-          startDate: singleTask.startDate || '',
-          endDate: singleTask.endDate || '',
+          startDate: formatDate(singleTask.startDate) || '',
+          endDate: formatDate(singleTask.endDate) || '',
           priority: singleTask.priority || '',
           coders: singleTask.coders?.map(coder => coder.id) || [],
           client: singleTask.client || '',
@@ -141,8 +144,10 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
             description: data.description.trim(),
             taskPhase: data.taskPhase.trim(),
             taskStatus: data.taskStatus.trim(),
-            startDate: data.startDate.trim(),
-            endDate: data.endDate.trim(),
+            // startDate: data.startDate.trim(),
+            // endDate: data.endDate.trim(),
+            startDate: data.startDate ? Timestamp.fromDate(new Date(data.startDate)) : null,
+            endDate: data.endDate ? Timestamp.fromDate(new Date(data.endDate)) : null,            
             priority: data.priority.trim(),
             coders: selectedCoders,   
             coderIds: selectedCoders.map(c => c.id),

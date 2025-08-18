@@ -9,6 +9,7 @@ import { TbEdit } from "react-icons/tb";
 import { IoEyeSharp } from "react-icons/io5";
 import { GoTrash } from "react-icons/go";
 import { useSelector } from 'react-redux';
+import { Timestamp } from "firebase/firestore";
 
 import {
   useReactTable,
@@ -19,6 +20,12 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table';
 
+const formatDate = (val) => {
+  if (!val) return "-";
+  if (val instanceof Timestamp) return val.toDate().toLocaleDateString();
+  if (val?.seconds) return new Date(val.seconds * 1000).toLocaleDateString(); // fallback
+  return String(val);
+};
 
 function Tasks() {
     const {user}=useSelector((state)=>state.auth);
@@ -175,9 +182,15 @@ function Tasks() {
             enableSorting: true,
             enableGlobalFilter: true
         }),
+        columnHelper.accessor('startDate',{
+            header: 'Start Date',
+            cell: info => formatDate(info.getValue()),
+            enableSorting: true,
+            enableGlobalFilter: true
+        }),
         columnHelper.accessor('endDate',{
             header: 'Due Date',
-            cell: info => info.getValue(),
+            cell: info => formatDate(info.getValue()),
             enableSorting: true,
             enableGlobalFilter: true
         }),

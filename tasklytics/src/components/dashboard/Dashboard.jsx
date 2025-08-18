@@ -94,6 +94,15 @@ function Dashboard() {
         return Object.values(grouped);
     }, [allTasks, masterData, filterType]);
 
+    // Show Lable in Chart Title
+    const chartTitle = useMemo(() => {
+        if (!masterData.length) return "No Data";
+        // let title = filterType.charAt(0).toUpperCase();
+        let title = filterType.charAt(0).toUpperCase()+filterType.slice(1,filterType.length);
+        return `Tasks by ${title} (per Client)`;
+        // Task {chartTitle} by Client
+    }, [masterData, filterType]);
+
     return (
         <>
         <div className="mx-auto p-4 z-10">
@@ -121,7 +130,7 @@ function Dashboard() {
             {/* Chart */}
             <div className="bg-white p-4 rounded-lg shadow w-full">
                 <div className="flex gap-2 align-center justify-between">
-                    <h3 className="text-lg font-semibold mb-4">Task {filterType.toUpperCase()} by Client</h3>
+                    <h3 className="text-lg font-semibold mb-4">{chartTitle}</h3>
                     <Select 
                         labelVisible={false}
                         // defaultValue="status"
