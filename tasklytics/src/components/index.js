@@ -21,6 +21,8 @@ import RestoreTrashModal from "./tasks/RestoreTrashModal";
 import Dashboard from './dashboard/Dashboard'
 import CountCard from "./dashboard/CountCard";
 import StackedBarChart from "./charts/StackedBarChart";
+import TasksDueThisWeek from "./dashboard/TasksDueThisWeek";
+import TeamWiseTasks from "./dashboard/TeamWiseTasks";
 
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
@@ -29,6 +31,7 @@ import Login from "./layout/Login";
 
 import Skeleton from "./ui/Skeleton/Skeleton";
 import ChartSkeleton from "./ui/Skeleton/ChartSkeleton";
+import TasksDueThisWeekSkeleton from './ui/Skeleton/TasksDueThisWeekSkeleton';
 
 export { 
     Loader,
@@ -55,11 +58,14 @@ export {
     Dashboard,
     CountCard,
     StackedBarChart,
+    TasksDueThisWeek,
+    TeamWiseTasks,
 
     Sidebar,
     Header,
     AppLayout,
 
     Skeleton,
-    ChartSkeleton
+    ChartSkeleton,
+    TasksDueThisWeekSkeleton
 };

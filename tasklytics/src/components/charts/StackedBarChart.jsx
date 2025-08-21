@@ -10,10 +10,10 @@ function StackedBarChart({data, masterData}) {
           barCategoryGap="25%" 
           barGap={2}
         >
-          <XAxis type="number" />
-          <YAxis dataKey="client" type="category" width={150} tickFormatter={(value) => value.length > 10 ? value.slice(0, 10) + "..." : value} tickMargin={10} /> {/* client names */}
+          <XAxis type="number" tick={{ fontSize: 14 }}/>
+          <YAxis dataKey="client" type="category" width={150} tickFormatter={(value) => value.length > 10 ? value.slice(0, 10) + "..." : value} tickMargin={10} tick={{ fontSize: 14 }} /> {/* client names */}
           <Tooltip />
-          <Legend />
+          <Legend wrapperStyle={{ fontSize: 14 }}/>
           {masterData.map((item) => (
             <Bar 
               key={item.value} 

@@ -2,12 +2,13 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux';
 import { getAllTaskFirebase } from '../../firebase/getAllTaskService';
 import { getAllMasterFirebase } from '../../firebase/getAllMasterService';
+import { startOfWeek, endOfWeek } from "date-fns";
 import { FaCheck } from "react-icons/fa";
 import { FaStopwatch } from "react-icons/fa6";
 import { MdLocalFireDepartment } from "react-icons/md";
 import { IoMdRocket } from "react-icons/io";
 import CountCard from './CountCard';
-import {StackedBarChart, Select, ChartSkeleton} from '../index';
+import {StackedBarChart, Select, ChartSkeleton, TasksDueThisWeek, TasksDueThisWeekSkeleton } from '../index';
 
 function Dashboard() {
     const {user}=useSelector((state)=>state.auth);
@@ -15,6 +16,7 @@ function Dashboard() {
     const [masterData, setMasterData] = useState([]);
     const [filterType, setFilterType] = useState("status");
     const [barChartLoading, setBarChartLoading] = useState(true);
+    const [taskDueLoading, setTaskDueLoading] = useState(true);
    
     // Get All TAsk Which are Trash False
     useEffect(()=>{
@@ -30,7 +32,6 @@ function Dashboard() {
         }
         getAllTasks();
     },[user])
-
 
     // for task Count
     const counts = useMemo (()=>{
@@ -105,6 +106,32 @@ function Dashboard() {
         // Task {chartTitle} by Client
     }, [masterData, filterType]);
 
+    // Task End Date This Week
+    const tasksDueThisWeek = useMemo(() => {
+        if (!allTasks.length) return [];
+
+        const now = new Date();
+
+        const weekStart = startOfWeek(now, { weekStartsOn: 1 }); // Monday start
+        const weekEnd = endOfWeek(now, { weekStartsOn: 1 });     // Sunday end   
+
+        let filteredTasks=allTasks.filter(task => {
+            if(task.taskStatus=="completed") return false;
+            if (!task.endDate?.seconds) return false;
+            const endDate = new Date(task.endDate.seconds * 1000);
+            return endDate >= weekStart && endDate <= weekEnd;
+        });
+        console.log("filteredTasks",filteredTasks);
+        return filteredTasks;
+    }, [allTasks]);
+
+    useEffect(() => {
+        setTaskDueLoading(true);
+        if (allTasks.length) {
+            setTaskDueLoading(false);
+        }
+    }, [allTasks]);    
+
     return (
         <>
         <div className="mx-auto p-4 z-10">
@@ -129,31 +156,43 @@ function Dashboard() {
                   />
             </div>
 
-            {/* BarChart Dropdown */}
-            <div className="bg-white p-4 rounded-lg shadow w-full">
-                <div className="flex gap-2 align-center justify-between">
-                    <h3 className="text-lg font-semibold mb-4">{chartTitle}</h3>
-                    <Select 
-                        labelVisible={false}
-                        // defaultValue="status"
-                        value={filterType} 
-                        onChange={(e)=> setFilterType(e.target.value)}
-                        className="w-48 p-1"
-                        options={[
-                            { value: "", label: "Filter Tasks", disabled: true },
-                            { value: "status", label: "By Status" },
-                            { value: "phase", label: "By Phase" },
-                            { value: "priority", label: "By Priority" },
-                        ]}                        
-                    />
+            <div className='my-4 rounded-lg flex gap-4'>
+                {/* BarChart Dropdown */}
+                <div className="bg-white border border-dotted border-brand-primary-light p-4 rounded-lg w-1/2">
+                    <div className="flex gap-2 align-center justify-between">
+                        <h3 className="text-lg font-semibold mb-4">{chartTitle}</h3>
+                        <Select 
+                            labelVisible={false}
+                            // defaultValue="status"
+                            value={filterType} 
+                            onChange={(e)=> setFilterType(e.target.value)}
+                            className="w-48 p-1"
+                            options={[
+                                { value: "", label: "Filter Tasks", disabled: true },
+                                { value: "status", label: "By Status" },
+                                { value: "phase", label: "By Phase" },
+                                { value: "priority", label: "By Priority" },
+                            ]}                        
+                        />
+                    </div>
+                    {/* <StackedBarChart data={chartData} masterData={masterData}/> */}
+                    {barChartLoading ? (
+                        <ChartSkeleton rows={chartData?.length || 5} />
+                        ) : (
+                        <StackedBarChart data={chartData} masterData={masterData} />
+                    )}                
+                </div>    
+
+                
+                {/* Task Due By This Week */}
+                <div className="bg-white border border-dotted border-brand-primary-light p-4 rounded-lg w-1/2">
+                    {taskDueLoading 
+                        ? <TasksDueThisWeekSkeleton rows={4} columns={3} /> 
+                        : <TasksDueThisWeek title="Tasks Due This Week" tasks={tasksDueThisWeek} />
+                    }
                 </div>
-                {/* <StackedBarChart data={chartData} masterData={masterData}/> */}
-                {barChartLoading ? (
-                    <ChartSkeleton rows={chartData?.length || 5} />
-                    ) : (
-                    <StackedBarChart data={chartData} masterData={masterData} />
-                )}                
-            </div>            
+            </div>
+
         </div>    
         </>
     )
