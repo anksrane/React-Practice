@@ -27,6 +27,9 @@ import Header from "./layout/Header";
 import AppLayout from "./layout/AppLayout";
 import Login from "./layout/Login";
 
+import Skeleton from "./ui/Skeleton/Skeleton";
+import ChartSkeleton from "./ui/Skeleton/ChartSkeleton";
+
 export { 
     Loader,
     Input, 
@@ -56,4 +59,7 @@ export {
     Sidebar,
     Header,
     AppLayout,
+
+    Skeleton,
+    ChartSkeleton
 };

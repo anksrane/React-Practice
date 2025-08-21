@@ -1,14 +1,7 @@
 import React from "react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, Rectangle } from "recharts";
-import { Loader } from '../index';
 
 function StackedBarChart({data, masterData}) {
-
-  if(!data?.length && !masterData?.length) {
-    return (
-      <Loader color="#000" />
-    )
-  }else{
     return (
       <ResponsiveContainer width="100%" height={300}>
         <BarChart 
@@ -35,7 +28,6 @@ function StackedBarChart({data, masterData}) {
         </BarChart>      
       </ResponsiveContainer>
     )
-  }
 }
 
 export default StackedBarChart

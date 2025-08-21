@@ -22,9 +22,24 @@ import {
 
 const formatDate = (val) => {
   if (!val) return "-";
-  if (val instanceof Timestamp) return val.toDate().toLocaleDateString();
-  if (val?.seconds) return new Date(val.seconds * 1000).toLocaleDateString(); // fallback
-  return String(val);
+  let dateObj;
+  if (val instanceof Timestamp) {
+    dateObj = val.toDate();
+  } else if (val?.seconds) {
+    dateObj = new Date(val.seconds * 1000);
+  } else if (val instanceof Date) {
+    dateObj = val;
+  } else {
+    return String(val);
+  }  
+  // Format as DD-MM-YYYY
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const month = monthNames[dateObj.getMonth()]; // Months are 0-based
+  const year = dateObj.getFullYear();
+
+  return `${day}-${month}-${year}`;
 };
 
 function Tasks() {

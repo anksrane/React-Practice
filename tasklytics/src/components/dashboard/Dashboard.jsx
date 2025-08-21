@@ -7,13 +7,14 @@ import { FaStopwatch } from "react-icons/fa6";
 import { MdLocalFireDepartment } from "react-icons/md";
 import { IoMdRocket } from "react-icons/io";
 import CountCard from './CountCard';
-import {StackedBarChart, Select} from '../index';
+import {StackedBarChart, Select, ChartSkeleton} from '../index';
 
 function Dashboard() {
     const {user}=useSelector((state)=>state.auth);
     const [allTasks, setAllTasks] = useState([]);
     const [masterData, setMasterData] = useState([]);
     const [filterType, setFilterType] = useState("status");
+    const [barChartLoading, setBarChartLoading] = useState(true);
    
     // Get All TAsk Which are Trash False
     useEffect(()=>{
@@ -47,10 +48,11 @@ function Dashboard() {
         return { completed, pending, overdue, active };        
     },[allTasks])
 
-    // fetxch Master Running Function
+    // fetch Master Running Function
     const fetchMasters = async (tableName, setVarName) => {
         const res = await getAllMasterFirebase(tableName);
         if (res.success) setVarName(res.data);
+        setBarChartLoading(false);
     }; 
 
     // Get Master List by status/ priority/ phase
@@ -60,6 +62,7 @@ function Dashboard() {
             phase: "phases",
             priority: "priorities"
         };
+        setBarChartLoading(true);
         fetchMasters(tableMap[filterType], setMasterData);
     }, [filterType]);
 
@@ -97,7 +100,6 @@ function Dashboard() {
     // Show Lable in Chart Title
     const chartTitle = useMemo(() => {
         if (!masterData.length) return "No Data";
-        // let title = filterType.charAt(0).toUpperCase();
         let title = filterType.charAt(0).toUpperCase()+filterType.slice(1,filterType.length);
         return `Tasks by ${title} (per Client)`;
         // Task {chartTitle} by Client
@@ -127,7 +129,7 @@ function Dashboard() {
                   />
             </div>
 
-            {/* Chart */}
+            {/* BarChart Dropdown */}
             <div className="bg-white p-4 rounded-lg shadow w-full">
                 <div className="flex gap-2 align-center justify-between">
                     <h3 className="text-lg font-semibold mb-4">{chartTitle}</h3>
@@ -145,7 +147,12 @@ function Dashboard() {
                         ]}                        
                     />
                 </div>
-                <StackedBarChart data={chartData} masterData={masterData}/>
+                {/* <StackedBarChart data={chartData} masterData={masterData}/> */}
+                {barChartLoading ? (
+                    <ChartSkeleton rows={chartData?.length || 5} />
+                    ) : (
+                    <StackedBarChart data={chartData} masterData={masterData} />
+                )}                
             </div>            
         </div>    
         </>
