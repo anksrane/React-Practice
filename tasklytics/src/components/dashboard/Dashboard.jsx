@@ -177,7 +177,7 @@ function Dashboard() {
                     </div>
                     {/* <StackedBarChart data={chartData} masterData={masterData}/> */}
                     {barChartLoading ? (
-                        <ChartSkeleton rows={chartData?.length || 5} />
+                        <ChartSkeleton rows={chartData?.length || 5} orientation='vertical' />
                         ) : (
                         <StackedBarChart data={chartData} masterData={masterData} />
                     )}                
