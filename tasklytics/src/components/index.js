@@ -22,7 +22,7 @@ import Dashboard from './dashboard/Dashboard'
 import CountCard from "./dashboard/CountCard";
 import StackedBarChart from "./charts/StackedBarChart";
 import TasksDueThisWeek from "./dashboard/TasksDueThisWeek";
-import TeamWiseTasks from "./dashboard/TeamWiseTasks";
+import PieChart from "./charts/PieChart";
 
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
@@ -32,6 +32,7 @@ import Login from "./layout/Login";
 import Skeleton from "./ui/Skeleton/Skeleton";
 import ChartSkeleton from "./ui/Skeleton/ChartSkeleton";
 import TasksDueThisWeekSkeleton from './ui/Skeleton/TasksDueThisWeekSkeleton';
+import PieChartSkeleton from './ui/Skeleton/PieChartSkeleton';
 
 export { 
     Loader,
@@ -59,7 +60,7 @@ export {
     CountCard,
     StackedBarChart,
     TasksDueThisWeek,
-    TeamWiseTasks,
+    PieChart,
 
     Sidebar,
     Header,
@@ -67,5 +68,6 @@ export {
 
     Skeleton,
     ChartSkeleton,
+    PieChartSkeleton,
     TasksDueThisWeekSkeleton
 };

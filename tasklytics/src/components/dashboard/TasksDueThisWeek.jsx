@@ -35,18 +35,12 @@ const truncateWords = (text, limit = 10) => {
 };
 
 export default function TasksDueThisWeek({
-    title = "Tasks Due This Week",
     tasks = [],
     columns = defaultColumns,
 }) {
     
   return (
     <>
-      {/* Title */}
-      <h2 className="text-lg font-semibold mb-4">
-        {title}
-      </h2>
-
       {/* Table wrapper */}
       <div className={`relative rounded-lg border overflow-y-auto max-h-60 ${styles.scrollbar}`}>
         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
