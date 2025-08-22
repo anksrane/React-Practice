@@ -16,11 +16,12 @@ function Dashboard() {
     const {user}=useSelector((state)=>state.auth);
     const [allTasks, setAllTasks] = useState([]);
     const [masterData, setMasterData] = useState([]);
-    const [filterType, setFilterType] = useState("status");
+    const [barChartFilterType, setBarChartFilterType] = useState("status");
     const [barChartLoading, setBarChartLoading] = useState(true);
     const [taskDueLoading, setTaskDueLoading] = useState(true);
     const [managers, setManagers] = useState([]);
     const [pieDataLoading, setPieDataLoading] = useState(false);    
+    const [pieViewType, setPieViewType] = useState("team");
    
     // Get All TAsk Which are Trash False
     useEffect(()=>{
@@ -29,6 +30,7 @@ function Dashboard() {
                 const response = await getAllTaskFirebase(user, false);
                 if(response.success){
                     setAllTasks(response.data);
+                    console.log(response.data);
                 }
             } catch (error) {
                 console.error("Error in Task Fetching: ", error);
@@ -68,8 +70,8 @@ function Dashboard() {
             priority: "priorities"
         };
         setBarChartLoading(true);
-        fetchMasters(tableMap[filterType], setMasterData);
-    }, [filterType]);
+        fetchMasters(tableMap[barChartFilterType], setMasterData);
+    }, [barChartFilterType]);
 
     // Bar Chart Tasks per Client By Phase/ Priority/ Status
     const barChartData = useMemo(() => {
@@ -79,8 +81,8 @@ function Dashboard() {
         for (let task of allTasks) {
             const client = task.clientLabel || "Unknown";
             const key =
-                    filterType == "phase" ? task.taskPhase :
-                    filterType == "priority" ? task.priority :
+                    barChartFilterType == "phase" ? task.taskPhase :
+                    barChartFilterType == "priority" ? task.priority :
                     task.taskStatus;            
 
             // If this client isn't in grouped yet, initialize it dynamically from master
@@ -100,15 +102,15 @@ function Dashboard() {
         }
         
         return Object.values(grouped);
-    }, [allTasks, masterData, filterType]);
+    }, [allTasks, masterData, barChartFilterType]);
 
     // Show Lable in Chart Title
     const chartTitle = useMemo(() => {
         if (!masterData.length) return "No Data";
-        let title = filterType.charAt(0).toUpperCase()+filterType.slice(1,filterType.length);
+        let title = barChartFilterType.charAt(0).toUpperCase()+barChartFilterType.slice(1,barChartFilterType.length);
         return `Tasks by ${title} (per Client)`;
         // Task {chartTitle} by Client
-    }, [masterData, filterType]);
+    }, [masterData, barChartFilterType]);
 
     // Task End Date This Week
     const tasksDueThisWeek = useMemo(() => {
@@ -163,28 +165,44 @@ function Dashboard() {
         if (!allTasks.length || !managers.length) return [["Manager", "Tasks"]]; // header only if no data
 
         const counts = {}; // temporary object to count tasks per manager
-        allTasks.forEach(task => {
-            task.managerId.forEach(managerId => {
-                const manager = managers.find(m => m.id === managerId);
-                const managerName = manager ? manager.userName : managerId;
-                console.log("manager ID ", manager);
-                console.log("managerName", managerName);
-                if (!counts[managerName]) counts[managerName] = 0;
-                counts[managerName] += 1;
+
+        if (pieViewType === "team") {
+            allTasks.forEach(task => {
+                task.managerId.forEach(managerId => {
+                    const manager = managers.find(m => m.id === managerId);
+                    const managerName = manager ? manager.userName : managerId;
+                    if (!counts[managerName]) counts[managerName] = 0;
+                    counts[managerName] += 1;
+                });
             });
-        });
 
-        // Convert counts object to Google Charts format
-        const data = [["Manager", "Tasks"]];
-        for (const [managerName, taskCount] of Object.entries(counts)) {
-            data.push([managerName, taskCount]);
+            // Convert counts object to Google Charts format
+            const data = [["Manager", "Tasks"]];
+            for (const [managerName, taskCount] of Object.entries(counts)) {
+                data.push([managerName, taskCount]);
+            }
+            if(data){
+                setPieDataLoading(false);
+            }
+            return data;            
+        }else{
+            // Group by coders (using coders array in task)
+            allTasks.forEach(task => {
+                task.coders.forEach(coder => {
+                    if (!counts[coder.id]) counts[coder.id] = { name: coder.name, tasks: 0 };
+                    counts[coder.id].tasks += 1;
+                });
+            });
+            const data = [["Coder", "Tasks"]];
+            for (const { name, tasks } of Object.values(counts)) {
+                data.push([name, tasks]);
+            }
+            if(data){
+                setPieDataLoading(false);
+            }
+            return data;            
         }
-
-        if(data){
-            setPieDataLoading(false);
-        }
-        return data;
-    }, [allTasks, managers]);
+    }, [allTasks, managers,pieViewType]);
 
     return (
         <>
@@ -218,8 +236,8 @@ function Dashboard() {
                         <Select 
                             labelVisible={false}
                             // defaultValue="status"
-                            value={filterType} 
-                            onChange={(e)=> setFilterType(e.target.value)}
+                            value={barChartFilterType} 
+                            onChange={(e)=> setBarChartFilterType(e.target.value)}
                             className="w-48 p-1"
                             options={[
                                 { value: "", label: "Filter Tasks", disabled: true },
@@ -244,11 +262,21 @@ function Dashboard() {
                 <div className="bg-white border border-dotted border-brand-primary-light p-4 rounded-lg w-1/2">
                     <div className="flex gap-2 align-center justify-between">
                         <h3 className="text-lg font-semibold mb-4">Tasks By Team</h3>
+                        <Select
+                            labelVisible={false}
+                            value={pieViewType}
+                            onChange={(e) => setPieViewType(e.target.value)}
+                            className="w-48 p-1"
+                            options={[
+                                { value: "team", label: "By Team" },
+                                { value: "coders", label: "By Coders" }
+                            ]}
+                        />                        
                     </div>                 
                     {pieDataLoading ? (
                         <PieChartSkeleton width="100%" height={300} />
                         ) : (
-                        <PieChart pieData={pieDataForChart} is3D={true} height={300} />
+                        <PieChart pieData={pieDataForChart} is3D={false} height={300} />
                     )}
                 </div>
             </div>

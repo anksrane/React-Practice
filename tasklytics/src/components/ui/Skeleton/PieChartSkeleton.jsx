@@ -7,7 +7,7 @@ function PieChartSkeleton({ width = "100%", height = 200 }) {
       className="flex justify-center items-center"
       style={{ width: width, height: height }}
     >
-      <Skeleton className="w-32 h-32 rounded-full" />
+      <Skeleton className="w-64 h-64 rounded-full" />
     </div>
   );
 }
