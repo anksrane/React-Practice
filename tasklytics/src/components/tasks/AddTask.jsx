@@ -182,13 +182,16 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
           cleaned.id = singleTask.id; // required for update
           cleaned.createdBy = singleTask.createdBy;
           cleaned.createdByName = singleTask.createdByName;
-          cleaned.keywords = generateKeywords(cleaned.title, cleaned.client, selectedCoders);
+          const newKeywords = generateKeywords(cleaned.title, cleaned.client, selectedCoders);
+          cleaned.keywords = singleTask.serialNo 
+              ? Array.from(new Set([...newKeywords, singleTask.serialNo]))
+              : newKeywords;
           console.log("cleaned",cleaned);
           const response = await updateTaskFirebase(singleTask.id, cleaned);
 
           if (response.success) {
             setLoading(false)
-            toast.success("Task Updated Successfully");
+            toast.success(`Task ${singleTask.serialNo} Updated Successfully`);
             onClose();
             reset();
             onTaskAdded?.();            
@@ -208,7 +211,7 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
             const response=await addTaskFirebase(createPayload);
             if(response.success){
               setLoading(false);
-              toast.success("Task Created Successfully");
+              toast.success(`Task ${response.serialNo} Created Successfully`);
               onClose();
               reset();
               onTaskAdded?.();

@@ -2,15 +2,15 @@ import React, { useRef, useEffect, useState } from 'react'
 import { Loader } from '../index';
 import { IoMdCloseCircle } from "react-icons/io";
 import { useSelector } from 'react-redux';
-import { getCodersList } from '../../firebase/codersService';
-import { addTaskFirebase } from '../../firebase/addTaskService';
-import { updateTaskFirebase } from '../../firebase/updateTaskService';
-import { toast } from 'react-toastify';
+import { format } from 'date-fns';
 
 function ViewTask({onClose, viewData }) {
     const {user}=useSelector((state)=>state.auth);
     const [loading,setLoading] = useState(true); 
     const [codersList, setCodersList] = useState([]);
+    const startDate = viewData.startDate ? format(viewData.startDate.toDate(), 'dd-MMM-yyyy') : '';
+    const endDate = viewData.endDate ? format(viewData.endDate.toDate(), 'dd-MMM-yyyy') : '';
+    
 
     const backdropRef = useRef(null);
 
@@ -87,22 +87,27 @@ function ViewTask({onClose, viewData }) {
 
                 <div className='mb-2'>
                   <h5 className='px-1 font-semibold'>Task Start Date : </h5>
-                  <p className='px-1'>{viewData.startDate}</p>
+                  <p className='px-1'>{startDate}</p>
                 </div>
 
                 <div className='mb-2'>
                   <h5 className='px-1 font-semibold'>Task End Date : </h5>
-                  <p className='px-1'>{viewData.endDate}</p>
+                  <p className='px-1'>{endDate}</p>
                 </div>
 
-                <div className='mb-2'>
-                  <h5 className='px-1 font-semibold'>Coders : </h5>
-                  {codersList && codersList.length > 0 && (
-                    <>
-                      <p className='px-1'>{codersList}</p>
-                    </>
-                  )}
-                </div>
+                {user.userRole=="Coder"?(
+                  "")
+                  :
+                  (
+                  <div className='mb-2'>
+                    <h5 className='px-1 font-semibold'>Coders : </h5>
+                    {codersList && codersList.length > 0 && (
+                      <>
+                        <p className='px-1'>{codersList}</p>
+                      </>
+                    )}
+                  </div>                  
+                )}
               </div>            
             </>
           )}
