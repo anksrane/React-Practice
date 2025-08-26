@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuth } from './features/auth/authActions';
 import { Loader } from './components';
+import { toggleSidebar } from "./features/ui/uiSlice";
 
 function App() {
     const dispatch=useDispatch();
@@ -17,6 +18,7 @@ function App() {
 
     useEffect(()=>{
       dispatch(checkAuth());
+      dispatch(toggleSidebar());
     },[dispatch])
 
     if(loading){

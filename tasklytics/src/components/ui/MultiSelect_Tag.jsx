@@ -129,7 +129,7 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
             />
           </div>
 
-          <ul className="max-h-40 overflow-y-auto">
+          <ul className="max-h-24 overflow-y-auto">
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option) => (
                 <li

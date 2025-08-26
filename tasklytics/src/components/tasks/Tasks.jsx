@@ -540,7 +540,7 @@ function Tasks() {
                     {row.getVisibleCells().map(cell => (
                       <td
                         key={cell.id}
-                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-left"
+                        className="px-6 py-3 whitespace-nowrap text-sm text-gray-900 text-left"
                       >
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>

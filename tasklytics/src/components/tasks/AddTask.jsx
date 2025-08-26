@@ -227,8 +227,8 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
     };
 
     return (
-      <div ref={backdropRef} className='absolute bg-black bg-opacity-50 z-20 w-full h-full cursor-pointer'  onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
-        <div className='absolute bg-white top-0 right-0 h-full w-96 p-4 overflow-y-auto cursor-auto' onMouseDown={(e) => e.stopPropagation()} onMouseUp={(e) => e.stopPropagation()} >
+      <div ref={backdropRef} className='fixed inset-0 bg-black bg-opacity-50 z-20 flex justify-end cursor-pointer' onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
+        <div className='bg-white w-96 h-full flex flex-col p-4 cursor-auto' onMouseDown={(e) => e.stopPropagation()} onMouseUp={(e) => e.stopPropagation()} >
           <div className='flex justify-end mb-2'>
             <button onClick={onClose}><IoMdCloseCircle className='text-2xl'/></button>
           </div>
@@ -242,6 +242,7 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
             </>
           ):(
             <>
+            <div className="flex-1 overflow-y-auto">
               <form onSubmit={handleSubmit(onSubmit)} className='container mx-auto pt-5 pb-4 relative'> 
                 {/* Client Input Start */}
                   <div className="w-full">
@@ -412,7 +413,8 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
                     </Button>
                     <Button type="reset" variant='danger' className='py-2 text-sm' onClick={()=>reset()}>Reset</Button>
                 </div>
-              </form>            
+              </form>   
+            </div>         
             </>
           )}
         </div>
