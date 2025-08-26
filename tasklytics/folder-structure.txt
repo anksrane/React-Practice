@@ -6,22 +6,33 @@ src/
 ├── assets/                           # Images, icons, etc.
 │
 ├── components/
+│   ├── chart/                       # Chart components
+│   │   └── PieChart.jsx                 
+│   │   └── StackedBarChart.jsx  
+│   ├── dashboard/                    # Dashboard UI components               
+│   │   └── Dashboard.jsx
+│   │   └── CountCard.jsx
+│   │   └── TasksDueThisWeek.jsx
+│   │   └── TasksDueThisWeek.module.css
 │   ├── layout/                       # App layout components                  
-│   │   └── AppLayout.jsx                 
-│   │   └── ConfirmDeleteModal.jsx                
-│   │   └── ConfirmTrashModal.jsx               
+│   │   └── AppLayout.jsx                               
 │   │   └── Header.jsx 
-│   │   └── Login.jsx                              
-│   │   └── RestoreTrashModal.jsx                              
+│   │   └── Login.jsx                                                           
 │   │   └── Sidebar.jsx                                 
 │   ├── tasks/                        # Task-specific components
 │   │   └── Tasks.jsx                   # List of tasks
 │   │   └── AddTask.jsx                 # Add / Edit new task
 │   │   └── Deleted.jsx                 # List of Deleted tasks 
 │   │   └── ViewTask.jsx                # View task details 
-│   ├── dashboard/                    # Dashboard UI components
-│   ├── team/                         # Team UI components
-│   ├── ui/                           
+│   │   └── ConfirmDeleteModal.jsx                
+│   │   └── ConfirmTrashModal.jsx 
+│   │   └── RestoreTrashModal.jsx 
+│   ├── ui/  
+│   │   ├── Skeleton/       
+│   │   │   └── Skeleton.jsx
+│   │   │   └── ChartSkeleton.jsx
+│   │   │   └── PieChartSkeleton.jsx
+│   │   │   └── TasksDueThisWeekSkeleton.jsx
 │   │   └── Button.jsx
 │   │   └── ButtonWithIcon.jsx
 │   │   └── DatePicker.jsx
@@ -51,14 +62,19 @@ src/
 ├── firebase/                         # Firebase logic
 │   ├── addTaskService.js                   # Service to add a task
 │   ├── authService.js                      # Service for authentication
+│   ├── bulkUpdateOverdueTasksService.js    # Service to bulk update overdue tasks
 │   ├── codersService.js                    # Service for get codersList
+│   ├── deleteAllTasksService.js            # Service to delete all tasks set counter zero
 │   ├── deleteTaskService.js                # Service to delete a task
 │   ├── dropdownService.js                  # Service for dropdowns
 │   ├── firebaseConfig.js                   # Firebase configuration
-│   ├── getAllTaskService.js                # Service to get all tasks         
-│   ├── getAllTasksWithFilter.js            # Service to get tasks with filters         
-│   ├── updateTaskService.js                # Service to update a task          
-│   ├── userService.js                      # Service for user details     
+│   ├── getAllManagersService.js            # Service to get all managers
+│   ├── getAllMasterService.js              # Service to get all masters
+│   ├── getAllTaskService.js                # Service to get all tasks
+│   ├── getAllTasksWithFilter.js            # Service to get tasks with filters
+│   ├── taskNotificationService.js          # Service to get task notifications
+│   ├── updateTaskService.js                # Service to update a task
+│   ├── userService.js                      # Service for user details
 │
 ├── hooks/
 │
