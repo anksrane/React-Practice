@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux';
+import { bulkUpdateOverdueTasksFirebase } from '../../firebase/bulkUpdateOverdueTasksService';
 import { getAllTaskFirebase } from '../../firebase/getAllTaskService';
 import { getAllMasterFirebase } from '../../firebase/getAllMasterService';
 import { getAllManagersFirebase } from '../../firebase/getAllManagersService';
@@ -21,22 +22,36 @@ function Dashboard() {
     const [taskDueLoading, setTaskDueLoading] = useState(true);
     const [managers, setManagers] = useState([]);
     const [pieDataLoading, setPieDataLoading] = useState(false);    
-    const [pieViewType, setPieViewType] = useState("team");
-   
-    // Get All TAsk Which are Trash False
+    const [pieViewType, setPieViewType] = useState(
+        user.userRole === "Coder" || user.userRole === "Manager" ? "coders" : "team"
+    );
+
+    // Update Overdue Task
+    useEffect(() => {
+        const updateOverdueTasks = async () => {
+            try {
+                await bulkUpdateOverdueTasksFirebase();
+            } catch (error) {
+                console.error("Failed to update overdue tasks:", error);
+            }
+        };
+
+        updateOverdueTasks();
+    }, []);
+
+    // Get All Task Which are Trash False
     useEffect(()=>{
         const getAllTasks = async () =>{
             try {
                 const response = await getAllTaskFirebase(user, false);
                 if(response.success){
                     setAllTasks(response.data);
-                    console.log(response.data);
                 }
             } catch (error) {
                 console.error("Error in Task Fetching: ", error);
             }
         }
-        getAllTasks();
+        getAllTasks();       
     },[user])
 
     // for task Count
@@ -112,32 +127,6 @@ function Dashboard() {
         // Task {chartTitle} by Client
     }, [masterData, barChartFilterType]);
 
-    // Task End Date This Week
-    const tasksDueThisWeek = useMemo(() => {
-        if (!allTasks.length) return [];
-
-        const now = new Date();
-
-        const weekStart = startOfWeek(now, { weekStartsOn: 1 }); // Monday start
-        const weekEnd = endOfWeek(now, { weekStartsOn: 1 });     // Sunday end   
-
-        let filteredTasks=allTasks.filter(task => {
-            if(task.taskStatus=="completed") return false;
-            if (!task.endDate?.seconds) return false;
-            const endDate = new Date(task.endDate.seconds * 1000);
-            return endDate >= weekStart && endDate <= weekEnd;
-        });
-        return filteredTasks;
-    }, [allTasks]);
-
-    // Set Task Due Loading Off
-    useEffect(() => {
-        setTaskDueLoading(true);
-        if (allTasks.length>=0) {
-            setTaskDueLoading(false);
-        }
-    }, [allTasks]);    
-
     // Get unique manager IDs from allTasks
     const managerIds = useMemo(() => {
         setPieDataLoading(true);
@@ -148,13 +137,25 @@ function Dashboard() {
         return Array.from(ids);
     }, [allTasks]);  
     
+    // Role Base Heading For Pie Chart
+    const roleHeadingForPie = {
+        Manager: "Team's Tasks",
+        Coder: "Tasks Shared with Team",
+    };
+
     // Fetch Managers Name
     useEffect(() => {
-        if (managerIds.length === 0) return;
+        if (managerIds.length === 0) {
+            setPieDataLoading(false); // nothing to fetch
+            return;
+        }
 
         const fetchManagers = async () => {
             const response = await getAllManagersFirebase({ manager: managerIds });
-            if (response.success) setManagers(response.data);
+            if (response.success) {
+            setManagers(response.data);
+            }
+            setPieDataLoading(false);
         };
 
         fetchManagers();
@@ -181,9 +182,6 @@ function Dashboard() {
             for (const [managerName, taskCount] of Object.entries(counts)) {
                 data.push([managerName, taskCount]);
             }
-            if(data){
-                setPieDataLoading(false);
-            }
             return data;            
         }else{
             // Group by coders (using coders array in task)
@@ -197,12 +195,46 @@ function Dashboard() {
             for (const { name, tasks } of Object.values(counts)) {
                 data.push([name, tasks]);
             }
-            if(data){
-                setPieDataLoading(false);
-            }
             return data;            
         }
     }, [allTasks, managers,pieViewType]);
+
+    // Task End Date This Week
+    const tasksDueThisWeek = useMemo(() => {
+        if (!allTasks.length) return [];
+
+        const now = new Date();
+
+        const weekStart = startOfWeek(now, { weekStartsOn: 1 }); // Monday start
+        const weekEnd = endOfWeek(now, { weekStartsOn: 1 });     // Sunday end   
+
+        let filteredTasks=allTasks.filter(task => {
+            if(task.taskStatus=="completed") return false;
+            if (!task.endDate?.seconds) return false;
+            const endDate = new Date(task.endDate.seconds * 1000);
+            return endDate >= weekStart && endDate <= weekEnd;
+        });
+        console.log(filteredTasks);
+        return filteredTasks;
+    }, [allTasks]);
+
+    // Set Task Due Loading Off
+    useEffect(() => {
+        setTaskDueLoading(true);
+        if (allTasks.length>=0) {
+            setTaskDueLoading(false);
+        }
+    }, [allTasks]);   
+    
+    // Task Overdue
+    const tasksOverdue = useMemo(() => {
+        if (!allTasks.length) return [];
+
+        let filteredTasks=allTasks.filter(task => {
+            return task.taskStatus=="overdue";
+        });
+        return filteredTasks;
+    }, [allTasks]);    
 
     return (
         <>
@@ -252,7 +284,7 @@ function Dashboard() {
                     ) : barChartData && barChartData.length > 0 ? (
                     <StackedBarChart data={barChartData} masterData={masterData} />
                     ) : (
-                    <div className="text-center text-brand-primary-dark font-bold py-6 max-h-60">
+                    <div className="text-center text-brand-primary-dark py-6 max-h-60">
                         No data available
                     </div>
                     )}              
@@ -261,23 +293,36 @@ function Dashboard() {
                 {/* Tasks By Team */}
                 <div className="bg-white border border-dotted border-brand-primary-light p-4 rounded-lg w-1/2">
                     <div className="flex gap-2 align-center justify-between">
-                        <h3 className="text-lg font-semibold mb-4">Tasks By Team</h3>
-                        <Select
-                            labelVisible={false}
-                            value={pieViewType}
-                            onChange={(e) => setPieViewType(e.target.value)}
-                            className="w-48 p-1"
-                            options={[
-                                { value: "team", label: "By Team" },
-                                { value: "coders", label: "By Coders" }
-                            ]}
-                        />                        
+                        <h3 className="text-lg font-semibold mb-4">
+                            {user.userRole === "Admin"
+                                ? pieViewType === "team"
+                                ? "Tasks By Team"
+                                : "Tasks By Coders"
+                                : roleHeadingForPie[user.userRole] || "Tasks By Team"}
+                        </h3>
+                        {user.userRole=="Admin" ? (
+                            <Select
+                                labelVisible={false}
+                                value={pieViewType}
+                                onChange={(e) => setPieViewType(e.target.value)}
+                                className="w-48 p-1"
+                                options={[
+                                    { value: "team", label: "By Team" },
+                                    { value: "coders", label: "By Coders" }
+                                ]}
+                            />   
+                        ):""}                     
                     </div>                 
                     {pieDataLoading ? (
                         <PieChartSkeleton width="100%" height={300} />
-                        ) : (
+                        ) : pieDataForChart && pieDataForChart.length>0 ? (
                         <PieChart pieData={pieDataForChart} is3D={false} height={300} />
-                    )}
+                        ) : (
+                            <div className="text-center text-brand-primary-dark font-bold py-6 max-h-60">
+                                No data available
+                            </div>                           
+                        )
+                    }
                 </div>
             </div>
 
@@ -290,15 +335,30 @@ function Dashboard() {
                     </div>                
                     {taskDueLoading ? 
                         (<TasksDueThisWeekSkeleton rows={4} columns={3} /> )
-                        : tasksDueThisWeek && tasksDueThisWeek.length>0 ? (<TasksDueThisWeek title="Tasks Due This Week" tasks={tasksDueThisWeek} />)
+                        : tasksDueThisWeek && tasksDueThisWeek.length>0 ? (<TasksDueThisWeek tasks={tasksDueThisWeek} />)
                         : (
-                            <div className="text-center text-brand-primary-dark font-bold py-6 max-h-60">
+                            <div className="text-center text-brand-primary-dark py-6 max-h-60">
                                 No data available
                             </div>                            
                         )
                     }
-                </div>                
-                <div className="bg-white border border-dotted border-brand-primary-light p-4 rounded-lg w-1/2"></div>
+                </div>      
+
+                {/* Task Overdue */}
+                <div className="bg-white border border-dotted border-brand-primary-light p-4 rounded-lg w-1/2">
+                    <div className="flex gap-2 align-center justify-between">
+                        <h3 className="text-lg font-semibold mb-4">Tasks Overdue</h3>
+                    </div>                
+                    {taskDueLoading ? 
+                        (<TasksDueThisWeekSkeleton rows={4} columns={3} /> )
+                        : tasksDueThisWeek && tasksDueThisWeek.length>0 ? (<TasksDueThisWeek tasks={tasksOverdue} />)
+                        : (
+                            <div className="text-center text-brand-primary-dark py-6 max-h-60">
+                                No data available
+                            </div>                            
+                        )
+                    }
+                </div>
             </div>
         </div>    
         </>

@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import styles from "./TasksDueThisWeek.module.css";
 
 const defaultColumns = [
+  { key: "serialNo", clientLabel: "Sr" },
   { key: "clientLabel", clientLabel: "Client Name" },
   { key: "title", clientLabel: "Title" },
   { key: "endDate", clientLabel: "Due Date" },

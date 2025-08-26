@@ -4,6 +4,7 @@ import { InputSearch, Loader } from '../index.js';
 import { IoMdAdd } from "react-icons/io";
 import { fetchAllDropdowns } from '../../firebase/dropdownService.js';
 import { getAllTaskFirebase } from '../../firebase/getAllTasksWithFilter.js';
+import { deleteAllTasksService } from '../../firebase/deleteAllTasksService.js'
 import { MdOutlineClear } from "react-icons/md";
 import { TbEdit } from "react-icons/tb";
 import { IoEyeSharp } from "react-icons/io5";
@@ -145,6 +146,12 @@ function Tasks() {
 
     const columnHelper=createColumnHelper();
     const columns = [
+        columnHelper.accessor('serialNo',{
+            header: 'Sr No',
+            cell: info => info.getValue(),
+            enableSorting: true,
+            enableGlobalFilter: true
+        }),      
         columnHelper.accessor('clientLabel',{
             header: 'client',
             cell: info => info.getValue(),
@@ -303,6 +310,20 @@ function Tasks() {
 
     const addIcon=<IoMdAdd />;  
 
+    
+    const handleDeleteAll = async () => {
+        if (!window.confirm("Are you sure you want to delete all tasks and reset the counter?")) {
+            return;
+        }
+        try {
+            await deleteAllTasksService();
+            fetchTasksWith(filters);
+            alert("All tasks deleted and serial number reset!");
+        } catch (error) {
+            alert("Error deleting tasks. Check console for details.",error);
+        }
+    };
+
     return (
     <>
 
@@ -430,6 +451,10 @@ function Tasks() {
                   setFilters(prev => ({ ...prev, priority: '' }));
                 }}
               ><MdOutlineClear /></button>
+            </div>
+
+            <div>
+              <button onClick={handleDeleteAll} className='bg-black text-white py-1 px-2 rounded-lg'>Delete All</button>
             </div>
           </div>
 

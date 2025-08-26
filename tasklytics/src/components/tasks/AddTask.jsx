@@ -301,6 +301,22 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
                   </div>
                 {/* Description Input End */}  
 
+                {/* Priority Input Start */}
+                  <div className="w-full">
+                    <Select 
+                    className="py-1 text-sm"
+                    label="Task Priority"
+                    defaultOption= "Select Priority"
+                    labelClass='font-semibold mt-2'
+                    options={taskPrioritiesOptions}
+                      {...register("priority",{
+                        required: "Please Select Priority",
+                      })}
+                      error={errors.priority && errors.priority.message}
+                    /> 
+                  </div>
+                {/* Priority Input End */}  
+
                 {/* Task Phase Input Start */}
                   <div className="w-full">
                     <Select 
@@ -332,22 +348,6 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
                     /> 
                   </div>
                 {/* Task Status Input End */}  
-
-                {/* Priority Input Start */}
-                  <div className="w-full">
-                    <Select 
-                    className="py-1 text-sm"
-                    label="Task Priority"
-                    defaultOption= "Select Priority"
-                    labelClass='font-semibold mt-2'
-                    options={taskPrioritiesOptions}
-                      {...register("priority",{
-                        required: "Please Select Priority",
-                      })}
-                      error={errors.priority && errors.priority.message}
-                    /> 
-                  </div>
-                {/* Priority Input End */}  
 
                 {/* Date Input Start */}
                 <div className='flex gap-2'>
