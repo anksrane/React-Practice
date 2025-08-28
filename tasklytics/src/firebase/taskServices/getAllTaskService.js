@@ -1,6 +1,6 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "./firebaseConfig";
-import { getAllMasterFirebase } from "./getAllMasterService";
+import { db } from "../firebaseConfig";
+import { getAllMasterFirebase } from "../getAllMasterService";
 
 const getLabel=(list,value)=>list.find(item=>item.value===value)?.label || value;
 

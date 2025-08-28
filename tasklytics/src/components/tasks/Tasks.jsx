@@ -3,8 +3,8 @@ import { ButtonWithIcon, AddTask, ViewTask, ConfirmTrashModal } from '../index.j
 import { InputSearch, Loader } from '../index.js';
 import { IoMdAdd } from "react-icons/io";
 import { fetchAllDropdowns } from '../../firebase/dropdownService.js';
-import { getAllTaskFirebase } from '../../firebase/getAllTasksWithFilter.js';
-import { deleteAllTasksService } from '../../firebase/deleteAllTasksService.js'
+import { getAllTaskFirebase } from '../../firebase/taskServices/getAllTasksWithFilter.js';
+import { deleteAllTasksService } from '../../firebase/taskServices/deleteAllTasksService.js'
 import { MdOutlineClear } from "react-icons/md";
 import { TbEdit } from "react-icons/tb";
 import { IoEyeSharp } from "react-icons/io5";

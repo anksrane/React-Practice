@@ -8,6 +8,7 @@ import { MdGroups } from "react-icons/md";
 import { IoAnalyticsSharp } from "react-icons/io5";
 import { TiPower } from "react-icons/ti";
 import { GoTrash } from "react-icons/go";
+import { GoOrganization } from "react-icons/go";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -28,8 +29,9 @@ function Sidebar({isOpen}) {
       { name: 'Dashboard', path:"/dashboard", icon:MdDashboardCustomize},
       { name: 'Tasks', path:"/tasks", icon: BiTask},
       { name: 'Team', path: '/team', icon:MdGroups },
-      { name: 'Analytics', path: '/analytics',icon:IoAnalyticsSharp },    
-      { name: 'Deleted Items', path: '/deleted',icon:GoTrash, role: 'Admin' },    
+      { name: 'Analytics', path: '/analytics', icon:IoAnalyticsSharp },    
+      { name: 'Deleted Items', path: '/deleted', icon:GoTrash, role: 'Admin' },    
+      { name: 'Clients', path: '/clients', icon:GoOrganization, role: 'Admin' },    
     ]    
 
     const visibleNavItems = navItems.filter(

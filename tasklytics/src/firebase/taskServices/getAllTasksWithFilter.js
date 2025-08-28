@@ -1,5 +1,5 @@
 import { collection, getDocs, query, orderBy, limit, startAfter, where } from "firebase/firestore";
-import { db } from "./firebaseConfig";
+import { db } from "../firebaseConfig";
 
 const getLabel=(list,value)=>list.find(item=>item.value===value)?.label || value;
 

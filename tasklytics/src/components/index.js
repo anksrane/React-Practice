@@ -24,6 +24,10 @@ import StackedBarChart from "./charts/StackedBarChart";
 import TasksDueThisWeek from "./dashboard/TasksDueThisWeek";
 import PieChart from "./charts/PieChart";
 
+import ClientsList from './clients/ClientsList';
+import AddEditClient from './clients/AddEditClient';
+import ViewClient from './clients/ViewClient';
+
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
 import AppLayout from "./layout/AppLayout";
@@ -61,6 +65,10 @@ export {
     StackedBarChart,
     TasksDueThisWeek,
     PieChart,
+
+    ClientsList,
+    AddEditClient,
+    ViewClient,
 
     Sidebar,
     Header,

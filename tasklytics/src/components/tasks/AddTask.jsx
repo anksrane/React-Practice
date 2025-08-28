@@ -4,8 +4,8 @@ import { Button, Input, Select, DatePicker, MultiSelect_Tag, Loader } from '../i
 import { IoMdCloseCircle } from "react-icons/io";
 import { useSelector } from 'react-redux';
 import { getCodersList } from '../../firebase/codersService';
-import { addTaskFirebase } from '../../firebase/addTaskService';
-import { updateTaskFirebase } from '../../firebase/updateTaskService';
+import { addTaskFirebase } from '../../firebase/taskServices/addTaskService';
+import { updateTaskFirebase } from '../../firebase/taskServices/updateTaskService';
 import { toast } from 'react-toastify';
 import { Timestamp } from "firebase/firestore";
 

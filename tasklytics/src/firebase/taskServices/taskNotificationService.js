@@ -1,4 +1,4 @@
-import { db } from "./firebaseConfig";
+import { db } from "../firebaseConfig";
 import { collection, doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 export const addTaskNotification = async({ taskId, type, message, notifiedUsers = [], serialNo = "" }) => {

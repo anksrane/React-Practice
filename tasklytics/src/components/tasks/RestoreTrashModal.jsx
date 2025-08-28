@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Button, Loader } from '../index';
 import { IoIosWarning } from "react-icons/io";
-import { updateTaskFirebase } from '../../firebase/updateTaskService';
+import { updateTaskFirebase } from '../../firebase/taskServices/updateTaskService';
 import { toast } from 'react-toastify';
 
 function RestoreTrashModal({onClose, onTaskAdded, restoreData}) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux';
-import { bulkUpdateOverdueTasksFirebase } from '../../firebase/bulkUpdateOverdueTasksService';
-import { getAllTaskFirebase } from '../../firebase/getAllTaskService';
+import { bulkUpdateOverdueTasksFirebase } from '../../firebase/taskServices/bulkUpdateOverdueTasksService';
+import { getAllTaskFirebase } from '../../firebase/taskServices/getAllTaskService';
 import { getAllMasterFirebase } from '../../firebase/getAllMasterService';
 import { getAllManagersFirebase } from '../../firebase/getAllManagersService';
 import { startOfWeek, endOfWeek } from "date-fns";

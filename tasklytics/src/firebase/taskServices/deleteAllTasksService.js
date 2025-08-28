@@ -1,4 +1,4 @@
-import { db } from "./firebaseConfig";
+import { db } from "../firebaseConfig";
 import { collection, getDocs, deleteDoc, doc, setDoc } from "firebase/firestore";
 
 export const deleteAllTasksService = async () => {

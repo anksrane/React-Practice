@@ -1,4 +1,4 @@
-import { db } from "./firebaseConfig";
+import { db } from "../firebaseConfig";
 import { collection, getDocs, writeBatch, doc, serverTimestamp } from "firebase/firestore";
 
 export const bulkUpdateOverdueTasksFirebase = async () => {

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Button, Loader } from '../index';
 import { IoIosWarning } from "react-icons/io";
-import { deleteTaskFirebase } from '../../firebase/deleteTaskService'; 
+import { deleteTaskFirebase } from '../../firebase/taskServices/deleteTaskService'; 
 import { toast } from 'react-toastify';
 
 function ConfirmDeleteModal({onClose, onTaskAdded, deleteData}) {
