@@ -10,7 +10,7 @@ function AppLayout() {
     const dispatch=useDispatch()
     const isSidebarOpen=useSelector((state)=>state.ui.isSidebarOpen);
     const handleToggleSidebar=()=>{
-        dispatch(toggleSidebar)
+        dispatch(toggleSidebar())
     }
     return (
         <>
