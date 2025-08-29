@@ -214,7 +214,6 @@ function Dashboard() {
             const endDate = new Date(task.endDate.seconds * 1000);
             return endDate >= weekStart && endDate <= weekEnd;
         });
-        console.log(filteredTasks);
         return filteredTasks;
     }, [allTasks]);
 
