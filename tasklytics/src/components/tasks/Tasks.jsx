@@ -146,8 +146,14 @@ function Tasks() {
 
     const columnHelper=createColumnHelper();
     const columns = [
-        columnHelper.accessor('serialNo',{
+        columnHelper.accessor('',{
             header: 'Sr No',
+            cell: info => currentPage * pageSize + info.row.index + 1,
+            enableSorting: true,
+            enableGlobalFilter: true
+        }),      
+        columnHelper.accessor('serialNo',{
+            header: 'Task No',
             cell: info => info.getValue(),
             enableSorting: true,
             enableGlobalFilter: true
@@ -310,7 +316,6 @@ function Tasks() {
 
     const addIcon=<IoMdAdd />;  
 
-    
     const handleDeleteAll = async () => {
         if (!window.confirm("Are you sure you want to delete all tasks and reset the counter?")) {
             return;
@@ -550,77 +555,76 @@ function Tasks() {
               )}
             </tbody>
           </table>
-        </div>
-        )}
 
+          {/* Pagination Controls */}
+          <div className="flex items-center justify-center flex-col sm:flex-row sm:justify-between flex-wrap mt-4">
+            <div className="text-sm text-gray-700 mb-2 hidden sm:block">
+              Showing <span className="font-semibold">{table.getFilteredRowModel().rows.length}</span> records
+            </div>
 
-        {/* Pagination Controls */}
-        <div className="flex items-center justify-center flex-col sm:flex-row sm:justify-between flex-wrap mt-4">
-          <div className="text-sm text-gray-700 mb-2 hidden sm:block">
-            Showing <span className="font-semibold">{table.getFilteredRowModel().rows.length}</span> records
-          </div>
+            <div className="flex items-center gap-2 mb-2">
+              {/* Previous Button */}
+              <button
+                className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                // onClick={() => table.previousPage()}
+                onClick={() => {
+                  setCurrentPage(prev => {
+                    const newPage = Math.max(prev - 1, 0);
+                    fetchTasksWith(filters, newPage); // fetch that page
+                    return newPage;
+                  });
+                }}
+                // disabled={!table.getCanPreviousPage()}
+                disabled={currentPage === 0}
+              >
+                &laquo;
+              </button>
 
-          <div className="flex items-center gap-2 mb-2">
-            {/* Previous Button */}
-            <button
-              className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-              // onClick={() => table.previousPage()}
-              onClick={() => {
-                setCurrentPage(prev => {
-                  const newPage = Math.max(prev - 1, 0);
-                  fetchTasksWith(filters, newPage); // fetch that page
-                  return newPage;
-                });
-              }}
-              // disabled={!table.getCanPreviousPage()}
-              disabled={currentPage === 0}
-            >
-              &laquo;
-            </button>
+              {/* Page Numbers */}
+              {pageNumbers.map((pageNumber, index) => (
+                <React.Fragment key={index}> {/* Use index for keys for ellipses */}
+                  {typeof pageNumber === 'number' ? (
+                    <button
+                      onClick={() => {
+                        setCurrentPage(pageNumber);
+                        fetchTasksWith(filters, pageNumber);
+                      }}
+                      className={`px-3 py-1 border border-gray-300 rounded-md text-sm font-medium ${currentPage === pageNumber ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-white text-gray-700 hover:bg-gray-50' }`} >
+                      {pageNumber + 1} {/* Display 1-indexed page number */}
+                    </button>
+                  ) : (
+                    <span className="px-3 py-1 text-gray-700">...</span>
+                  )}
+                </React.Fragment>
+              ))}
 
-            {/* Page Numbers */}
-            {pageNumbers.map((pageNumber, index) => (
-              <React.Fragment key={index}> {/* Use index for keys for ellipses */}
-                {typeof pageNumber === 'number' ? (
-                  <button
-                    onClick={() => {
-                      setCurrentPage(pageNumber);
-                      fetchTasksWith(filters, pageNumber);
-                    }}
-                    className={`px-3 py-1 border border-gray-300 rounded-md text-sm font-medium ${currentPage === pageNumber ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-white text-gray-700 hover:bg-gray-50' }`} >
-                    {pageNumber + 1} {/* Display 1-indexed page number */}
-                  </button>
-                ) : (
-                  <span className="px-3 py-1 text-gray-700">...</span>
-                )}
-              </React.Fragment>
-            ))}
+              <button
+                // onClick={() => table.nextPage()}
+                onClick={() => {
+                  setCurrentPage(prev => {
+                    const newPage = prev + 1;
+                    fetchTasksWith(filters, newPage);
+                    return newPage;
+                  });
+                }}
+                // disabled={!table.getCanNextPage()}
+                disabled={!hasMorePages}
+                className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                &raquo;
+              </button>
+            </div>
 
-            <button
-              // onClick={() => table.nextPage()}
-              onClick={() => {
-                setCurrentPage(prev => {
-                  const newPage = prev + 1;
-                  fetchTasksWith(filters, newPage);
-                  return newPage;
-                });
-              }}
-              // disabled={!table.getCanNextPage()}
-              disabled={!hasMorePages}
-              className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              &raquo;
-            </button>
-          </div>
-
-          {/* Current Page and Total Pages Info */}
-          <span className="text-sm text-gray-700 mb-2">
-            Page{' '}
-            <span className="font-semibold">
-              {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+            {/* Current Page and Total Pages Info */}
+            <span className="text-sm text-gray-700 mb-2">
+              Page{' '}
+              <span className="font-semibold">
+                {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+              </span>
             </span>
-          </span>
-        </div>
+          </div>            
+        </div>      
+        )}
 
       </div>
     </div>

@@ -26,7 +26,7 @@ import PieChart from "./charts/PieChart";
 
 import ClientsList from './clients/ClientsList';
 import AddEditClient from './clients/AddEditClient';
-import ViewClient from './clients/ViewClient';
+import DeleteClient from './clients/DeleteClient';
 
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
@@ -68,7 +68,7 @@ export {
 
     ClientsList,
     AddEditClient,
-    ViewClient,
+    DeleteClient,
 
     Sidebar,
     Header,
