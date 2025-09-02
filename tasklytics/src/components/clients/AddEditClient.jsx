@@ -113,7 +113,7 @@ function AddEditClient({ onClose, onClientAdded, clientData, editingMode }) {
               placeholder="Enter Client Name"
               {...register("clientName", { required: "Client name is required" })}
               onChange={(e) => handleClientNameChange(e.target.value)}
-              value={watch("clientName")}
+              value={watch("clientName") ?? ""}
               error={errors.clientName && errors.clientName.message}
             />
 

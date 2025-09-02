@@ -60,25 +60,18 @@ function ClientsList() {
       header: 'Sr No',
       // cell: info => info.getValue(),
       cell: info => currentPage * pageSize + info.row.index + 1,
-      enableSorting: true,
-      minSize: 50,
-      maxSize: 100,
+      enableSorting: false,
     }),
     columnHelper.accessor('label', {
       header: 'Client Name',
       cell: info => info.getValue(),
       enableSorting: true,
     }),
-    columnHelper.accessor('sortOrder', {
-      header: 'Sort Order',
-      cell: info => info.getValue(),
-      enableSorting: true,
-    }),
     columnHelper.display({
-        id: 'actions', // Unique ID for this display column
+        id: 'actions',
         header: 'Actions',
         cell: props => (
-        <div className="flex gap-3">
+        <div className="flex gap-3 justify-center">
             <button
             className="border border-slate-500 font-bold p-1 hover:delay-100 hover:bg-black hover:text-white rounded text-xs"
             onClick={() => handleOpenEditPopup(props.row.original)}
@@ -196,10 +189,14 @@ function ClientsList() {
                     <th
                       key={header.id}
                       scope="col"
-                      className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider select-none ${header.column.getCanSort()? 'cursor-pointer' : ''}`}
+                      className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider select-none 
+                        ${header.id === "serialNo" ? "w-[10%]" : ""} 
+                        ${header.id === "label" ? "w-[75%]" : ""} 
+                        ${header.id === "actions" ? "w-[15%]" : ""} 
+                        ${header.column.getCanSort() ? "cursor-pointer" : ""}`}
                       onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
                     >
-                      <div className="flex items-center gap-1">
+                      <div className={`flex items-center gap-1 ${header.id === "actions" ? "justify-center" : ""}`}>
                         {flexRender(header.column.columnDef.header, header.getContext())}
                         {header.column.getCanSort() && (
                           <span>
@@ -249,7 +246,7 @@ function ClientsList() {
                   &laquo; 
                 </button>
 
-                {Array.from({ length: table.getPageCount() }, (_, i) => i).map(pageNumber => (
+                {Array.from({ length: totalPages }, (_, i) => i).map(pageNumber => (
                   <button
                     key={pageNumber}
                     onClick={() => {
