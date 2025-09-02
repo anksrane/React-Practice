@@ -3,6 +3,7 @@ import { IoMdAdd } from "react-icons/io";
 import { InputSearch, ButtonWithIcon, Loader, AddEditClient, DeleteClient } from '../index.js';
 import { getClientsWithFilter } from '../../firebase/clientServices/clientsService';
 import { TbEdit } from "react-icons/tb";
+import { GoTrash } from "react-icons/go";
 
 import {
   useReactTable,
@@ -27,18 +28,30 @@ function ClientsList() {
   const [showAddEditClient, setShowAddEditClient] = useState(false);
   const [editingClientData, setEditingClientData] = useState(null);
 
-  const [deleteClient,setDeleteClient] = useState(false);  
+  const [deleteClient,setDeleteClient] = useState(null);  
+  const [showDeleteClient, setShowDeleteClient] = useState(false);
 
   // Function to handle edit click
-  const handleEditClient = (client) => {
+  const handleOpenEditPopup = (client) => {
     setEditingClientData(client);
     setShowAddEditClient(true);
   };
 
-  const handleClosePopup = () => {
+  const handleCloseEditPopup = () => {
     setEditingClientData(null);
     setShowAddEditClient(false);
   };  
+
+  // Function to Handle Delete Click
+  const handleOpenDeletePopup = (client)=> {
+    setDeleteClient(client);
+    setShowDeleteClient(true);
+  }
+
+  const handleCloseDeletePopup = () => {
+    setDeleteClient(null);
+    setShowDeleteClient(false);
+  }
 
   // Define table columns
   const columnHelper = createColumnHelper();
@@ -68,14 +81,14 @@ function ClientsList() {
         <div className="flex gap-3">
             <button
             className="border border-slate-500 font-bold p-1 hover:delay-100 hover:bg-black hover:text-white rounded text-xs"
-            onClick={() => handleEditClient(props.row.original)}
+            onClick={() => handleOpenEditPopup(props.row.original)}
             >
             <TbEdit className='text-xl font-bold'/>
             </button>
 
             <button
             className="border border-red-500 font-bold p-1 hover:delay-100 hover:bg-red-500 text-red-500 hover:text-white rounded text-xs"
-
+              onClick={()=> handleOpenDeletePopup(props.row.original)}
             >
             <GoTrash className='text-lg font-bold'/>
             </button>
@@ -270,17 +283,27 @@ function ClientsList() {
 
       {showAddEditClient && (
         <AddEditClient
-          onClose={handleClosePopup}
+          onClose={handleCloseEditPopup}
           editingMode={!!editingClientData}
           clientData={editingClientData}
           onClientAdded={() => {
-            setShowAddEditClient(false);
             fetchClients(currentPage);
           }}
         />
       )}   
 
-      {deleteClient}   
+      {
+        showDeleteClient && (
+          <DeleteClient 
+            onClose={handleCloseDeletePopup}
+            clientData={deleteClient}
+            onClientDeleted={() => {
+              fetchClients(currentPage);
+            }}
+          />
+        )
+      }
+
     </div>
     
   );

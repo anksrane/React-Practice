@@ -22,15 +22,16 @@ function ConfirmDeleteModal({onClose, onTaskAdded, deleteData}) {
 
     const handleDelete= async (data) =>{
       let taskId=data.id;
+      let response;
       try {
-        const response = await deleteTaskFirebase(taskId);
+        response = await deleteTaskFirebase(taskId);
         if (response.success) {
           toast.success("Task deleted successfully");
           onClose();
           onTaskAdded?.();            
         }            
       } catch (error) {
-          toast.error("Failed to delete task. Please try again.");
+          toast.error("Failed to delete task. Please try again.",error);
           throw response.error;        
       } 
     }
