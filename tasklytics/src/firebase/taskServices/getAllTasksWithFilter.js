@@ -90,6 +90,8 @@ export const getAllTaskFirebase = async (
             };
         }); 
 
+        console.log(tasks);
+
         return {
             success: true,
             data: tasks,

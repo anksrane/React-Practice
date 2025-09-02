@@ -15,13 +15,15 @@ export const bulkUpdateOverdueTasksFirebase = async () => {
             // ensure endDate exists and is in Firestore Timestamp format
             if (taskData.endDate && taskData.endDate.toDate() < now) {
                 // Only update if not already overdue
-                if (taskData.taskStatus !== "overdue") {
-                    const taskRef = doc(db, "tasksTable", taskDoc.id);
-                    batch.update(taskRef, {
-                        taskStatus: "overdue",
-                        updated_at: serverTimestamp()
-                    });
-                    count++;
+                if (taskData.taskStatus !== "completed") {
+                    if(taskData.taskPhase!=="delivery" || taskData.taskPhase!=="hold"){
+                        const taskRef = doc(db, "tasksTable", taskDoc.id);
+                        batch.update(taskRef, {
+                            taskStatus: "overdue",
+                            updated_at: serverTimestamp()
+                        });
+                        count++;
+                    }
                 }
             }
         });

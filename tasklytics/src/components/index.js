@@ -28,6 +28,10 @@ import ClientsList from './clients/ClientsList';
 import AddEditClient from './clients/AddEditClient';
 import DeleteClient from './clients/DeleteClient';
 
+import PhaseList from "./phases/PhaseList";
+import AddEditPhase from './phases/AddEditPhase';
+import DeletePhase from './phases/DeletePhase';
+
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
 import AppLayout from "./layout/AppLayout";
@@ -69,6 +73,10 @@ export {
     ClientsList,
     AddEditClient,
     DeleteClient,
+
+    PhaseList,
+    AddEditPhase,
+    DeletePhase,
 
     Sidebar,
     Header,

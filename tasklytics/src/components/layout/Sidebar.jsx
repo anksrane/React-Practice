@@ -28,10 +28,10 @@ function Sidebar({isOpen}) {
     const navItems=[
       { name: 'Dashboard', path:"/dashboard", icon:MdDashboardCustomize},
       { name: 'Tasks', path:"/tasks", icon: BiTask},
-      { name: 'Team', path: '/team', icon:MdGroups },
-      { name: 'Analytics', path: '/analytics', icon:IoAnalyticsSharp },    
+      { name: 'Team', path: '/team', icon:MdGroups },   
       { name: 'Deleted Items', path: '/deleted', icon:GoTrash, role: 'Admin' },    
       { name: 'Clients', path: '/clients', icon:GoOrganization, role: 'Admin' },    
+      { name: 'Phases', path: '/phases', icon:GoOrganization, role: 'Admin' },    
     ]    
 
     const visibleNavItems = navItems.filter(
