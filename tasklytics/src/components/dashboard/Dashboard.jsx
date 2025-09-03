@@ -4,7 +4,7 @@ import { bulkUpdateOverdueTasksFirebase } from '../../firebase/taskServices/bulk
 import { getAllTaskFirebase } from '../../firebase/taskServices/getAllTaskService';
 import { getAllMasterFirebase } from '../../firebase/getAllMasterService';
 import { getAllManagersFirebase } from '../../firebase/getAllManagersService';
-import { startOfWeek, endOfWeek } from "date-fns";
+import { startOfWeek, endOfWeek, subDays } from "date-fns";
 import { FaCheck } from "react-icons/fa";
 import { FaStopwatch } from "react-icons/fa6";
 import { MdLocalFireDepartment } from "react-icons/md";
@@ -206,14 +206,23 @@ function Dashboard() {
         const now = new Date();
 
         const weekStart = startOfWeek(now, { weekStartsOn: 1 }); // Monday start
-        const weekEnd = endOfWeek(now, { weekStartsOn: 1 });     // Sunday end   
+        let weekEnd = endOfWeek(now, { weekStartsOn: 1 });       // Normally Sunday
+        weekEnd = subDays(weekEnd, 1);                           // Shift to Saturday
+        weekEnd.setHours(23, 59, 59, 999);  
 
-        let filteredTasks=allTasks.filter(task => {
-            if(task.taskStatus=="completed") return false;
-            if (!task.endDate?.seconds) return false;
-            const endDate = new Date(task.endDate.seconds * 1000);
-            return endDate >= weekStart && endDate <= weekEnd;
-        });
+        const filteredTasks = allTasks
+            .filter(task => {
+                if (task.taskStatus === "completed") return false;
+                if (!task.endDate?.seconds) return false;
+
+                const endDate = new Date(task.endDate.seconds * 1000);
+                return endDate >= weekStart && endDate <= weekEnd;
+            })
+            .sort((a, b) => {
+                const dateA = a.endDate.seconds * 1000;
+                const dateB = b.endDate.seconds * 1000;
+                return dateA - dateB; // smallest endDate first
+            });        
         return filteredTasks;
     }, [allTasks]);
 
@@ -226,14 +235,25 @@ function Dashboard() {
     }, [allTasks]);   
     
     // Task Overdue
+    // const tasksOverdue = useMemo(() => {
+    //     if (!allTasks.length) return [];
+
+    //     let filteredTasks=allTasks.filter(task => {
+    //         return task.taskStatus=="overdue";
+    //     });
+    //     return filteredTasks;
+    // }, [allTasks]);    
+
     const tasksOverdue = useMemo(() => {
         if (!allTasks.length) return [];
 
-        let filteredTasks=allTasks.filter(task => {
-            return task.taskStatus=="overdue";
-        });
+        // Filter tasks with status "overdue"
+        let filteredTasks = allTasks.filter(task => task.taskStatus === "overdue");
+
+        // Sort tasks by endDate (earliest first)
+        filteredTasks.sort((a, b) => new Date(a.endDate) - new Date(b.endDate));
         return filteredTasks;
-    }, [allTasks]);    
+    }, [allTasks]);
 
     return (
         <>

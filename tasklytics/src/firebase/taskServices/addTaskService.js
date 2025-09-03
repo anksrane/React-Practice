@@ -27,7 +27,7 @@ export const addTaskFirebase = async(taskData)=>{
             id:taskId,
             serialNo,
             ...taskData,
-            keywords: [...(taskData.keywords || []), serialNo],
+            keywords: [...(taskData.keywords || []), serialNo.toLowerCase()],
             created_at:serverTimestamp(),
         });
 

@@ -1,7 +1,6 @@
 import { db } from "../firebaseConfig";
 import { doc, updateDoc, getDoc, getDocs, collection, query, where } from "firebase/firestore";
 
-
 // Update phase in Firestore
 export const updatePhaseFirebase = async (phaseId, updatedData) => {
   try {
@@ -13,7 +12,6 @@ export const updatePhaseFirebase = async (phaseId, updatedData) => {
       throw new Error("Phase not found");
     }
     const oldSlug = phaseSnap.data().value;
-    console.log(updatedData.value);
 
     // 2. Update tasks in tasksTable that reference old slug
     const tasksRef = collection(db, "tasksTable");
@@ -21,9 +19,8 @@ export const updatePhaseFirebase = async (phaseId, updatedData) => {
 
     const updatePromises = tasksSnap.docs.map((taskDoc) => {
       const taskRef = doc(db, "tasksTable", taskDoc.id);
-      return updateDoc(taskRef, { phase: updatedData.value });
+      return updateDoc(taskRef, { taskPhase: updatedData.value });
     });
-    console.log(updatePromises);
     
     await Promise.all(updatePromises);
 

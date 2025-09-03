@@ -79,6 +79,21 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
       }
     };
 
+    // Date Function
+    const setDayStart = (dateString) => {
+      if (!dateString) return null;
+      const date = new Date(dateString);
+      date.setHours(0, 0, 0, 0); // start of the day
+      return Timestamp.fromDate(date);
+    };
+
+    const setDayEnd = (dateString) => {
+      if (!dateString) return null;
+      const date = new Date(dateString);
+      date.setHours(23, 59, 59, 999); // end of the day
+      return Timestamp.fromDate(date);
+    };    
+
     const onSubmit = async (data) => {
       setLoading(true);
 
@@ -144,10 +159,8 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
             description: data.description.trim(),
             taskPhase: data.taskPhase.trim(),
             taskStatus: data.taskStatus.trim(),
-            // startDate: data.startDate.trim(),
-            // endDate: data.endDate.trim(),
-            startDate: data.startDate ? Timestamp.fromDate(new Date(data.startDate)) : null,
-            endDate: data.endDate ? Timestamp.fromDate(new Date(data.endDate)) : null,            
+            startDate: setDayStart(data.startDate),
+            endDate: setDayEnd(data.endDate),           
             priority: data.priority.trim(),
             coders: selectedCoders,   
             coderIds: selectedCoders.map(c => c.id),
@@ -183,8 +196,8 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
           cleaned.createdBy = singleTask.createdBy;
           cleaned.createdByName = singleTask.createdByName;
           const newKeywords = generateKeywords(cleaned.title, cleaned.client, selectedCoders);
-          cleaned.keywords = singleTask.serialNo 
-              ? Array.from(new Set([...newKeywords, singleTask.serialNo]))
+          cleaned.keywords = singleTask.serialNo.toLowerCase() 
+              ? Array.from(new Set([...newKeywords, singleTask.serialNo.toLowerCase()]))
               : newKeywords;
           console.log("cleaned",cleaned);
           const response = await updateTaskFirebase(singleTask.id, cleaned);
