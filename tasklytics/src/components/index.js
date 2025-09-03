@@ -32,6 +32,14 @@ import PhaseList from "./phases/PhaseList";
 import AddEditPhase from './phases/AddEditPhase';
 import DeletePhase from './phases/DeletePhase';
 
+import PrioritiesList from "./priorities/PrioritiesList";
+import AddEditPriorities from './priorities/AddEditPriorities';
+import DeletePriorities from './priorities/DeletePriorities';
+
+import StatusesList from './statuses/StatusesList';
+import AddEditStatus from './statuses/AddEditStatus';
+import DeleteStatus from "./statuses/DeleteStatus";
+
 import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
 import AppLayout from "./layout/AppLayout";
@@ -77,6 +85,14 @@ export {
     PhaseList,
     AddEditPhase,
     DeletePhase,
+
+    PrioritiesList,
+    AddEditPriorities,
+    DeletePriorities,
+
+    StatusesList,
+    AddEditStatus,
+    DeleteStatus,
 
     Sidebar,
     Header,

@@ -458,9 +458,9 @@ function Tasks() {
               ><MdOutlineClear /></button>
             </div>
 
-            <div>
+            {/* <div>
               <button onClick={handleDeleteAll} className='bg-black text-white py-1 px-2 rounded-lg'>Delete All</button>
-            </div>
+            </div> */}
           </div>
 
           {/* Input Search New*/}

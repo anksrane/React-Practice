@@ -5,10 +5,10 @@ import { FaTasks } from "react-icons/fa";
 import { MdDashboardCustomize } from "react-icons/md";
 import { BiTask } from "react-icons/bi";
 import { MdGroups } from "react-icons/md";
-import { IoAnalyticsSharp } from "react-icons/io5";
 import { TiPower } from "react-icons/ti";
 import { GoTrash } from "react-icons/go";
 import { GoOrganization } from "react-icons/go";
+import { IoSettings } from "react-icons/io5";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -28,10 +28,12 @@ function Sidebar({isOpen}) {
     const navItems=[
       { name: 'Dashboard', path:"/dashboard", icon:MdDashboardCustomize},
       { name: 'Tasks', path:"/tasks", icon: BiTask},
-      { name: 'Team', path: '/team', icon:MdGroups },   
+      // { name: 'Team', path: '/team', icon:MdGroups },   
       { name: 'Deleted Items', path: '/deleted', icon:GoTrash, role: 'Admin' },    
-      { name: 'Clients', path: '/clients', icon:GoOrganization, role: 'Admin' },    
-      { name: 'Phases', path: '/phases', icon:GoOrganization, role: 'Admin' },    
+      { name: 'Clients', path: '/clients', icon:IoSettings, role: 'Admin' },    
+      { name: 'Phases', path: '/phases', icon:IoSettings, role: 'Admin' },    
+      { name: 'Priorities', path: '/priorities', icon:IoSettings, role: 'Admin' },    
+      { name: 'Statuses', path: '/statuses', icon:IoSettings, role: 'Admin' },    
     ]    
 
     const visibleNavItems = navItems.filter(

@@ -233,16 +233,6 @@ function Dashboard() {
             setTaskDueLoading(false);
         }
     }, [allTasks]);   
-    
-    // Task Overdue
-    // const tasksOverdue = useMemo(() => {
-    //     if (!allTasks.length) return [];
-
-    //     let filteredTasks=allTasks.filter(task => {
-    //         return task.taskStatus=="overdue";
-    //     });
-    //     return filteredTasks;
-    // }, [allTasks]);    
 
     const tasksOverdue = useMemo(() => {
         if (!allTasks.length) return [];

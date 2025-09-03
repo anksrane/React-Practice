@@ -6,6 +6,8 @@ import DeletedListPage from './pages/DeletedListPage';
 import DashboardPage from './pages/DashboardPage';
 import ClientsPage from './pages/ClientsPage';
 import PhasesPage from './pages/PhasesPage';
+import PrioritiesPage from './pages/PrioritiesPage';
+import StatusPage from './pages/StatusPage';
 import { AppLayout } from './components';
 import  ProtectedRoutes  from './routes/ProtectedRoutes'
 import { useEffect } from 'react';
@@ -38,6 +40,8 @@ function App() {
             <Route path='/dashboard' element={<DashboardPage />}/>
             <Route path='/clients' element={<ClientsPage />}/>
             <Route path='/phases' element={<PhasesPage />}/>
+            <Route path='/priorities' element={<PrioritiesPage />}/>
+            <Route path='/statuses' element={<StatusPage />}/>
           </Route>
         </Route>
 

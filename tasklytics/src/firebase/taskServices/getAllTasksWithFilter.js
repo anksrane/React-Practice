@@ -90,7 +90,6 @@ export const getAllTaskFirebase = async (
             };
         }); 
 
-        console.log(tasks);
 
         return {
             success: true,
@@ -99,7 +98,7 @@ export const getAllTaskFirebase = async (
             hasMore: hasMore // Boolean indicating if there are more pages beyond this one
         };
     }catch(error){
-        console.log("Error fetching tasks:", error);
+        console.error("Error fetching tasks:", error);
         return { success: false, error };
     }
 }
