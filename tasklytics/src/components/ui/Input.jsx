@@ -10,10 +10,11 @@ const Input = React.forwardRef(function Input({
   error = '',        
   isTextarea = false, 
   labelVisible= true,
+  disabled=false,
   ...props
 }, ref) {
   const id = useId();
-  const inputClass = `px-3 rounded-lg bg-white text-black outline-none focus:bg-gray-50 ${error ? 'border-red-500' : 'border-gray-400'} focus:border-slate-400 duration-200 border w-full ${className}`;
+  const inputClass = `px-3 rounded-lg bg-white text-black outline-none focus:bg-gray-50 ${error ? 'border-red-500' : 'border-gray-400'} focus:border-slate-400 duration-200 border w-full ${className} ${disabled ? 'disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed':''}`;
 
   return (
     <div className="w-full h-fit">
@@ -29,6 +30,7 @@ const Input = React.forwardRef(function Input({
           id={id}
           ref={ref}
           placeholder={placeholder}
+          disabled={disabled}
           {...props}
         />
       ) : (
@@ -39,6 +41,7 @@ const Input = React.forwardRef(function Input({
           ref={ref}
           id={id}
           placeholder={placeholder}
+          disabled={disabled}
           {...props}
         />
       )} 
