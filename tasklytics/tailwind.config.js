@@ -12,20 +12,25 @@ export default {
       },
       colors: {
         brand: {
-          'primary': '#003D3A',
-          'primary-light': '#5E8677',
-          'primary-dark': '#0a2625',
-          'secondary': '#FFD61F',
-          'secondary-light': '#FFE985',
-          'secondary-lighter': '#FAF4D3',
-          'secondary-dark': '#D1AC00',
-          'background': '#090C02',
-          'background-dark':'#0C1618',
-          'surface': '#FFFFFF',
-          'text': '#090C02',
-          'text-white': '#FFFFFF',
-          'text-black': '#000',
-          'accent': '#FFE985',
+          'primary': '#003D3A',          // brunswick-green
+          'primary-light': '#5E8677',    // hookers-green
+          'primary-dark': '#0C1618',     // rich-black (slightly darker than given #0a2625)
+          
+          'secondary': '#FFD61F',        // gold
+          'secondary-light': '#FFE985',  // jasmine
+          'secondary-lighter': '#FAF4D3',// cornsilk
+          'secondary-dark': '#D1AC00',   // gold-metallic
+          
+          'background': '#090C02',       // smoky-black
+          'background-dark': '#0C1618',  // rich-black
+          
+          'surface': '#FFFFFF',          // white
+          
+          'text': '#090C02',             // smoky-black
+          'text-white': '#FFFFFF',       // white
+          'text-black': '#000000',       // pure black
+          
+          'accent': '#E00000',           // red-cmyk
         },
       },      
     },

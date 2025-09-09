@@ -43,7 +43,7 @@ function PopoverMenu({isOpen,triggerRef}) {
     };    
 
   return (
-    <div ref={menuRef} className={isOpen ? 'absolute top-14 right-0 border-slate-800 bg-white shadow-lg rounded-md z-10' : 'hidden'}>
+    <div ref={menuRef} className={isOpen ? 'absolute top-14 right-0 border-slate-800 bg-white shadow-lg rounded-md z-50' : 'hidden'}>
       <ul>
         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer border-b-[1px]" onClick={() => gotoProfile()}
             >Profile</li>

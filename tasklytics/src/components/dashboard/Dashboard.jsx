@@ -222,7 +222,8 @@ function Dashboard() {
                 const dateA = a.endDate.seconds * 1000;
                 const dateB = b.endDate.seconds * 1000;
                 return dateA - dateB; // smallest endDate first
-            });        
+            });  
+        console.log("End Date This Week",filteredTasks); 
         return filteredTasks;
     }, [allTasks]);
 
@@ -242,6 +243,7 @@ function Dashboard() {
 
         // Sort tasks by endDate (earliest first)
         filteredTasks.sort((a, b) => new Date(a.endDate) - new Date(b.endDate));
+        console.log("overdue",filteredTasks); 
         return filteredTasks;
     }, [allTasks]);
 
@@ -360,7 +362,7 @@ function Dashboard() {
                     </div>                
                     {taskDueLoading ? 
                         (<TasksDueThisWeekSkeleton rows={4} columns={3} /> )
-                        : tasksDueThisWeek && tasksDueThisWeek.length>0 ? (<TasksDueThisWeek tasks={tasksOverdue} />)
+                        : tasksOverdue && tasksOverdue.length>0 ? (<TasksDueThisWeek tasks={tasksOverdue} />)
                         : (
                             <div className="text-center text-brand-primary-dark py-6 max-h-60">
                                 No data available

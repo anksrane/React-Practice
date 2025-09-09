@@ -11,19 +11,9 @@ import { GoOrganization } from "react-icons/go";
 import { IoSettings } from "react-icons/io5";
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { logoutUser } from '../../features/auth/authActions'
-import { setIsSidebarOpen } from "../../features/ui/uiSlice"
 
 function Sidebar({isOpen}) {
-    const {user} = useSelector((state)=>state.auth);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const handleLogout = async () => {
-      dispatch(setIsSidebarOpen(false));
-      await dispatch(logoutUser());
-      navigate('/login');
-    };    
+    const {user} = useSelector((state)=>state.auth);  
   
     const navItems=[
       { name: 'Dashboard', path:"/dashboard", icon:MdDashboardCustomize},
@@ -66,18 +56,6 @@ function Sidebar({isOpen}) {
               );
             })}
           </nav>
-        </div>
-
-        <div className="mt-6 border-t pt-4">
-          <Button
-            variant="outline"
-            className="w-full flex items-center gap-2 justify-center text-red-600 border-red-600 hover:bg-red-100"
-            // onClick={() => console.log('Logout here')}
-            onClick={handleLogout}
-          >
-            <TiPower className='text-2xl'/>
-            {isOpen && <span>Logout</span>}
-          </Button>
         </div>
       </aside>
     )

@@ -286,8 +286,8 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
                         {...register("title", {
                             required: "Title is Required",
                             pattern: {
-                                value: /^[a-zA-Z0-9 _.-]{1,100}$/,
-                                message: "Title can only contain letters, numbers, spaces, -, _, and ."
+                                value: /^[a-zA-Z0-9 _.,()@#$%*+\-=]{1,100}$/,
+                                message: "Title can only contain letters, numbers, spaces, and allowed symbols (._,()-@#$%*+=)"
                             }
                         })}
                         error={errors.title && errors.title.message}
@@ -306,8 +306,8 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
                         {...register("description", {
                             required: "Description is Required",
                             pattern: {
-                                value: /^[^{}\[\];]{1,1000}$/,
-                                message: "Description can only contain letters, numbers, spaces, -, _, and ."
+                                value: /^[a-zA-Z0-9 _.,()@#$%*+\-=]{1,100}$/,
+                                message: "Title can only contain letters, numbers, spaces, and allowed symbols (._,()-@#$%*+=)"
                             }
                         })}
                         error={errors.description && errors.description.message}
