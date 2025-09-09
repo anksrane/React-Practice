@@ -22,6 +22,8 @@ export const loginUser=(email, password) => async(dispatch) => {
             email: authUser.email,
             userRole:profile.userRole,
             manager:profile.manager,
+            managers:profile.managers,
+            mobileNo:profile.mobileNo
         }   
 
         dispatch(setUser(userData));
@@ -75,7 +77,8 @@ export const checkAuth = () => async(dispatch) => {
                     email: user.email,
                     userRole: profile.userRole,
                     manager:profile.manager,
-                    managers:profile.managers
+                    managers:profile.managers,
+                    mobileNo:profile.mobileNo
                 };
 
                 dispatch(setUser(userData));                

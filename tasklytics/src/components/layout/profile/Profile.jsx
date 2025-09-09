@@ -3,12 +3,10 @@ import { useSelector } from 'react-redux';
 import { useForm } from "react-hook-form";
 import { Input, ButtonWithIcon, Button } from "../../index";
 import { FaPenToSquare, FaEye } from "react-icons/fa6";
-import { CgProfile } from "react-icons/cg";
 import profileDummy from '../../../assets/profile-icon.png';
 
 function Profile() {
     const {user} = useSelector((state)=>state.auth);
-    // console.log(user.managers.name);
     const [isEditing, setIsEditing] = useState(false);
     const { register, handleSubmit, reset, formState:{ errors, isSubmitting }, } = useForm({
         defaultValues: {
