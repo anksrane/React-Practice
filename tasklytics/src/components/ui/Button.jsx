@@ -10,7 +10,7 @@ function Button({
 }) {
   const base = 'px-4 rounded-lg mt-2 transition duration-200';
   const variants = {
-    primary: 'bg-black text-white hover:bg-gray-900',
+    primary: 'bg-brand-primary text-white hover:bg-gray-900',
     outline: 'border border-black text-black hover:bg-gray-100',
     danger: 'bg-red-500 text-white hover:bg-red-600 border border-red-500',
     custom: ''

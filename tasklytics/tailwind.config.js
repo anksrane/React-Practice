@@ -12,7 +12,7 @@ export default {
       },
       colors: {
         brand: {
-          'primary': '#003D3A',          // brunswick-green
+          'primary': '#08415C',          // brunswick-green
           'primary-light': '#5E8677',    // hookers-green
           'primary-dark': '#0C1618',     // rich-black (slightly darker than given #0a2625)
           
@@ -32,7 +32,20 @@ export default {
           
           'accent': '#E00000',           // red-cmyk
         },
-      },      
+      },    
+      backgroundSize: {
+        '200%': '200% 100%',
+      },
+      keyframes: {
+        'gradient-x': {
+          '0%': { 'background-position': '0% 50%' },
+          '50%': { 'background-position': '100% 50%' },
+          '100%': { 'background-position': '0% 50%' },
+        },
+      },
+      animation: {
+        'gradient-x': 'gradient-x 3s ease infinite',
+      },        
     },
   },
   plugins: [],
