@@ -12,25 +12,37 @@ export default {
       },
       colors: {
         brand: {
-          'primary': '#08415C',          // brunswick-green
-          'primary-light': '#5E8677',    // hookers-green
-          'primary-dark': '#0C1618',     // rich-black (slightly darker than given #0a2625)
-          
-          'secondary': '#FFD61F',        // gold
-          'secondary-light': '#FFE985',  // jasmine
-          'secondary-lighter': '#FAF4D3',// cornsilk
-          'secondary-dark': '#D1AC00',   // gold-metallic
-          
-          'background': '#090C02',       // smoky-black
-          'background-dark': '#0C1618',  // rich-black
-          
-          'surface': '#FFFFFF',          // white
-          
-          'text': '#090C02',             // smoky-black
-          'text-white': '#FFFFFF',       // white
-          'text-black': '#000000',       // pure black
-          
-          'accent': '#E00000',           // red-cmyk
+          primary: {
+            100: '#5e8677', // hookers-green (lightest tint we have)
+            500: '#00524e', // brunswick-green (base primary)
+            900: '#1c3136', // rich-black (darkest shade)
+          },
+
+          secondary: {
+            100: '#faf4d3', // cornsilk (soft background use)
+            500: '#e00000', // red-cmyk (alert / emphasis)
+            900: '#090c02', // smoky-black (deep contrast)
+          },
+
+          neutral: {
+            100: '#ffffff', // white
+            500: '#faf4d3', // cornsilk (neutral paper / card tone)
+            900: '#090c02', // smoky-black (text/foreground)
+          },
+
+          text: {
+            light: '#ffffff', // white text
+            dark: '#090c02',  // smoky-black
+            black: '#000000', // true black
+            disabled: '#d6d6d6' // disabled gray 
+          },
+
+          accent: {
+            danger: '#e00000', // red-cmyk
+            success: '#5e8677', // hookers-green (reuse as success/confirmation)
+            info: '#00524e',    // brunswick-green
+            disabled: '#F5F5F5' // disabled gray
+          },
         },
       },    
       backgroundSize: {

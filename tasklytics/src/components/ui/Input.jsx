@@ -14,7 +14,7 @@ const Input = React.forwardRef(function Input({
   ...props
 }, ref) {
   const id = useId();
-  const inputClass = `px-3 rounded-lg bg-white text-black outline-none focus:bg-gray-50 ${error ? 'border-red-500' : 'border-gray-400'} focus:border-slate-400 duration-200 border w-full ${className} ${disabled ? 'disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed':''}`;
+  const inputClass = `px-3 rounded-lg bg-brand-neutral-100 text-brand-dark outline-none focus:shadow focus:border-brand-primary-100 ${error ? 'border-brand-accent-danger' : 'border-brand-primary-900'} duration-200 border w-full ${className} ${disabled ? 'disabled:bg-brand-accent-disabled disabled:text-gray-500 disabled:cursor-not-allowed':''}`;
 
   return (
     <div className="w-full h-fit">

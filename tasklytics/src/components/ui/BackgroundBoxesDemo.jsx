@@ -3,7 +3,7 @@ import { BackgroundBoxes } from "./BackgroundBoxes";
 
 export default function BackgroundBoxesDemo() {
   return (
-    <div className="absolute inset-0 w-screen h-screen overflow-hidden bg-brand-primary-dark">
+    <div className="absolute inset-0 w-screen h-screen overflow-hidden">
       {/* 🔹 Boxes Grid */}
       <BackgroundBoxes />
 

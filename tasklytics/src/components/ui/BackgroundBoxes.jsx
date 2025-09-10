@@ -2,12 +2,11 @@ import React, { memo } from "react";
 import { motion } from "framer-motion";
 
 const BoxesCore = ({ className, ...rest }) => {
-  const rows = new Array(60).fill(1); // adjust for performance
-  const cols = new Array(60).fill(1);
+  const rows = new Array(100).fill(1); // adjust for performance
+  const cols = new Array(100).fill(1);
 
   const colors = [
-    "#090c02ff", "#f9a8d4", "#004643ff", "#5e8677ff",
-    "#d1ac00ff", "#ffd61fff", "#ffe985ff", "#faf4d3ff",
+    "#5E8677", 
   ];
 //   const colors = [
 //     "#93c5fd", "#f9a8d4", "#86efac", "#fde047",
@@ -19,7 +18,7 @@ const BoxesCore = ({ className, ...rest }) => {
   return (
     <div
       style={{
-        transform: "translate(-50%, -50%) skewX(-60deg) skewY(14deg) scale(0.7)",
+        transform: "translate(-50%, -50%) skewX(-60deg) skewY(14deg) scale(0.5)",
       }}
       className={`absolute top-1/2 left-1/2 z-0 flex flex-col ${className}`}
       {...rest}
@@ -33,7 +32,7 @@ const BoxesCore = ({ className, ...rest }) => {
                 backgroundColor: getRandomColor(),
                 transition: { duration: 0 },
               }}
-              className="h-12 w-24 border-t border-l border-slate-800"
+              className="h-12 w-24 border-t border-l border-slate-700"
             >
               {j % 2 === 0 && i % 2 === 0 && (
                 <svg
