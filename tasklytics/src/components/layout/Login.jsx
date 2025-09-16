@@ -5,7 +5,6 @@ import { loginUser } from '../../features/auth/authActions'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import  BackgroundBoxesDemo  from '../ui/BackgroundBoxesDemo';
 import img from "../../assets/side-image.jpg"
 
 function Login() {
@@ -39,7 +38,6 @@ function Login() {
     return (
         <div className='relative flex items-center justify-center h-screen w-screen overflow-hidden p-1 md:p-0'>
             {/* 🔹 Background Boxes */}
-            <BackgroundBoxesDemo />
 
             <div className="relative z-30 w-full max-w-4xl shadow-md rounded-md flex">
                 <div className='bg-gray-600 hidden md:block md:w-1/2'>

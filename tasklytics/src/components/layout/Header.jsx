@@ -21,16 +21,18 @@ function Header() {
   };  
   return (
     <>
-      <div className='w-full py-3 px-4 flex items-center justify-between bg-transparent border-b relative'>
-        <button onClick={()=>dispatch(toggleSidebar())}>
-          <GiHamburgerMenu className='text-white text-2xl' />
+      <div className='w-full py-3 px-4 flex items-center justify-between bg-transparent border-b bg-brand-primary-500'>
+        <button className='z-10' onClick={()=>dispatch(toggleSidebar())} >
+          <GiHamburgerMenu className='text-brand-text-light text-2xl' />
         </button>
-        <div ref={triggerRef} className='flex items-center justify-between gap-2 cursor-pointer' onClick={handleUserMenuToggle}>
-          <span className='text-white text-xl font-semibold'>{username}</span>
-          <FaUser className='text-white text-3xl border border-white p-[2px] rounded-[50%]'/>
+        <div className='relative flex'>
+          <div ref={triggerRef} className='flex items-center justify-between gap-2 cursor-pointer' onClick={handleUserMenuToggle}>
+            <span className='text-brand-text-light text-xl font-semibold'>{username}</span>
+            <FaUser className='text-brand-text-light text-3xl border border-brand-text-light p-[2px] rounded-[50%]'/>
+          </div>
+          <PopoverMenu isOpen={isUserMenuOpen} triggerRef={triggerRef} />
         </div>
       </div>
-      <PopoverMenu isOpen={isUserMenuOpen} triggerRef={triggerRef} />
       <ProfilePopup isOpen={isProfilePopupOpen}/>
     </>
   )

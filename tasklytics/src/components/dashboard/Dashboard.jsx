@@ -223,7 +223,6 @@ function Dashboard() {
                 const dateB = b.endDate.seconds * 1000;
                 return dateA - dateB; // smallest endDate first
             });  
-        console.log("End Date This Week",filteredTasks); 
         return filteredTasks;
     }, [allTasks]);
 
@@ -243,7 +242,6 @@ function Dashboard() {
 
         // Sort tasks by endDate (earliest first)
         filteredTasks.sort((a, b) => new Date(a.endDate) - new Date(b.endDate));
-        console.log("overdue",filteredTasks); 
         return filteredTasks;
     }, [allTasks]);
 
