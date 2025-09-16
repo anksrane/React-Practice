@@ -89,8 +89,15 @@ export default {
       },
       animation: {
         'gradient-x': 'gradient-x 3s ease infinite',
-      },           
+      },               
     },
+    screens:{
+      'sm': "641px",
+      'md': "769px",
+      'lg': "1025px",
+      'xl': "1280px",
+      "2xl": "1536px"
+    }      
   },
   plugins: [],
 }

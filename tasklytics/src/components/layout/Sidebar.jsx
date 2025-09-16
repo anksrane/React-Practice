@@ -33,7 +33,7 @@ function Sidebar({isOpen}) {
     );    
 
     return (
-      <aside className={`h-screen bg-brand-primary-900 border-r shadow-md p-2 flex flex-col justify-between duration-500 ${isOpen? 'fixed top-0 z-50 left-0 w-full sm:static sm:w-64' : 'hidden sm:flex sm:w-20'}`}>
+      <aside className={`h-screen bg-brand-primary-900 border-r shadow-md p-2 flex flex-col justify-between duration-500 ${isOpen? 'fixed top-0 z-50 left-0 w-full md:static md:w-64' : 'hidden md:flex md:w-20'}`}>
         <div>
           <div className='md:block flex justify-between items-center'>
             <div className='md:hidden block'></div>

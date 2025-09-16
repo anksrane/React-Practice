@@ -241,7 +241,7 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
 
     return (
       <div ref={backdropRef} className='fixed inset-0 bg-black bg-opacity-50 z-20 flex justify-end cursor-pointer' onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
-        <div className='bg-white w-96 h-full flex flex-col p-4 cursor-auto' onMouseDown={(e) => e.stopPropagation()} onMouseUp={(e) => e.stopPropagation()} >
+        <div className='bg-white sm:w-96 w-full h-full flex flex-col p-4 cursor-auto' onMouseDown={(e) => e.stopPropagation()} onMouseUp={(e) => e.stopPropagation()} >
           <div className='flex justify-end mb-2'>
             <button onClick={onClose}><IoMdCloseCircle className='text-2xl'/></button>
           </div>
@@ -364,7 +364,7 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
                 {/* Task Status Input End */}  
 
                 {/* Date Input Start */}
-                <div className='flex gap-2'>
+                <div className='flex sm:flex-row flex-col gap-2'>
                     <div className="w-full">
                       <DatePicker
                         label="Task Start Date"

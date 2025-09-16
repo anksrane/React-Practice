@@ -368,7 +368,7 @@ function Tasks() {
       
       <div>
           {/* Add Task Button */}
-          <ButtonWithIcon icon={addIcon} iconClass={'text-xl font-bold'} iconPosition="left" variant="primary" className='text-sm mt-0' 
+          <ButtonWithIcon icon={addIcon} iconClass={'text-xl font-bold'} iconPosition="left" variant="primary" className='text-sm mt-0 mb-2' 
             onClick={()=>{
               setShowAddTaskModal(true);
               setEditingMode(false);
@@ -377,12 +377,12 @@ function Tasks() {
             Add Task
           </ButtonWithIcon>        
         {/* Global Search Input */}
-        <div className="mb-4 flex items-end justify-between">
+        <div className="mb-4 flex sm:flex-row flex-col gap-1 justify-between">
 
-          <div className='flex gap-1'>
+          <div className='flex sm:flex-row flex-col gap-1'>
             <div className='flex border rounded'>
               <select
-                className="px-2 py-1 text-sm rounded"
+                className="px-2 py-1 text-sm w-full rounded"
                 value={filters.phase}
                 // onChange={(e) => setFilters(prev => ({ ...prev, phase: e.target.value }))}
                 onChange={(e) => {
@@ -408,7 +408,7 @@ function Tasks() {
 
             <div className='flex border rounded'>
               <select
-                className="px-2 py-1 text-sm rounded"
+                className="px-2 py-1 text-sm w-full rounded"
                 value={filters.status}
                 // onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
                 onChange={(e) => {
@@ -434,7 +434,7 @@ function Tasks() {
 
             <div className='flex border rounded'>
               <select
-                className="px-2 py-1 text-sm rounded"
+                className="px-2 py-1 text-sm w-full rounded"
                 value={filters.priority}
                 // onChange={(e) => setFilters(prev => ({ ...prev, priority: e.target.value }))}
                 onChange={(e) => {
@@ -468,6 +468,9 @@ function Tasks() {
               type="text" 
               placeholder="Search Client Name, Title" 
               value={searchText}
+              className="px-1 py-1 text-sm"
+              clearBtnClassName="px-1 py-1 text-sm"
+              searchBtnClassName="px-1 py-1 text-sm"
               onChange={e => setSearchText(e.target.value)} 
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {

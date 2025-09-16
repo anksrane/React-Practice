@@ -250,7 +250,7 @@ function Dashboard() {
         <div className="mx-auto p-4 z-10">
             <h2 className="text-2xl font-bold mb-4 text-center">Dashboard</h2>
             {/* Task Count Section */}
-            <div className='grid grid-cols-4 gap-4 rounded-lg'>
+            <div className='grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-4 gap-2 rounded-lg'>
                 <CountCard title="Completed Tasks" 
                     count={counts.completed} 
                     icon={<FaCheck className="text-green-500 text-3xl" />}
@@ -269,9 +269,9 @@ function Dashboard() {
                   />
             </div>
 
-            <div className='my-4 rounded-lg flex gap-4'>
+            <div className='lg:my-4 my-2 rounded-lg flex lg:flex-row flex-col lg:gap-4 gap-2'>
                 {/* BarChart Dropdown */}
-                <div className="bg-white border border-dotted border-brand-primary-light p-4 rounded-lg w-1/2">
+                <div className="bg-white border border-dotted border-brand-primary-900 p-4 rounded-lg lg:w-1/2 w-full">
                     <div className="flex gap-2 align-center justify-between">
                         <h3 className="text-lg font-semibold mb-4">{chartTitle}</h3>
                         <Select 
@@ -300,7 +300,7 @@ function Dashboard() {
                 </div>    
 
                 {/* Tasks By Team */}
-                <div className="bg-white border border-dotted border-brand-primary-light p-4 rounded-lg w-1/2">
+                <div className="bg-white border border-dotted border-brand-primary-900 p-4 rounded-lg lg:w-1/2 w-full">
                     <div className="flex gap-2 align-center justify-between">
                         <h3 className="text-lg font-semibold mb-4">
                             {user.userRole === "Admin"
@@ -335,10 +335,10 @@ function Dashboard() {
                 </div>
             </div>
 
-            <div className='my-4 rounded-lg flex gap-4'>
+            <div className='lg:my-4 my-2 rounded-lg flex lg:flex-row flex-col lg:gap-4 gap-2'>
                 
                 {/* Task Due By This Week */}
-                <div className="bg-white border border-dotted border-brand-primary-light p-4 rounded-lg w-1/2">
+                <div className="bg-white border border-dotted border-brand-primary-900 p-4 rounded-lg lg:w-1/2 w-full">
                     <div className="flex gap-2 align-center justify-between">
                         <h3 className="text-lg font-semibold mb-4">Tasks Due This Week</h3>
                     </div>                
@@ -354,7 +354,7 @@ function Dashboard() {
                 </div>      
 
                 {/* Task Overdue */}
-                <div className="bg-white border border-dotted border-brand-primary-light p-4 rounded-lg w-1/2">
+                <div className="bg-white border border-dotted border-brand-primary-900 p-4 rounded-lg lg:w-1/2 w-full">
                     <div className="flex gap-2 align-center justify-between">
                         <h3 className="text-lg font-semibold mb-4">Tasks Overdue</h3>
                     </div>                

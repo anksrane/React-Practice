@@ -9,6 +9,7 @@ import { IoEyeSharp } from "react-icons/io5";
 import { GoTrash } from "react-icons/go";
 import { MdOutlineRestorePage } from "react-icons/md";
 import { useSelector } from 'react-redux';
+import { Timestamp } from "firebase/firestore";
 
 import {
   useReactTable,
@@ -19,6 +20,27 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table';
 
+const formatDate = (val) => {
+  if (!val) return "-";
+  let dateObj;
+  if (val instanceof Timestamp) {
+    dateObj = val.toDate();
+  } else if (val?.seconds) {
+    dateObj = new Date(val.seconds * 1000);
+  } else if (val instanceof Date) {
+    dateObj = val;
+  } else {
+    return String(val);
+  }  
+  // Format as DD-MM-YYYY
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const month = monthNames[dateObj.getMonth()]; // Months are 0-based
+  const year = dateObj.getFullYear();
+
+  return `${day}-${month}-${year}`;
+};
 
 function Deleted() {
     const {user}=useSelector((state)=>state.auth);
@@ -122,6 +144,18 @@ function Deleted() {
 
     const columnHelper=createColumnHelper();
     const columns = [
+        columnHelper.accessor('',{
+            header: 'Sr No',
+            cell: info => currentPage * pageSize + info.row.index + 1,
+            enableSorting: true,
+            enableGlobalFilter: true
+        }),      
+        columnHelper.accessor('serialNo',{
+            header: 'Task No',
+            cell: info => info.getValue(),
+            enableSorting: true,
+            enableGlobalFilter: true
+        }),      
         columnHelper.accessor('clientLabel',{
             header: 'client',
             cell: info => info.getValue(),
@@ -166,7 +200,7 @@ function Deleted() {
                   break;
               }
                   return (
-                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${priorityClass}`}>
+                      <span className={`px-2 py-1 rounded-lg text-xs font-semibold ${priorityClass}`}>
                       {priority}
                       </span>
                   );
@@ -174,9 +208,15 @@ function Deleted() {
             enableSorting: true,
             enableGlobalFilter: true
         }),
+        columnHelper.accessor('startDate',{
+            header: 'Start Date',
+            cell: info => formatDate(info.getValue()),
+            enableSorting: true,
+            enableGlobalFilter: true
+        }),
         columnHelper.accessor('endDate',{
             header: 'Due Date',
-            cell: info => info.getValue(),
+            cell: info => formatDate(info.getValue()),
             enableSorting: true,
             enableGlobalFilter: true
         }),
@@ -274,8 +314,6 @@ function Deleted() {
         return numbers;
     }, [currentPage, pageCount]);  
 
-    const addIcon=<IoMdAdd />;  
-
     return (
     <>
 
@@ -310,12 +348,12 @@ function Deleted() {
       
       <div>     
         {/* Global Search Input */}
-        <div className="mb-4 flex items-end justify-between">
+        <div className="mb-4 flex sm:flex-row flex-col gap-1 justify-between">
 
-          <div className='flex gap-1'>
+          <div className='flex sm:flex-row flex-col gap-1'>
             <div className='flex border rounded'>
               <select
-                className="px-2 py-1 text-sm rounded"
+                className="px-2 py-1 text-sm w-full rounded"
                 value={filters.phase}
                 // onChange={(e) => setFilters(prev => ({ ...prev, phase: e.target.value }))}
                 onChange={(e) => {
@@ -341,7 +379,7 @@ function Deleted() {
 
             <div className='flex border rounded'>
               <select
-                className="px-2 py-1 text-sm rounded"
+                className="px-2 py-1 text-sm w-full rounded"
                 value={filters.status}
                 // onChange={(e) => setFilters(prev => ({ ...prev, status: e.target.value }))}
                 onChange={(e) => {
@@ -367,7 +405,7 @@ function Deleted() {
 
             <div className='flex border rounded'>
               <select
-                className="px-2 py-1 text-sm rounded"
+                className="px-2 py-1 text-sm w-full rounded"
                 value={filters.priority}
                 // onChange={(e) => setFilters(prev => ({ ...prev, priority: e.target.value }))}
                 onChange={(e) => {
@@ -396,6 +434,9 @@ function Deleted() {
             <InputSearch 
               type="text" 
               placeholder="Search Client Name, Title" 
+              className="px-1 py-1 text-sm"
+              clearBtnClassName="px-1 py-1 text-sm"
+              searchBtnClassName="px-1 py-1 text-sm"              
               value={searchText}
               onChange={e => setSearchText(e.target.value)} 
               onKeyDown={(e) => {
