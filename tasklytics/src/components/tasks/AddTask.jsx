@@ -187,7 +187,7 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
           cleaned.keywords = singleTask.serialNo.toLowerCase() 
               ? Array.from(new Set([...newKeywords, singleTask.serialNo.toLowerCase()]))
               : newKeywords;
-          console.log("cleaned",cleaned);
+          console.log("updatePayload",cleaned);
           const response = await updateTaskFirebase(singleTask.id, cleaned);
 
           if (response.success) {

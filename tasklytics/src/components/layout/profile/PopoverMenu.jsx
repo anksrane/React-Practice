@@ -51,7 +51,7 @@ function PopoverMenu({isOpen,triggerRef}) {
       <ul>
         <li className="px-4 py-2 rounded-tr-md rounded-tl-md hover:bg-neutral-500 cursor-pointer border-b-[1px]" onClick={() => gotoProfile()}
             >Profile</li>
-        <li className="px-4 py-2 hover:bg-neutral-500 cursor-pointer border-b-[1px]">Change Password</li>
+        {/* <li className="px-4 py-2 hover:bg-neutral-500 cursor-pointer border-b-[1px]">Change Password</li> */}
         <li className="px-4 py-2 rounded-bl-md rounded-br-md hover:bg-neutral-500 cursor-pointer" onClick={handleLogout}>Logout</li>
       </ul>
     </div>
