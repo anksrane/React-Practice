@@ -67,18 +67,6 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
 
     const backdropRef = useRef(null);
 
-    const handleMouseDown = (e) => {
-      setTimeout(() => {
-        backdropRef.current.clickedOnBackdrop = e.target === backdropRef.current;
-      }, 0);
-    };
-
-    const handleMouseUp = (e) => {
-      if (backdropRef.current.clickedOnBackdrop && e.target === backdropRef.current) {
-        onClose(); 
-      }
-    };
-
     // Date Function
     const setDayStart = (dateString) => {
       if (!dateString) return null;
@@ -239,9 +227,19 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
         }        
     };
 
+    const handleBackdropClick = (e) => {
+      if (e.target === backdropRef.current) {
+        onClose();
+      }
+    };    
+
     return (
-      <div ref={backdropRef} className='fixed inset-0 bg-black bg-opacity-50 z-20 flex justify-end cursor-pointer' onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
-        <div className='bg-white sm:w-96 w-full h-full flex flex-col p-4 cursor-auto' onMouseDown={(e) => e.stopPropagation()} onMouseUp={(e) => e.stopPropagation()} >
+      <div ref={backdropRef} className='fixed inset-0 bg-black bg-opacity-50 z-20 flex justify-end cursor-pointer' 
+        onClick={handleBackdropClick}
+      >
+        <div className='bg-white sm:w-96 w-full h-full flex flex-col p-4 cursor-auto' 
+          onClick={(e) => e.stopPropagation()} 
+        >
           <div className='flex justify-end mb-2'>
             <button onClick={onClose}><IoMdCloseCircle className='text-2xl'/></button>
           </div>

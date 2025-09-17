@@ -92,6 +92,7 @@ export default {
       },               
     },
     screens:{
+      'xs': "450px",
       'sm': "641px",
       'md': "769px",
       'lg': "1025px",
