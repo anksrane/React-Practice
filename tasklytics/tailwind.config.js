@@ -44,6 +44,11 @@ export default {
           secondary: 'var(--text-secondary)',
           muted: 'var(--text-muted)',
         },
+        table:{
+          DEFAULT: 'var(--table)',
+          secondary: 'var(--table-secondary)',
+          light: 'var(--table-light)',
+        },
         border: {
           DEFAULT: 'var(--border)',
           light: 'var(--border-light)',

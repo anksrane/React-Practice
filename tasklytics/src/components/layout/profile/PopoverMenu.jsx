@@ -43,7 +43,7 @@ function PopoverMenu({isOpen,triggerRef}) {
     };    
 
   return (
-    <div ref={menuRef} className={isOpen ? 'absolute top-12 w-48 right-2 border border-background-overlay bg-background-overlay text-text-secondary shadow-lg rounded-md z-50' : 'hidden'}>
+    <div ref={menuRef} className={isOpen ? 'absolute top-12 w-48 right-2 border border-background bg-background-overlay text-text-secondary shadow-md rounded-md z-50' : 'hidden'}>
     <div className="absolute -top-2 right-2 w-0 h-0 
                 border-l-8 border-l-transparent 
                 border-r-8 border-r-transparent 
