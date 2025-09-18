@@ -56,7 +56,7 @@ export default function TasksDueThisWeek({
           </thead>
           <tbody>
             {tasks.map((task) => (
-              <tr key={task.id} className="border-b odd:bg-table-light even:bg-table hover:bg-surface-hover">
+              <tr key={task.id} className="border-b bg-table-light hover:bg-table">
                 {columns.map((col) => (
                   <td
                     key={col.key}

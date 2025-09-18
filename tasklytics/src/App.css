@@ -15,8 +15,9 @@
   --text-muted: #6B7280;        /* placeholders, hints */
   --text-light:#fff;
 
-  --table-light:#dedfe0;
-  --table-medium:#b6b6b6;
+  --table: #9c9c9c;
+  --table-medium:#bdbdbd;
+  --table-light:#d8d8d8;
 
   --border: #D1D5DB;            /* neutral border */
   --border-light: #E5E7EB;

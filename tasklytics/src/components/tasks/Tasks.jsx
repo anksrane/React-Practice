@@ -371,9 +371,9 @@ function Tasks() {
 
           <div className="flex sm:flex-row flex-col gap-1">
             {['phase','status','priority'].map(filterKey => (
-              <div key={filterKey} className='flex border rounded'>
+              <div key={filterKey} className='flex border rounded-md'>
                 <select
-                  className="px-2 py-1 text-sm w-full rounded"
+                  className="px-2 py-1 text-sm w-full rounded-tl-md rounded-bl-md focus:border-primary"
                   value={filters[filterKey]}
                   onChange={(e) => setFilters(prev => ({ ...prev, [filterKey]: e.target.value }))}
                 >
@@ -382,7 +382,7 @@ function Tasks() {
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                   ))}
                 </select>
-                <button className='bg-red-500 hover:bg-red-700 p-1 rounded-e text-white'
+                <button className='bg-danger hover:bg-danger p-1 rounded-e text-white'
                   onClick={() => setFilters(prev => ({ ...prev, [filterKey]: '' }))}><MdOutlineClear/></button>
               </div>
             ))}
@@ -394,7 +394,7 @@ function Tasks() {
               placeholder="Search Client Name, Title" 
               value={searchText}
               className="px-1 py-1 text-sm"
-              clearBtnClassName="px-1 py-1 text-sm"
+              clearBtnClassName="px-1 py-1 text-sm text-transpart"
               searchBtnClassName="px-1 py-1 text-sm"
               onChange={e => setSearchText(e.target.value)} 
               onKeyDown={(e) => {
@@ -414,17 +414,17 @@ function Tasks() {
           </div>
         ) :
         (
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-sm">
+        <div className="overflow-x-auto rounded-md">
+          <table className="min-w-full border border-gray-300 rounded-md shadow-sm text-text">
             {/* Table Header (<thead>) */}
-            <thead className="bg-gray-100">
+            <thead className="bg-primary text-text">
               {table.getHeaderGroups().map(headerGroup => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map(header => (
                     <th
                       key={header.id}
                       scope="col"
-                      className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider select-none ${header.column.getCanSort()? 'cursor-pointer' : ''}`}
+                      className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider select-none ${header.column.getCanSort()? 'cursor-pointer' : ''}`}
                       // Add onClick handler for sorting if the column is sortable
                       onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
                     >
@@ -451,17 +451,17 @@ function Tasks() {
               {/* Display "No results" if filtered rows are empty */}
               {table.getRowModel().rows.length === 0 ? (
                 <tr>
-                  <td colSpan={columns.length} className="px-6 py-4 text-center text-gray-500">
+                  <td colSpan={columns.length} className="px-6 py-4 text-center bg-table-light">
                     No tasks found.
                   </td>
                 </tr>
               ) : (
                 table.getRowModel().rows.map(row => (
-                  <tr key={row.id}>
+                  <tr key={row.id} className='border-b bg-table-light hover:bg-table'>
                     {row.getVisibleCells().map(cell => (
                       <td
                         key={cell.id}
-                        className="px-6 py-3 whitespace-nowrap text-sm text-gray-900 text-left"
+                        className="px-6 py-3 whitespace-nowrap text-sm text-left"
                       >
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>
