@@ -19,7 +19,7 @@ const InputSearch = React.forwardRef(function InputSearch({
     const id=React.useId();
     const inputClass = `w-full pl-2 py-1 rounded-md text-sm focus:outline-none focus:border-transparent z-0 ${className}`;
     return (
-        <div className="flex items-center border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        <div className="flex items-center border border-border rounded-md focus:outline-none focus:shadow-md focus:border-primary hover:border-primary-hover">
             <input
                 type={type}
                 className={inputClass}
@@ -44,9 +44,9 @@ const InputSearch = React.forwardRef(function InputSearch({
                 >
                 <IoMdClose className="text-lg" />
             </button>  
-            <button className={`p-2 bg-black rounded-r-md border-0 ${searchBtnClassName}`} onClick={()=>onSearch(value)}>
+            {/* <button className={`p-2 bg-black rounded-r-md border-0 ${searchBtnClassName}`} onClick={()=>onSearch(value)}>
                     <FaSearch className='text-gray-50 text-lg' />
-            </button>
+            </button> */}
         </div>
     )
 });

@@ -14,12 +14,14 @@ const Input = React.forwardRef(function Input({
   ...props
 }, ref) {
   const id = useId();
-  const inputClass = `px-3 rounded-lg bg-brand-neutral-100 text-brand-dark outline-none focus:shadow focus:border-brand-primary-100 ${error ? 'border-brand-accent-danger' : 'border-brand-primary-900'} duration-200 border w-full ${className} ${disabled ? 'disabled:bg-brand-accent-disabled disabled:text-gray-500 disabled:cursor-not-allowed':''}`;
+  const inputClass = `px-3 py-2 rounded-md text-text outline-none focus:shadow-md focus:border-primary hover:border-primary-hover 
+  ${error ? 'border border-danger' : 'border border-border'} duration-200 w-full 
+  ${disabled ? 'bg-disabled text-text-muted cursor-not-allowed' : ''} ${className}`;
 
   return (
     <div className="w-full h-fit">
       {label && (
-        <label className={`${labelVisible ? 'inline-block':'hidden'} inline-block mb-1 pl-1 ${labelClass}`} htmlFor={id}>
+        <label className={`${labelVisible ? 'inline-block':'hidden'} inline-block mb-1 pl-1 text-text-secondary ${labelClass}`} htmlFor={id}>
           {label}
         </label>
       )}
