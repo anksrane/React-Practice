@@ -52,7 +52,7 @@ function Login() {
                             label="Email: "
                             placeholder="Enter your Email"
                             type="email"
-                            className="py-2"
+                            className="p-2"
                             {...register("email", {
                                 required: "Email is Required",
                                 pattern: {
@@ -66,7 +66,7 @@ function Login() {
                             label="Password: "
                             placeholder="Enter your Password"
                             type="password"
-                            className="py-2"
+                            className="p-2"
                             {...register("password", {
                                 required: "Password is Required",
                                 minLength:  {

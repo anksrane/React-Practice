@@ -92,16 +92,16 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
           {label}
         </label>
       )}
-      <div className={`flex align-center rounded-md bg-white border outline-none focus:shadow-md focus:border-primary hover:border-primary-hover
+      <div className={`flex align-center rounded-md bg-white border border-background outline-none focus:shadow-md focus:border-primary hover:border-primary-hover
          ${error ? 'border-danger' : 'border-gray-400'}`}>
         <div
-          className={`px-3 bg-transparent rounded-md text-text w-full cursor-pointer flex ${className}`}
+          className={`py-1 px-2 bg-transparent rounded-md text-text w-full cursor-pointer flex ${className}`}
           onClick={() => setShowOptions((prev) => !prev)}
         >
           {selected.length > 0 ? selectedLabels.join(", ") : placeholder}
         </div>
         <button
-          className="text-sm w-fit font-bold p-1 bg-danger w-100 rounded-e text-white hover:underline"
+          className="p-1 text-sm w-fit font-bold bg-danger w-100 rounded-e text-white hover:underline"
           onClick={clearSelection}
           type="button"
         >
@@ -119,7 +119,7 @@ const MultiSelect_Tag = forwardRef(function MultiSelect_Tag(
       </div>
 
       {showOptions && (
-        <div className="border rounded-md shadow-md bg-white z-10 w-full max-h-60 overflow-y-auto">
+        <div className="border border-background rounded-md shadow-md bg-white z-10 w-full max-h-60 overflow-y-auto">
           <div className="p-2 border-b">
             <input
               type="text"

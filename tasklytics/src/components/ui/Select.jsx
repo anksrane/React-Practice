@@ -26,7 +26,7 @@ const Select = React.forwardRef(function Select({
       <select
         id={id}
         ref={ref}
-        className={`px-3 rounded-md border text-text outline-none focus:shadow-md focus:border-primary hover:border-primary-hover w-full 
+        className={`rounded-md border text-text outline-none focus:shadow-md focus:border-primary hover:border-primary-hover w-full 
           ${error ? 'border border-danger' : 'border border-border'} duration-200 w-full 
           ${disabled ? 'bg-disabled text-text-muted cursor-not-allowed' : ''} ${className}`}
         {...props}

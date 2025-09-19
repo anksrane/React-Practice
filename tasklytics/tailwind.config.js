@@ -43,6 +43,7 @@ export default {
           DEFAULT: 'var(--text)',
           secondary: 'var(--text-secondary)',
           muted: 'var(--text-muted)',
+          light: 'var(--text-light)',
         },
         table:{
           DEFAULT: 'var(--table)',

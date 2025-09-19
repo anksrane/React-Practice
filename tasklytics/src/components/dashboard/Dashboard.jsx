@@ -271,7 +271,7 @@ function Dashboard() {
 
             <div className='lg:my-4 my-2 rounded-lg flex lg:flex-row flex-col lg:gap-4 gap-2'>
                 {/* BarChart Dropdown */}
-                <div className="bg-background-surface shadow-md  p-4 rounded-lg lg:w-1/2 w-full">
+                <div className="bg-background-surface shadow-md p-4 rounded-lg lg:w-1/2 w-full">
                     <div className="flex gap-2 align-center justify-between">
                         <h3 className="text-lg font-semibold mb-4 text-text-secondary">{chartTitle}</h3>
                         <Select 

@@ -14,20 +14,20 @@ const Input = React.forwardRef(function Input({
   ...props
 }, ref) {
   const id = useId();
-  const inputClass = `px-3 py-2 rounded-md text-text outline-none focus:shadow-md focus:border-primary hover:border-primary-hover 
+  const inputClass = `rounded-md text-text outline-none focus:shadow-md focus:border-primary hover:border-primary-hover 
   ${error ? 'border border-danger' : 'border border-border'} duration-200 w-full 
   ${disabled ? 'bg-disabled text-text-muted cursor-not-allowed' : ''} ${className}`;
 
   return (
     <div className="w-full h-fit">
       {label && (
-        <label className={`${labelVisible ? 'inline-block':'hidden'} inline-block mb-1 pl-1 text-text-secondary ${labelClass}`} htmlFor={id}>
+        <label className={`${labelVisible ? 'inline-block':'hidden'} inline-block mb-1 pl-1 ${labelClass? labelClass : "text-text-secondary"}`} htmlFor={id}>
           {label}
         </label>
       )}
       {isTextarea ? (
         <textarea
-          className={`h-fit ${inputClass}`}
+          className={`h-fit ${inputClass} ${className}`}
           name={name}
           id={id}
           ref={ref}
