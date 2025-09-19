@@ -35,9 +35,9 @@ function ViewTask({onClose, viewData }) {
       <div ref={backdropRef} className='fixed inset-0 bg-black bg-opacity-50 z-20 flex justify-end cursor-pointer' onClick={handleBackdropClick}>
         <div className='bg-white sm:w-96 w-full h-full flex flex-col p-4 cursor-auto' onClick={(e) => e.stopPropagation()}  >
           <div className='flex justify-end mb-2'>
-            <button onClick={onClose}><IoMdCloseCircle className='text-2xl text-background'/></button>
+            <button onClick={onClose}><IoMdCloseCircle className='text-2xl text-dark'/></button>
           </div>
-          <h2 className="text-2xl font-bold mb-4 text-center text-background">View Task</h2>
+          <h2 className="text-2xl font-bold mb-4 text-center text-dark">View Task</h2>
 
           {loading?(
             <>

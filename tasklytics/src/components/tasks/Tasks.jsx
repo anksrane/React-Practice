@@ -416,7 +416,7 @@ function Tasks() {
         (
         <div>
           <div className="overflow-x-auto rounded-md">
-            <table className="min-w-full border border-gray-300 rounded-md shadow-sm text-text">
+            <table className="min-w-full border rounded-md shadow-sm text-text">
               {/* Table Header (<thead>) */}
               <thead className="bg-primary text-text">
                 {table.getHeaderGroups().map(headerGroup => (

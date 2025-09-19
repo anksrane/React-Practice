@@ -14,6 +14,7 @@
   --text-secondary: #374151;    /* Labels, headings */
   --text-muted: #6B7280;        /* placeholders, hints */
   --text-light:#fff;
+  --text-black: #000;  
 
   --table: #9c9c9c;
   --table-medium:#bdbdbd;
@@ -48,8 +49,9 @@
   
   --text: #001927;              
   --text-secondary: #E0E6ED;    
-  --text-muted: #35383f;    
+  --text-muted: #202227;    
   --text-light:#fff;
+  --text-black: #000;
 
   --table: #9c9c9c;
   --table-medium:#bdbdbd;
@@ -61,7 +63,7 @@
   /* Semantic colors */
   --danger: #ff0000;            
   --success: #22C55E;           
-  --disabled: #9AA5B1;          
+  --disabled: #c6ccd1;          
   --active: #FF6F61;            
   --inactive: #9AA5B1;          
 }

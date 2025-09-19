@@ -19,7 +19,7 @@ const InputSearch = React.forwardRef(function InputSearch({
     const id=React.useId();
     const inputClass = `pl-2 py-1 rounded-md text-sm focus:outline-none focus:border-transparent z-0 w-full ${className}`;
     return (
-        <div className="flex items-center border border-border rounded-md focus:outline-none focus:shadow-md focus:border-primary hover:border-primary-hover relative min-w-[250px]">
+        <div className="flex items-center rounded-md focus:outline-none focus:shadow-md focus:border-primary hover:border-primary-hover relative min-w-[250px]">
             <input
                 type={type}
                 className={inputClass}

@@ -241,9 +241,9 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
           onClick={(e) => e.stopPropagation()} 
         >
           <div className='flex justify-end mb-2'>
-            <button onClick={onClose}><IoMdCloseCircle className='text-2xl text-background'/></button>
+            <button onClick={onClose}><IoMdCloseCircle className='text-2xl text-dark'/></button>
           </div>
-          <h2 className="text-2xl font-bold mb-4 text-center text-background">{editingMode?"Edit Task" : "Add Task"}</h2>
+          <h2 className="text-2xl font-bold mb-4 text-center text-dark">{editingMode?"Edit Task" : "Add Task"}</h2>
 
           {loading?(
             <>
