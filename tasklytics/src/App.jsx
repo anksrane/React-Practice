@@ -8,7 +8,6 @@ import ClientsPage from './pages/ClientsPage';
 import PhasesPage from './pages/PhasesPage';
 import PrioritiesPage from './pages/PrioritiesPage';
 import StatusPage from './pages/StatusPage';
-import ProfilePage from './pages/ProfilePage';
 import { AppLayout } from './components';
 import  ProtectedRoutes  from './routes/ProtectedRoutes'
 
@@ -44,7 +43,6 @@ function App() {
             <Route path='/phases' element={<PhasesPage />}/>
             <Route path='/priorities' element={<PrioritiesPage />}/>
             <Route path='/statuses' element={<StatusPage />}/>
-            <Route path='/profile' element={<ProfilePage />}/>
           </Route>
         </Route>
 

@@ -1,11 +1,12 @@
 import React, {useEffect, useRef} from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setIsUserMenuOpen } from '../../../features/ui/userMenuSlice';
 import { setIsProfilePopupOpen } from '../../../features/ui/profilePopupSlice';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../../features/auth/authActions';
 
 function PopoverMenu({isOpen,triggerRef}) {
+    const {user} = useSelector((state)=>state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const menuRef = useRef(null);    
@@ -49,6 +50,7 @@ function PopoverMenu({isOpen,triggerRef}) {
                 border-r-8 border-r-transparent 
                 border-b-8 border-b-background-overlay"></div>        
       <ul>
+        <li className="px-4 py-2 rounded-tr-md rounded-tl-md hover:bg-background-surface border-b-[1px]">{user.name}</li>
         <li className="px-4 py-2 rounded-tr-md rounded-tl-md hover:bg-background-surface cursor-pointer border-b-[1px]" onClick={() => gotoProfile()}
             >Profile</li>
         {/* <li className="px-4 py-2 hover:bg-neutral-500 cursor-pointer border-b-[1px]">Change Password</li> */}

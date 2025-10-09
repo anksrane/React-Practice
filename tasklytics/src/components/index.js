@@ -44,7 +44,6 @@ import Sidebar from "./layout/Sidebar";
 import Header from "./layout/Header";
 import AppLayout from "./layout/AppLayout";
 import Login from "./layout/Login";
-import Profile from './layout/profile/Profile';
 import PopoverMenu from './layout/profile/PopoverMenu';
 import ProfilePopup from './layout/profile/ProfilePopup';
 
@@ -100,7 +99,6 @@ export {
     Sidebar,
     Header,
     AppLayout,
-    Profile,
     PopoverMenu,
     ProfilePopup,
 
