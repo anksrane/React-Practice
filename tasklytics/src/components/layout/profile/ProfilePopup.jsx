@@ -143,13 +143,19 @@ function ProfilePopup({isOpen}) {
                                       className="py-1 px-2 text-sm"
                                       labelClass='font-semibold mt-2'
                                       disabled={!isEditing}
+                                      // {...register("mobileNo", {
+                                      //     required: "Mobile Number is required",
+                                      //     pattern: {
+                                      //         value: /^[0-9]{10}$/,
+                                      //         message: "Mobile number must be exactly 10 digits"
+                                      //     }
+                                      // })}
                                       {...register("mobileNo", {
-                                          required: "Mobile Number is required",
-                                          pattern: {
-                                              value: /^[0-9]{10}$/,
-                                              message: "Mobile number must be exactly 10 digits"
+                                          validate: value => {
+                                              if (!value) return true; // allow blank
+                                              return /^[0-9]{10}$/.test(value) || "Mobile number must be exactly 10 digits";
                                           }
-                                      })}
+                                      })}                                      
                                       error={errors.mobileNo && errors.mobileNo.message}
                                   />  
                               </div>     
@@ -157,43 +163,15 @@ function ProfilePopup({isOpen}) {
 
                               {/* Role of User */}
                               <div className="">
-                                  <Input 
-                                      label="Role"
-                                      placeholder="Enter Role"
-                                      type="text"
-                                      className="py-1 px-2 text-sm"
-                                      labelClass='font-semibold mt-2'
-                                      disabled={true} 
-                                      {...register("role", {
-                                          required: "Role",
-                                          pattern: {
-                                              value: /^[a-zA-Z0-9 _.-]{1,100}$/,
-                                              message: "Title can only contain letters, numbers, spaces, -, _, and ."
-                                          },
-                                      })}
-                                      error={errors.role && errors.role.message}
-                                  />  
+                                <p className='mb-1 pl-1 font-semibold mt-2'>Role</p>
+                                <p className={`py-1 px-2 border border-border text-sm rounded-md bg-disabled text-text-muted cursor-not-allowed`}>{user.userRole}</p>                                   
                               </div>     
                               {/* Role of User */}                                                   
 
                               {/* email of User */}
                               <div className="">
-                                  <Input 
-                                      label="Email"
-                                      placeholder="Enter Name"
-                                      type="text"
-                                      className="py-1 px-2 text-sm"
-                                      labelClass='font-semibold  mt-2'
-                                      disabled={true}
-                                      {...register("email", {
-                                          required: "Email is required",
-                                          pattern: {
-                                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                            message: "Please enter a valid email address"
-                                          }
-                                      })}
-                                      error={errors.email && errors.email.message}
-                                  />  
+                                <p className='mb-1 pl-1 font-semibold mt-2'>Role</p>
+                                <p className={`py-1 px-2 border border-border text-sm rounded-md bg-disabled text-text-muted cursor-not-allowed`}>{user.email}</p> 
                               </div>     
                               {/* email of User */}           
 
