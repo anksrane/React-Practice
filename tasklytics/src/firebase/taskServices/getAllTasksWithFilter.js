@@ -73,7 +73,6 @@ export const getAllTaskFirebase = async (
         const startIndex  = (page - 1) * pageSize;
         const paginatedTasks = tasks.slice(startIndex , startIndex  + pageSize);
         const hasMore = startIndex  + pageSize < totalTasks;
-        console.log("startIndex",hasMore)
         
         return {
             success: true,

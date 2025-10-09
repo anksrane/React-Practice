@@ -212,7 +212,7 @@ function Dashboard() {
 
         const filteredTasks = allTasks
             .filter(task => {
-                if (task.taskStatus === "completed") return false;
+                if (task.taskStatus == "completed" || task.taskStatus == "overdue" || task.taskPhase == "hold") return false;
                 if (!task.endDate?.seconds) return false;
 
                 const endDate = new Date(task.endDate.seconds * 1000);

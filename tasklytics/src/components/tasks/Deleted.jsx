@@ -298,7 +298,6 @@ function Deleted() {
         for (let i = startPage; i <= endPage; i++) {
             numbers.push(i);
         }
-        console.log(numbers);
         return numbers;
     }, [currentPage, pageCount]);  
 

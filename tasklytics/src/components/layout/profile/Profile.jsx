@@ -23,7 +23,6 @@ function Profile() {
     }
 
     const onSubmit = (data) => {
-        console.log("Updated Profile:", data);
         setIsEditing(false);
     };    
 

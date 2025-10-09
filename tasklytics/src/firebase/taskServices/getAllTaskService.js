@@ -42,11 +42,11 @@ export const getAllTaskFirebase = async (user, trashStatus) => {
                 phaseLabel: getLabel(phaseMaster.data, task.taskPhase),
                 clientLabel: getLabel(clientMaster.data, task.client),
             }));
-        }        
+        }    
 
         return {success:true, data:allTasks};
     }catch(error){
-        console.log("Error fetching tasks:", error);
+        console.error("Error fetching tasks:", error);
         return { success: false, error };
     }
 }

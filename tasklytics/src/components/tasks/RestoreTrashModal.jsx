@@ -5,7 +5,6 @@ import { updateTaskFirebase } from '../../firebase/taskServices/updateTaskServic
 import { toast } from 'react-toastify';
 
 function RestoreTrashModal({onClose, onTaskAdded, restoreData}) {
-    // console.log(restoreData);
     const backdropRef = useRef(null);
 
     const handleBackdropClick = (e) => {

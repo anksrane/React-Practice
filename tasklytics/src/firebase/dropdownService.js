@@ -37,9 +37,6 @@ export const fetchAllDropdowns = async () => {
             getDropdownOptions('statuses', 'sortOrder', 'asc'),
             getDropdownOptions('clients','sortOrder','asc'),
         ]);
-        // console.log("taskPhases:", taskPhases);
-        // console.log("taskPriorities:", taskPriorities);
-        // console.log("statuses:", statuses);
         return { taskPhases, taskPriorities, statuses, clients };
     } catch (error) {
         console.error("Error fetching all dropdown options:", error);

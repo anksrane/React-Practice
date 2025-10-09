@@ -187,7 +187,6 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
           cleaned.keywords = singleTask.serialNo.toLowerCase() 
               ? Array.from(new Set([...newKeywords, singleTask.serialNo.toLowerCase()]))
               : newKeywords;
-          console.log("updatePayload",cleaned);
           const response = await updateTaskFirebase(singleTask.id, cleaned);
 
           if (response.success) {
@@ -207,7 +206,6 @@ function AddTask({onClose, singleTask, editingMode, onTaskAdded, taskPhasesOptio
             createdByName: user.name,
             keywords: generateKeywords(cleaned.title, cleaned.client, selectedCoders)        
           };
-          console.log("createPayload",createPayload);
           try {
             const response=await addTaskFirebase(createPayload);
             if(response.success){

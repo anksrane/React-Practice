@@ -5,7 +5,6 @@ import { updateTaskFirebase } from '../../firebase/taskServices/updateTaskServic
 import { toast } from 'react-toastify';
 
 function ConfirmTrashModal({onClose, onTaskAdded, deleteData}) {
-    // console.log(deleteData);
     const backdropRef = useRef(null);
 
     const handleBackdropClick = (e) => {

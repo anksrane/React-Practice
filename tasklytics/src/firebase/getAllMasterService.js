@@ -13,7 +13,7 @@ export const getAllMasterFirebase = async (tableName) =>{
 
         return {success:true, data:masterData};        
     } catch (error) {
-        console.log("Error fetching:", error);
+        console.error("Error fetching:", error);
         return { success: false, error };        
     }
 }

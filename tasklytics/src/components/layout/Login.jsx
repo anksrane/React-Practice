@@ -33,7 +33,6 @@ function Login() {
         };
 
         const result=await dispatch(loginUser(cleaned.email,cleaned.password));
-        console.log(result);
     };
     return (
         <div className='relative flex items-center justify-center h-screen w-screen overflow-hidden p-1 md:p-0'>
