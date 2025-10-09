@@ -1,12 +1,80 @@
-# React + Vite
+# Tasklytics  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Tasklytics** is a role-based task management application that helps teams manage and track tasks efficiently. It supports multiple roles (Admin, Manager, Coder) with distinct permissions and provides an analytics dashboard for insights.  
 
-Currently, two official plugins are available:
+🔗 **Live Demo**: <a href="https://tasklytics-six.vercel.app/" target="_blank">Tasklytics on Vercel</a>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Features  
+- 🔑 **Authentication & Roles** – Firebase Auth with Admin, Manager, and Coder roles.  
+- 📝 **Task Management** – Create, update, delete, and assign tasks.  
+- 👥 **Role-based Permissions** –  
+  - **Admin**: Full access  
+  - **Manager**: Assign coders, track progress  
+  - **Coder**: Manage assigned tasks  
+- 📊 **Analytics Dashboard** – Tasks by status, priority, due date, and recent activity.  
+- 🗑 **Soft Delete & Restore** – Deleted tasks can be restored from trash.  
+- 🎨 **Modern UI** – Built with Tailwind CSS and responsive layouts.  
+- ⚡ **Deployed** on Vercel with CI/CD from GitHub.  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠 Tech Stack  
+- **Frontend:** React 19, Vite, Redux Toolkit, React Hook Form  
+- **Backend/DB:** Firebase (Auth, Firestore)  
+- **UI Framework:** Tailwind CSS
+- **Charts:** Google Charts  
+- **Deployment:** Vercel  
+
+---
+
+## 🔑 Demo Credentials  
+
+Use the following credentials to explore different roles:  
+
+- **Admin**  
+  - Email: `admin@test.com`  
+  - Password: `demo123`  
+
+- **Manager**  
+  - Email: `manager1@test.com`  
+  - Password: `demo123`  
+
+- **Manager**  
+  - Email: `manager2@test.com`  
+  - Password: `demo123`  
+
+- **Coder under Manager1**  
+  - Email: `coder1@test.com`  
+  - Password: `demo123`  
+
+- **Coder under Manager1**  
+  - Email: `coder2@test.com`  
+  - Password: `demo123`
+
+- **Coder under Manager2**  
+  - Email: `coder3@test.com`  
+  - Password: `demo123` 
+
+- **Coder under Manager2**  
+  - Email: `coder4@test.com`  
+  - Password: `demo123` 
+
+- **Coder under Manager2**  
+  - Email: `coder5@test.com`  
+  - Password: `demo123` 
+
+---
+
+## 📦 Installation & Setup  
+
+```bash
+# Clone repository
+git clone https://github.com/your-username/tasklytics.git
+
+# Navigate to project
+cd tasklytics
+
+# Install dependencies
+npm install
