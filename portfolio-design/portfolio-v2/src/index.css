@@ -1,6 +1,7 @@
 :root {
   /* Base / Light Theme */
-  --background: #f3f3f3; 
+  --background: #f3f3f3;
+  --background-contrast: #f3f3f3;  
 
   --primary: #0CCE6B;
   --text-color:#383838;
@@ -13,6 +14,7 @@
 .dark {
   /* Base / Dark Theme */
   --background: #1a1a1c; 
+  --background-contrast: #121213; 
   
   --primary: #0CCE6B;
   --text-color:#fff;
