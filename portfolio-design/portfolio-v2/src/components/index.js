@@ -3,6 +3,8 @@ import Hero from "./sections/Hero";
 import LineSvg from './sections/LineSvg';
 import Homepage from './pages/Homepage'
 
+import Projects from './sections/Projects/Projects';
+
 export {
     // Layout
     Header,
@@ -10,6 +12,7 @@ export {
     // Sections
     Hero,
     LineSvg,
+    Projects,
 
     // Pages
     Homepage

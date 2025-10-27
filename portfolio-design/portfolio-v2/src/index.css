@@ -4,10 +4,12 @@
   --background-contrast: #f3f3f3;  
 
   --primary: #0CCE6B;
+  --primary-dark: #04522a;
   --text-color:#383838;
 
   --white: #fff; 
-  --black: #000;   
+  --black: #000;  
+  --grey: #cfcfcf; 
   --border: 0, 0, 0;  
 }
 
@@ -17,10 +19,12 @@
   --background-contrast: #121213; 
   
   --primary: #0CCE6B;
+  --primary-dark: #04522a;
   --text-color:#dbdada;
   
   --white: #fff; 
   --black: #000;  
+  --grey: #686868;
   --border: 255, 255, 255;
 }
 

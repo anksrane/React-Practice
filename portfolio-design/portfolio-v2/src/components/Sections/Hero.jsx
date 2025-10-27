@@ -13,7 +13,7 @@ function Hero() {
         <div className="hero-inner-container">
           <div className="hero-left-section">
             <h1 className='hero-heading'>Frontend Developer</h1>           
-            <h2 className='hero-content'>I'm Ankit Rane, a passionate frontend developer crafting clean, impactful, and user-focused web experiences.</h2>
+            <h2 className='hero-content'>I'm Ankit Rane, a passionate frontend developer crafting clean, impactful and user-focused web experiences.</h2>
             <div className="social-links-container">
               <a href="https://github.com/yourusername" className='social-links' target="_blank" rel="noopener noreferrer">
                 <FaGithub className='social-icons'/> GitHub
