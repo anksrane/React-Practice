@@ -22,9 +22,9 @@ const Projects = () => {
 
   // auto slide
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
+    const interval = setInterval(nextSlide, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [activeIndex]);
 
   return (
     <section className="projects-slider">
