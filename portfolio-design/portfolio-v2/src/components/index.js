@@ -7,6 +7,7 @@ import LineSvg from './sections/LineSvg';
 import Projects from './sections/Projects/Projects';
 import ProjectDetails from './sections/Projects/ProjectDetails';
 import Skills from './sections/Skills';
+import Journey from './sections/Journey/Journey';
 
 export {
     // Layout
@@ -18,6 +19,7 @@ export {
     Projects,
     ProjectDetails,
     Skills,
+    Journey,
 
     // Pages
     Homepage,

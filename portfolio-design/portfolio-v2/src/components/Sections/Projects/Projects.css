@@ -78,7 +78,8 @@
 
 .projects-slider .slider .list .item.active .more-link {
   display: block;
-  color: var(--text-color);
+  background-color: var(--primary-dark);
+  color: var(--white);
   text-decoration: none;
   font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (1920 - 320)));
   width: fit-content;
@@ -87,12 +88,12 @@
   font-weight: 700;
   padding: 10px 5px;
   border-radius: 10px;
-  border: 1px solid var(--text-color);
+  border: 1px solid var(--primary-dark);
 }
 
 .projects-slider .slider .list .item.active .more-link:hover {
-  background-color: var(--text-color);
-  color: var(--background-contrast);
+  background-color: var(--white);
+  color: var(--primary-dark);
   transition: 0.1s;
 }
 
@@ -123,7 +124,7 @@
 }
 
 .projects-slider .slider .list .item.active .more-link{
-  animation-duration: 1.5s;
+  animation-duration: 1.3s;
 }
 
 .projects-slider .arrows {

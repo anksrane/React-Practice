@@ -1,5 +1,6 @@
 .skills-section-outer-container {
-  border: 1px solid rgba(var(--border), 0.2);
+  border-top: 1px solid rgba(var(--border), 0.2);
+  border-bottom: 1px solid rgba(var(--border), 0.2);
   padding: 5% 0px;
 }
 
