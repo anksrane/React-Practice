@@ -43,10 +43,10 @@ body:after {
   z-index: -1;
 }
 
-body:after {
+/* body:after {
   transform: rotate(180deg) scale(5);
   filter: none;
-}
+} */
 
 .container {
   width: 100%;

@@ -2,17 +2,20 @@
   border: 1px solid rgba(var(--border), 0.2);
   padding: 5% 0px;
 }
+
 .skills-heading {
   text-align: center;
   color: var(--text-color);
   font-size: calc(24px + (50 - 24) * ((100vw - 320px) / (1920 - 320)));
   margin-bottom: 5%;
 }
+
 .skill-item-container {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 20px;
 }
+
 .skill-item {
   display: flex;
   gap: 10px;
@@ -26,11 +29,13 @@
   padding: 15px 10px;
   transition: all 0.4s ease;
 }
+
 .skill-icon {
   max-width: 80px;
   width: 100%;
   transition: transform 0.4s ease;
 }
+
 .skill-name {
   text-align: center;
   color: var(--text-color);
@@ -51,4 +56,41 @@
   visibility: visible;
   height: auto;
   transform: translateY(0);
+}
+
+@media (max-width:1024px){
+  .skill-item-container{
+    gap: 10px;
+  }
+}
+@media (max-width:768px){
+  .skill-item-container{
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width:580px){
+  .skill-item-container{
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 300px;
+    margin: auto;
+  }
+  /* Always show skill name on small screens */
+  .skill-name {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+    transform: none;
+  }
+
+  /* Disable hover effects */
+  .skill-item:hover .skill-icon {
+    transform: none;
+  }
+
+  .skill-item:hover .skill-name {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+    transform: none;
+  }
 }
