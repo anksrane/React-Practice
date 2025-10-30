@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import projectsData from "./projectsData"; // create a shared file for data if needed
+import "./ProjectDetails.css";
 
 const ProjectDetails = () => {
   const { slug } = useParams();
@@ -19,14 +20,21 @@ const ProjectDetails = () => {
 
   return (
     <>
-      <section className="project-details">
-        {/* <div className="project-banner">
-        <img src={project.image} alt={project.title} />
-      </div> */}
-        <div className="project-content">
-          <h1>{project.title}</h1>
-          <p>{project.desc}</p>
-          {/* add more fields like technologies, demo link, repo link, etc */}
+      <section className="container">
+        <div className="split-container">
+          <div className="left-panel">
+            <div>
+              <h1>{project.title}</h1>
+              <p>{project.desc}</p>  
+            </div>       
+          </div>
+
+          <div className="right-panel">
+            <img src="https://placehold.co/1920x1080" alt="Project 1" />
+            <img src="https://placehold.co/1920x1080" alt="Project 2" />
+            <img src="https://placehold.co/1920x1080" alt="Project 3" />
+            <img src="https://placehold.co/1920x1080" alt="Project 4" />
+          </div>
         </div>
       </section>
     </>

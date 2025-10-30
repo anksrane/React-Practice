@@ -119,7 +119,7 @@ function Journey() {
       className="vertical-timeline-element--work"
       date={item.date}
       iconClassName="timeline-icon-work"
-      icon={<FaBriefcase />}
+      icon={<FaBriefcase className="icon-journey" />}
     >
       <h3 className="vertical-timeline-element-title">{item.title}</h3>
       <h4 className="vertical-timeline-element-subtitle">{item.companyname}</h4>
@@ -140,7 +140,7 @@ function Journey() {
       className="vertical-timeline-element--education"
       date={item.date}
       iconClassName="timeline-icon-edu"
-      icon={<FaGraduationCap />}
+      icon={<FaGraduationCap className="icon-journey"/>}
     >
       <h3 className="vertical-timeline-element-title">{item.title}</h3>
       <h4 className="vertical-timeline-element-subtitle">{item.companyname}</h4>
