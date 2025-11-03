@@ -39,7 +39,7 @@ const skill = [
 
 function Skills() {
   return (
-    <section className='skills-section-outer-container'>
+    <div className='skills-section-outer-container'>
         <div className='container'>
             <h2 className='skills-heading'>Skills & Tools</h2>
             <div className="skill-item-container">
@@ -51,7 +51,7 @@ function Skills() {
                 ))}
             </div>
         </div>
-    </section>  
+    </div>  
   )
 }
 

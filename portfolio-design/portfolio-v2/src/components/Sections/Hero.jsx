@@ -8,7 +8,7 @@ import './Hero.css'
 
 function Hero() {
   return (
-    <section className='hero-outer-container'>
+    <div className='hero-outer-container'>
       <div className="container">
         <div className="hero-inner-container">
           <div className="hero-left-section">
@@ -31,7 +31,7 @@ function Hero() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 

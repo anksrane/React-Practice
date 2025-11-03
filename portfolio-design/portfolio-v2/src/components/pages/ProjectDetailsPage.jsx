@@ -1,12 +1,12 @@
 import React from 'react';
 import {Header} from '../../components';
-import {ProjectDetails} from '..';
+import {ProjectDetails} from '../../components';
 
 function ProjectDetailsPage() {
   return (
     <>
-      <div><Header /></div>    
-      <div><ProjectDetails /></div>
+      <div><Header /></div>  
+      <section><ProjectDetails /></section>  
     </>
   )
 }

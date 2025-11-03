@@ -14,26 +14,23 @@ const projectsData = [
     slug: "tasklytics",
     image: taskImage,
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    link: "/projects/tasklytics",
-    status:"Ongoing"
+    link: "/projects/g20"
   },
-  // {
-  //   id: 2,
-  //   title: "Gmmco",
-  //   slug: "gmmco",
-  //   image: gmmcoImage,
-  //   desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-  //   link: "/projects/02",
-  //   status:"Completed"
-  // },
+  {
+    id: 2,
+    title: "Gmmco",
+    slug: "gmmco",
+    image: gmmcoImage,
+    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    link: "/projects/02"
+  },
   {
     id: 3,
     title: "G20",
     slug: "g20",
     image: g20Image,
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    link: "/projects/g20",
-    status:"Completed"
+    link: "/projects/g20"
   },
   {
     id: 4,
@@ -41,8 +38,7 @@ const projectsData = [
     slug: "vijay-tanks",
     image: vijayImage,
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    link: "/projects/vijay-tanks",
-    status:"Completed"
+    link: "/projects/vijay-tanks"
   },
   {
     id: 5,
@@ -50,8 +46,7 @@ const projectsData = [
     slug: "hansa-gcr",
     image: hansaImage,
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    link: "/projects/hansa-gcr",
-    status:"Completed"
+    link: "/projects/hansa-gcr"
   },
   {
     id: 6,
@@ -59,26 +54,7 @@ const projectsData = [
     slug: "birla",
     image: birlaImage,
     desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    link: "/projects/birla",
-    status:"Completed"
-  },
-  {
-    id: 7,
-    title: "Stockholding",
-    slug: "stockholding",
-    image: stockholdingImage,
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    link: "/projects/stockholding",
-    status:"Completed"
-  },
-  {
-    id: 8,
-    title: "Zuari Farm Hub",
-    slug: "zuarifarmhub",
-    image: zuarifarmhubImage,
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-    link: "/projects/zuarifarmhub",
-    status:"Completed"
+    link: "/projects/birla"
   },
 ];
 

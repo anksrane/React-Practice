@@ -111,51 +111,49 @@ function Journey() {
         </VerticalTimelineElement>
       </VerticalTimeline> */}
 
-<VerticalTimeline lineColor="rgba(255,255,255,0.2)">
-  {/* Professional Timeline */}
-  {professional.map((item, index) => (
-    <VerticalTimelineElement
-      key={`pro-${index}`}
-      className="vertical-timeline-element--work"
-      date={item.date}
-      iconClassName="timeline-icon-work"
-      icon={<FaBriefcase className="icon-journey" />}
-    >
-      <h3 className="vertical-timeline-element-title">{item.title}</h3>
-      <h4 className="vertical-timeline-element-subtitle">{item.companyname}</h4>
-      {item.description.length > 0 && (
-        <ul className="vertical-timeline-list">
-          {item.description.map((desc, idx) => (
-            <li key={idx}>{desc}</li>
-          ))}
-        </ul>
-      )}
-    </VerticalTimelineElement>
-  ))}
+      <VerticalTimeline lineColor="rgba(255,255,255,0.2)">
+        {/* Professional Timeline */}
+        {professional.map((item, index) => (
+          <VerticalTimelineElement
+            key={`pro-${index}`}
+            className="vertical-timeline-element--work"
+            date={item.date}
+            iconClassName="timeline-icon-work"
+            icon={<FaBriefcase className="icon-journey" />}
+          >
+            <h3 className="vertical-timeline-element-title">{item.title}</h3>
+            <h4 className="vertical-timeline-element-subtitle">{item.companyname}</h4>
+            {item.description.length > 0 && (
+              <ul className="vertical-timeline-list">
+                {item.description.map((desc, idx) => (
+                  <li key={idx}>{desc}</li>
+                ))}
+              </ul>
+            )}
+          </VerticalTimelineElement>
+        ))}
 
-  {/* Academics Timeline */}
-  {academics.map((item, index) => (
-    <VerticalTimelineElement
-      key={`edu-${index}`}
-      className="vertical-timeline-element--education"
-      date={item.date}
-      iconClassName="timeline-icon-edu"
-      icon={<FaGraduationCap className="icon-journey"/>}
-    >
-      <h3 className="vertical-timeline-element-title">{item.title}</h3>
-      <h4 className="vertical-timeline-element-subtitle">{item.companyname}</h4>
-      {item.description.length > 0 && (
-        <ul className="vertical-timeline-list">
-          {item.description.map((desc, idx) => (
-            <li key={idx}>{desc}</li>
-          ))}
-        </ul>
-      )}
-    </VerticalTimelineElement>
-  ))}
-</VerticalTimeline>
-
-
+        {/* Academics Timeline */}
+        {academics.map((item, index) => (
+          <VerticalTimelineElement
+            key={`edu-${index}`}
+            className="vertical-timeline-element--education"
+            date={item.date}
+            iconClassName="timeline-icon-edu"
+            icon={<FaGraduationCap className="icon-journey"/>}
+          >
+            <h3 className="vertical-timeline-element-title">{item.title}</h3>
+            <h4 className="vertical-timeline-element-subtitle">{item.companyname}</h4>
+            {item.description.length > 0 && (
+              <ul className="vertical-timeline-list">
+                {item.description.map((desc, idx) => (
+                  <li key={idx}>{desc}</li>
+                ))}
+              </ul>
+            )}
+          </VerticalTimelineElement>
+        ))}
+      </VerticalTimeline>
     </section>
   )
 }
