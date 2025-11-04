@@ -6,6 +6,7 @@ import birlaImage from "../../../assets/images/projects-main/birla.jpg";
 import stockholdingImage from "../../../assets/images/projects-main/stockholding.jpg";
 import zuarifarmhubImage from "../../../assets/images/projects-main/zuarifarmhub.jpg";
 import hansaImage from "../../../assets/images/projects-main/hansa-gcr.jpg";
+import Skills from "../Skills";
 
 const projectsData = [
   {
@@ -13,8 +14,9 @@ const projectsData = [
     title: "Tasklytics",
     slug: "tasklytics",
     image: taskImage,
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    shortDesc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     link: "/projects/tasklytics",
+    skills:["React.js", "Redux Toolkit", "Firebase (Auth & Firestore)", "Tailwind CSS", "Vite", "HTML", "CSS", "JavaScript"],
     status:"Ongoing"
   },
   // {
@@ -22,8 +24,9 @@ const projectsData = [
   //   title: "Gmmco",
   //   slug: "gmmco",
   //   image: gmmcoImage,
-  //   desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+  //   shortDesc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
   //   link: "/projects/02",
+  //    skills:["React.js", "Redux Toolkit", "Tailwind CSS", "HTML", "CSS", "JavaScript"],
   //   status:"Completed"
   // },
   {
@@ -31,8 +34,9 @@ const projectsData = [
     title: "G20",
     slug: "g20",
     image: g20Image,
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    shortDesc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     link: "/projects/g20",
+    skills: ["HTML5", "CSS3", "JavaScript", "XML", "Bootstrap"],
     status:"Completed"
   },
   {
@@ -40,8 +44,9 @@ const projectsData = [
     title: "Vijay Tanks",
     slug: "vijay-tanks",
     image: vijayImage,
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    shortDesc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     link: "/projects/vijay-tanks",
+    skills:["HTML5", "CSS3", "Bootstrap", "JavaScript", "jQuery"],
     status:"Completed"
   },
   {
@@ -49,8 +54,9 @@ const projectsData = [
     title: "Hansa GCR",
     slug: "hansa-gcr",
     image: hansaImage,
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    shortDesc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     link: "/projects/hansa-gcr",
+    skills: ["HTML5", "CSS3", "JavaScript", "XML", "Bootstrap", "GSAP"],
     status:"Completed"
   },
   {
@@ -58,8 +64,9 @@ const projectsData = [
     title: "Birla",
     slug: "birla",
     image: birlaImage,
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    shortDesc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     link: "/projects/birla",
+    skills:["HTML5", "CSS3", "Bootstrap", "JavaScript"],
     status:"Completed"
   },
   {
@@ -67,8 +74,9 @@ const projectsData = [
     title: "Stockholding",
     slug: "stockholding",
     image: stockholdingImage,
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    shortDesc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     link: "/projects/stockholding",
+    skills:["HTML5", "CSS3", "Bootstrap", "JavaScript", "jQuery"],
     status:"Completed"
   },
   {
@@ -76,8 +84,9 @@ const projectsData = [
     title: "Zuari Farm Hub",
     slug: "zuarifarmhub",
     image: zuarifarmhubImage,
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    shortDesc: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     link: "/projects/zuarifarmhub",
+    skills:["HTML5", "CSS3", "Bootstrap", "JavaScript", "jQuery"],
     status:"Completed"
   },
 ];

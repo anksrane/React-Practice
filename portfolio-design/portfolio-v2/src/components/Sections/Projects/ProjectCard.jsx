@@ -18,9 +18,20 @@ function ProjectCard({ data }) {
         </div>
       </div>
       <div className="projectCard-hover-content">
-        <h3 className="project-hover-heading">
-          {data.title}
-        </h3>
+        <div>
+          <h3 className="project-hover-heading">
+            {data.title}
+          </h3>
+          <p className="short-desc">{data.shortDesc}</p>
+        </div>
+        <div className="skills-container">
+          <h4 className="tech-title">Techonologies: </h4>
+            {data.skills.map((skill, i) => (
+              i < data.skills.length - 1 
+                ? <p key={i} className="skill-item">{skill},</p> 
+                : <p key={i} className="skill-item">{skill}</p>
+            ))}
+        </div>        
         <NavLink
           // key={item.name}
           to={data.link}
