@@ -9,10 +9,10 @@ function Homepage() {
   return (
     <>
         <section><Header /></section>
-        {/* <section><Hero /></section>
+        <section><Hero /></section>
         <section><Skills /></section>
-        <section><Journey /></section> */}
         <section><Projects/></section>
+        <section><Journey /></section>
     </>
   )
 }

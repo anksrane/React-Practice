@@ -24,7 +24,7 @@ const ProjectDetails = () => {
         <div className="split-container">
           <div className="left-panel">
             <div>
-              <h1>{project.title}</h1>
+              <h1 className="proj-det-heading">{project.title}</h1>
               <p>{project.desc}</p>  
             </div>       
           </div>
