@@ -80,11 +80,6 @@
   margin-bottom: 15px;
 }
 
-.project-section .tech-title{
-  color: var(--primary);
-  font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
-}
-
 .project-section .short-desc,.project-section .skill-item{
   color: var(--white);
   font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
@@ -100,14 +95,15 @@
   margin-top: 15px;
   border: 1px solid transparent;
   font-weight: 700;
-  padding: 10px 5px;
+  padding: 10px 15px;
   border-radius: 10px;
-  border: 1px solid var(--primary-dark);  
+  border: 1px solid rgba(var(--border),0.2);
+  font-weight: 600;  
 }
 
 .more-link:hover {
   background-color: var(--primary);
-  color: var(--white);
+  color: var(--background);
   transition: 0.1s;
 }
 

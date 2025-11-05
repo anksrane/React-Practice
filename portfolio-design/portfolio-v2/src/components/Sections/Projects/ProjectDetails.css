@@ -1,18 +1,60 @@
-.split-container {
+.project-details-section .split-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: start;
+  gap: 30px;
 }
 
-.left-panel {
-  padding: 1.3rem;
+.project-details-section .left-panel {
+  padding: 5% 0;
   height: 100vh;
   position: sticky;
   top: 0;
 }
 
-.proj-det-heading{
-  color: var(--secondary);
+.project-details-section .proj-det-heading{
+  color: var(--primary);
+  margin-bottom: 2%;
+}
+.project-details-section .proj-det-desc{
+  color: var(--text-color);
+  margin-bottom: 1.5%;
+}
+
+.project-details-section .skills-container{
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.project-details-section .tech-title{
+  color: var(--primary);
+  font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
+}
+
+.project-details-section .skill-item{
+  color: var(--white);
+  font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
+}
+
+.project-details-section  .proj-links{
+  text-decoration: none;
+  background-color: var(--primary-dark);
+  color: var(--white);
+  display: inline-block;
+  border: 1px solid rgba(var(--border),0.2);
+  font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin-right: 15px;
+  margin-top: 30px;
+  font-weight: 600;
+}
+
+.project-details-section  .proj-links:hover{
+  background-color: var(--primary);
+  color: var(--background);
+  transition: 0.1s;
 }
 
 .right-panel {

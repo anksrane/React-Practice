@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import projectsData from "./projectsData"; // create a shared file for data if needed
+import { FaGithub } from "react-icons/fa6";
+import { FaLink } from "react-icons/fa";
+import projectsData from "./projectsData";
 import "./ProjectDetails.css";
 
 const ProjectDetails = () => {
@@ -25,7 +27,18 @@ const ProjectDetails = () => {
           <div className="left-panel">
             <div>
               <h1 className="proj-det-heading">{project.title}</h1>
-              <p>{project.desc}</p>  
+              <p className="proj-det-desc">{project.longDesc}</p> 
+              <div className="skills-container">
+                <h4 className="tech-title">Techonologies: </h4>
+                  {project.skills.map((skill, i) => (
+                    i < project.skills.length - 1 
+                      ? <p key={i} className="skill-item">{skill},</p> 
+                      : <p key={i} className="skill-item">{skill}</p>
+                  ))}
+              </div> 
+              {project.projLink?(<a href={project.projLink} className="proj-links" target="_blank"><FaLink /> Live Demo</a>):""}                  
+              {project.gitHub?(<a href={project.gitHub} className="proj-links" target="_blank"><FaGithub /> Github Repo</a> ):""}                  
+               
             </div>       
           </div>
 

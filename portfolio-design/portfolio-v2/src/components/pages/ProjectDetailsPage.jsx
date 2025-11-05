@@ -9,7 +9,7 @@ function ProjectDetailsPage() {
   return (
     <>
       <div><Header /></div>  
-      <section><ProjectDetails /></section>  
+      <section className='project-details-section'><ProjectDetails /></section>  
     </>
   )
 }
