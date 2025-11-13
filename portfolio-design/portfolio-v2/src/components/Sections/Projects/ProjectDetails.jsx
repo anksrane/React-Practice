@@ -1,8 +1,15 @@
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay, Navigation } from "swiper/modules";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { FaGithub } from "react-icons/fa6";
 import { FaLink } from "react-icons/fa";
 import projectsData from "./projectsData";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+import "swiper/css/navigation";
 import "./ProjectDetails.css";
 
 const ProjectDetails = () => {
@@ -23,30 +30,46 @@ const ProjectDetails = () => {
   return (
     <>
       <section className="container">
-        <div className="split-container">
+        <div className="split-container">   
+          {/* <div className="right-panel">
+            <img src="https://placehold.co/1920x1080" alt="Project 1" />
+          </div>   */}
+          <div className="right-panel">
+            <Swiper
+              spaceBetween={20}
+              slidesPerView={1}
+              loop={true}
+              pagination={{ clickable: true }}
+              // navigation={true}
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false
+              }}              
+              modules={[Pagination, Autoplay, Navigation ]}
+            >
+              {project.images?.map((img, i) => (
+                <SwiperSlide key={i}>
+                  <img src={img} alt={`Project Slide ${i + 1}`} className="img-responsive"/>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>                      
           <div className="left-panel">
             <div>
-              <h1 className="proj-det-heading">{project.title}</h1>
+              <h1 className="proj-det-heading">{project.title}</h1>   
               <p className="proj-det-desc">{project.longDesc}</p> 
-              <div className="skills-container">
-                <h4 className="tech-title">Techonologies: </h4>
-                  {project.skills.map((skill, i) => (
-                    i < project.skills.length - 1 
-                      ? <p key={i} className="skill-item">{skill},</p> 
-                      : <p key={i} className="skill-item">{skill}</p>
+              <h4 className="tech-title">Techonologies: </h4>
+              <div className="skills-container-icons">
+                  {project.skillsIcons.map((skill, i) => (
+                    i < project.skillsIcons.length 
+                      ? <img key={i} src={skill} alt="" className="img-responsive proj-det-icon" />:""
                   ))}
               </div> 
-              {project.projLink?(<a href={project.projLink} className="proj-links" target="_blank"><FaLink /> Live Demo</a>):""}                  
-              {project.gitHub?(<a href={project.gitHub} className="proj-links" target="_blank"><FaGithub /> Github Repo</a> ):""}                  
-               
+              <div className="btns-container">
+                {project.projLink?(<a href={project.projLink} className="proj-links" target="_blank"><FaLink /> Live Demo</a>):""}                  
+                {project.gitHub?(<a href={project.gitHub} className="proj-links" target="_blank"><FaGithub /> Github Repo</a> ):""} 
+              </div>                 
             </div>       
-          </div>
-
-          <div className="right-panel">
-            <img src="https://placehold.co/1920x1080" alt="Project 1" />
-            <img src="https://placehold.co/1920x1080" alt="Project 2" />
-            <img src="https://placehold.co/1920x1080" alt="Project 3" />
-            <img src="https://placehold.co/1920x1080" alt="Project 4" />
           </div>
         </div>
       </section>

@@ -18,8 +18,8 @@ body {
   position: relative;
 }
 
-body:before,
-body:after {
+.bg-special:before,
+.bg-special:after {
   content: "";
   position: fixed;
   width: 100%;

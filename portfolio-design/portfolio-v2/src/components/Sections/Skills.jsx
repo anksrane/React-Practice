@@ -1,40 +1,25 @@
 import React from 'react';
-import reactIcon from '../../assets/images/icons/react-svgrepo-com.svg';
-import reduxIcon from '../../assets/images/icons/redux-svgrepo-com.svg';
-import routerIcon from '../../assets/images/icons/reactrouter.svg';
-import jsIcon from '../../assets/images/icons/js-svgrepo-com.svg';
-import jqueryIcons from '../../assets/images/icons/jquery-svgrepo-com.svg';
-import htmlIcons from '../../assets/images/icons/html-5-svgrepo-com.svg';
-import cssIcons from '../../assets/images/icons/css-3-svgrepo-com.svg';
-import bootstrapIcons from '../../assets/images/icons/bootstrap-svgrepo-com.svg';
-import tailwindIcons from '../../assets/images/icons/tailwind-svgrepo-com.svg';
-import gsapIcons from '../../assets/images/icons/gsap.svg';
-import gitIcons from '../../assets/images/icons/github-142-svgrepo-com.svg';
-import npmIcons from '../../assets/images/icons/npm.svg';
-import webpackIcons from '../../assets/images/icons/webpack.svg';
-import apiIcons from '../../assets/images/icons/api-settings-svgrepo-com.svg';
-import vsIcons from '../../assets/images/icons/vs-code-svgrepo-com.svg';
-import psIcons from '../../assets/images/icons/photoshop-cc-logo-svgrepo-com.svg';
-
+// New code
+import { icons } from '../../assets/images/icons';
 import './Skills.css';
 
 const skill = [
-  { name: "React JS", icon: reactIcon },
-  { name: "Redux", icon: reduxIcon },
-  { name: "React-Router", icon: routerIcon },
-  { name: "JavaScript", icon: jsIcon },
-  { name: "API-Integration", icon: apiIcons },  
-  { name: "JQuery", icon: jqueryIcons },
-  { name: "HTML", icon: htmlIcons },
-  { name: "CSS", icon: cssIcons },
-  { name: "Bootstrap", icon: bootstrapIcons },
-  { name: "TailwindCSS", icon: tailwindIcons },
-  { name: "GSAP", icon: gsapIcons },
-  { name: "GitHub", icon: gitIcons },
-  { name: "NPM", icon: npmIcons },
-  { name: "Webpack", icon: webpackIcons },
-  { name: "Visual Studio", icon: vsIcons },
-  { name: "Photoshop", icon: psIcons },
+  { name: "React JS", icon: icons.reactIcon },
+  { name: "Redux", icon: icons.reduxIcon },
+  { name: "React-Router", icon: icons.routerIcon },
+  { name: "JavaScript", icon: icons.jsIcon },
+  { name: "API-Integration", icon: icons.apiIcons },  
+  { name: "JQuery", icon: icons.jqueryIcons },
+  { name: "HTML", icon: icons.htmlIcons },
+  { name: "CSS", icon: icons.cssIcons },
+  { name: "Bootstrap", icon: icons.bootstrapIcons },
+  { name: "TailwindCSS", icon: icons.tailwindIcons },
+  { name: "GSAP", icon: icons.gsapIcons },
+  { name: "GitHub", icon: icons.gitIcons },
+  { name: "NPM", icon: icons.npmIcons },
+  { name: "Webpack", icon: icons.webpackIcons },
+  { name: "Visual Studio", icon: icons.vsIcons },
+  { name: "Photoshop", icon: icons.psIcons },
 ];
 
 function Skills() {
