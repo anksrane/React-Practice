@@ -75,11 +75,9 @@ const projectsData = [
     //     slug: "gmmco",
     //     image: gmmcoImage,
     //     shortDesc: "A modular React-based frontend built for Gmmco, featuring reusable components, smooth navigation with React Router, and basic Redux-driven state management, styled with Tailwind CSS.",
-    //     longDesc: "Gmmco Inc. is a leading industrial solutions provider, and this project involved building a clean, scalable, and high-performance frontend for their corporate website. The entire interface was developed using React with a modular architecture to ensure flexibility, easy maintenance, and component reusability across the platform.
-
-// To enhance the user experience, React Router was implemented for smooth, multi-page navigation, while basic Redux was integrated to handle essential state management across key UI sections. Tailwind CSS was used to create a modern and responsive design system, supported by HTML, CSS, and JavaScript for additional structure and behavior.
-
-// The result is a fast, organized, and visually consistent frontend that aligns with Gmmco’s brand identity and improves overall user interaction.",
+    //     longDesc: ["Gmmco Inc. is a leading industrial solutions provider, and this project involved building a clean, scalable, and high-performance frontend for their corporate website. The entire interface was developed using React with a modular architecture to ensure flexibility, easy maintenance, and component reusability across the platform.",
+    //     "To enhance the user experience, React Router was implemented for smooth, multi-page navigation, while basic Redux was integrated to handle essential state management across key UI sections. Tailwind CSS was used to create a modern and responsive design system, supported by HTML, CSS, and JavaScript for additional structure and behavior.",
+    //     "The result is a fast, organized, and visually consistent frontend that aligns with Gmmco’s brand identity and improves overall user interaction."],
     //     link: "/projects/gmmco",
     //     projLink: ["https://www.gmmco.in/"],
     //     gitHub: "",

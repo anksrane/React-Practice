@@ -31,9 +31,6 @@ const ProjectDetails = () => {
     <>
       <section className="container">
         <div className="split-container">   
-          {/* <div className="right-panel">
-            <img src="https://placehold.co/1920x1080" alt="Project 1" />
-          </div>   */}
           <div className="right-panel">
             <Swiper
               spaceBetween={20}

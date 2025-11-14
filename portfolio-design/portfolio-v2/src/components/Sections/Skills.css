@@ -1,8 +1,15 @@
 .skills-section-outer-container {
   /* border-top: 1px solid rgba(var(--border), 0.2);
   border-bottom: 1px solid rgba(var(--border), 0.2); */
-  padding: 5% 0px;
+  /* padding: 5% 0px; */
   background-color: color-mix(in srgb, var(--background-contrast) 50%, transparent);
+}
+
+.skills-section-inner-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 .skills-section-outer-container .skills-heading {

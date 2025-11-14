@@ -17,7 +17,7 @@
 .project-details-section .proj-det-desc {
   color: var(--text-color);
   margin-bottom: 1%;
-  text-align: center;   
+  text-align: justify;   
 }
 
 .project-details-section .skills-container {
