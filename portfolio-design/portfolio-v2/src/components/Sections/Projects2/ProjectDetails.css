@@ -1,22 +1,10 @@
 .split-container {
-  /* display: flex;
-  height: 95vh; 
-  overflow: hidden; */
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: start;
 }
 
 .left-panel {
-  /* width: 50%;
-  position: sticky;
-  top: 0;
-  height: 95vh;
-  color: white;
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; */
   padding: 1.3rem;
   height: 100vh;
   position: sticky;
@@ -24,21 +12,21 @@
 }
 
 .right-panel {
-  /* width: 50%;
-  height: 95vh;
-  overflow-y: scroll;
-  scroll-behavior: smooth; */
-  /* padding: 1.3rem; */
   min-height: 100vh;
 }
 
-.right-panel img {
+.mySwiper .swiper-slide img {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* .right-panel .swiper .swiper-initialized{
   width: 100%;
-  /* height: 100vh; */
   object-fit: cover;
   display: block;
-  border: 1px solid black;
-}
+  border: 5px solid red;
+  border-radius: 10px;
+} */
 
 @media (max-width: 768px) {
   .split-container {

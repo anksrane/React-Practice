@@ -57,7 +57,11 @@ const ProjectDetails = () => {
           <div className="left-panel">
             <div>
               <h1 className="proj-det-heading">{project.title}</h1>   
-              <p className="proj-det-desc">{project.longDesc}</p> 
+              <div className="proj-det-desc-container">{project.longDesc ? (
+                project.longDesc.map((para,index)=>(
+                  <p key={index} className="proj-det-desc">{para}</p>
+                ))
+              ):""}</div> 
               <h4 className="tech-title">Techonologies: </h4>
               <div className="skills-container-icons">
                   {project.skillsIcons.map((skill, i) => (
@@ -66,7 +70,14 @@ const ProjectDetails = () => {
                   ))}
               </div> 
               <div className="btns-container">
-                {project.projLink?(<a href={project.projLink} className="proj-links" target="_blank"><FaLink /> Live Demo</a>):""}                  
+                {/* {project.projLink?(<a href={project.projLink} className="proj-links" target="_blank"><FaLink /> Live Demo</a>):""}    */}
+                {project.projLink ? (
+                  project.projLink.map((link, index) => (
+                    <a key={index} href={link} className="proj-links" target="_blank" rel="noopener noreferrer">
+                      <FaLink /> Live Demo {project.projLink.length > 1 ? index + 1 : ""}
+                    </a>
+                  ))
+                ) : ""}                              
                 {project.gitHub?(<a href={project.gitHub} className="proj-links" target="_blank"><FaGithub /> Github Repo</a> ):""} 
               </div>                 
             </div>       

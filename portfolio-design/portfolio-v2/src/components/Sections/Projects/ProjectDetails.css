@@ -51,7 +51,7 @@
   height: 50px;
   display: block;
   border: 1px solid var(--text-color);
-  border-radius: 50%;
+  border-radius: 10px;
   padding: 3px;
 }
 
@@ -146,6 +146,8 @@
   border-radius: 5px;
   border: 1px solid var(--background);
 }
+
+.right-panel, .swiper-wrapper .img-responsive{ border-radius: 10px;}
 /* Swiper CSS End */
 
 @media (max-width: 768px) {
