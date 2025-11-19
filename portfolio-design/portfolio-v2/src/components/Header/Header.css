@@ -1,7 +1,9 @@
 .header-container-outer {
   width: 100%;
   border-bottom: 0.1px solid rgba(var(--border), 0.2);
-  position: relative;
+  position: fixed;
+  background-color: var(--background);
+  z-index: 10;
 }
 .navbar-container {
   display: flex;
@@ -27,6 +29,9 @@
   color: var(--text-color);
   font-size: 16px;
   font-weight: 600;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 .nav-link:hover {
   color: var(--black);

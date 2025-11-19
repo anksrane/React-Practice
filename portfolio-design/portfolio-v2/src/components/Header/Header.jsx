@@ -1,5 +1,5 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import logo from "../../assets/images/AR-crop.png";
 import { IoSunny } from "react-icons/io5";
@@ -13,16 +13,32 @@ import { toggleMenu } from "../../features/ui/mobMenuSlice";
 import "./Header.css";
 
 function Header() {
+  const [activeSection, setActiveSection] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();  
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.theme.mode);  
   const menuOpen = useSelector((state) => state.menuMobile.isMenuOpen);
   const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Projects", path: "/projects" },
-    { name: "Skills", path: "/skills" },
-    { name: "Journey", path: "/journey" },
+    { name: "Home", id: "hero" },
+    { name: "Skills", id: "skills" },
+    { name: "Projects", id: "projects" },
+    { name: "Journey", id: "journey" },
   ];
+
+  const handleNavigation = (id) => {
+    if (location.pathname === "/") {
+      window.location.hash = id;
+      document.getElementById(id)?.scrollIntoView({
+        behavior: "smooth",
+      });
+    } else {
+      navigate(`/#${id}`);
+    }
+
+    if (menuOpen) dispatch(toggleMenu());
+  };
+  
   return (
     <div className="header-container-outer">
       <div className="container">
@@ -51,13 +67,21 @@ function Header() {
             </div>
             {navItems.map((item) => {
               return (
-                <NavLink
+                // <NavLink
+                //   key={item.name}
+                //   to={item.path}
+                //   className={({ isActive }) =>`nav-link ${isActive ? 'active' : ''}`
+                //   }
+                //   onClick={() => handleNavigation(item.id)}
+                // >{item.name}             
+                // </NavLink>
+                <button
                   key={item.name}
-                  to={item.path}
-                  className={({ isActive }) =>`nav-link ${isActive ? 'active' : ''}`
-                  }
-                >{item.name}             
-                </NavLink>
+                  className={`nav-link ${location.hash === "#" + item.id ? "active" : ""}`}
+                  onClick={() => handleNavigation(item.id)}
+                >
+                  {item.name}
+                </button>                
               );
             })}            
           </div>
