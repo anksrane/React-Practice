@@ -21,16 +21,19 @@ function App() {
         pin:bg1.current,
         pinSpacing:false,
         start: "top top",
-        endTrigger:".last",
-        end: "bottom bottom"
+        // endTrigger:".last",
+        end: "bottom bottom",
+        markers:true,
       })
 
       gsap.timeline({
         scrollTrigger:{
           trigger:img_container.current,
-          pin: img_container.current,
+          // pin: img_container.current,
           scrub: 1,
-          start: "0% 0%",
+          // start: "0% 0%",
+          start: "top top",
+          end: "+=1500",
         }
       })
       .to(img.current,{transform: "translateZ(2200px)"})
@@ -45,7 +48,7 @@ function App() {
     <>
       <div className='relative'>
         <div ref={bg1} className='bg bg-[#141414] absolute h-screen w-screen z-[-1]'></div>
-        <section>
+        <section className=''>
           <div ref={img_container} className='img-container perspective flex items-center justify-center h-screen w-screen'>
             <img ref={img} src={bg} alt="background" className='image-mask' />
             <div className='text-white absolute flex flex-col items-center justify-center bg-transparent'>

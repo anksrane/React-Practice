@@ -1,5 +1,5 @@
 .project-details-section .split-container {
-  padding-bottom:3%;
+  padding:70px 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -91,22 +91,15 @@
 }
 
 /* Swiper CSS Start */
-/* --- Custom Swiper Navigation --- */
 .swiper-button-next,
 .swiper-button-prev {
-  color: var(--primary-dark); /* arrow color */
+  color: var(--primary-dark); 
   width: 44px;
   height: 44px;
   border-radius: 50%;
   backdrop-filter: blur(4px);
   transition: all 0.3s ease;
 }
-/* 
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-  background: rgba(0, 0, 0, 0.7);
-  transform: scale(1.05);
-} */
 
 /* change arrow size */
 .swiper-button-next::after,
@@ -170,4 +163,7 @@
       width: 35px;
       height: 35px;
   }  
+  .project-details-section .proj-det-desc{
+    text-align: left;
+  }
 }

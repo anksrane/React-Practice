@@ -6,19 +6,19 @@ import {Journey} from '../../components';
 import {Projects} from '../../components';
 
 function Homepage() {
-useEffect(() => {
-  if (location.hash) {
-    const id = location.hash.replace("#", "");
-    setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({
-        behavior: "smooth",
-      });
-    }, 150);
-  }
-}, [location]);  
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({
+          behavior: "smooth",
+        });
+      }, 150);
+    }
+  }, [location]);  
   return (
     <>
-        <section><Header /></section>
+        <div><Header /></div>
         <section id="hero"><Hero /></section>
         <section id="skills"><Skills /></section>
         <section id="projects"><Projects/></section>

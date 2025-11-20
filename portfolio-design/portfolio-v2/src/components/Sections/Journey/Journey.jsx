@@ -79,7 +79,7 @@ const academics=[
 
 function Journey() {
   return (
-    <section className="timeline-section">
+    <div className="timeline-section">
         <div className="timeline-inner-container">
           <h2 className="timeline-heading">My Journey</h2>
 
@@ -127,7 +127,7 @@ function Journey() {
             ))}
           </VerticalTimeline>
         </div>
-    </section>
+    </div>
   )
 }
 

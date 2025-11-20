@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import logo from "../../assets/images/AR-crop.png";
@@ -14,6 +14,7 @@ import "./Header.css";
 
 function Header() {
   const [activeSection, setActiveSection] = useState(null);
+  const [isHidden, setIsHidden] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();  
   const dispatch = useDispatch();
@@ -34,13 +35,38 @@ function Header() {
       });
     } else {
       navigate(`/#${id}`);
+      setIsHidden(false);
     }
 
     if (menuOpen) dispatch(toggleMenu());
   };
+
+  useEffect(()=>{
+    let lastScroll = window.scrollY;
+
+    const handleScroll = () => {
+      // Don't hide if mobile menu is open
+      if (menuOpen) return;
+
+      const currentScroll = window.scrollY;
+
+      if (currentScroll > lastScroll) {
+        // scrolling down
+        setIsHidden(true);
+      } else {
+        // scrolling up
+        setIsHidden(false);
+      }
+
+      lastScroll = currentScroll;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);    
+  })
   
   return (
-    <div className="header-container-outer">
+    <div className={`header-container-outer ${isHidden ? "off-canvas" : "fixed"}`}>
       <div className="container">
         <div className="navbar-container">
           <NavLink to={"/"} className='logo-link'>
