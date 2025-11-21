@@ -39,7 +39,7 @@ function Skills() {
           start: "top 20%",
           // toggleActions: "play none none none",
            toggleActions: "play pause pause reverse",
-          markers: true
+          // markers: true
         }
       });
 
