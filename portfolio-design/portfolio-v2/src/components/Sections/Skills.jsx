@@ -1,7 +1,12 @@
-import React from 'react';
-// New code
 import { icons } from '../../assets/images/icons';
 import './Skills.css';
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const skill = [
   { name: "React JS", icon: icons.reactIcon },
@@ -23,8 +28,40 @@ const skill = [
 ];
 
 function Skills() {
+  const sectionRef = useRef(null);
+
+  useGSAP(
+    (context) => {
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: context.selector(".skills-section-inner-container"),
+          start: "top 20%",
+          // toggleActions: "play none none none",
+           toggleActions: "play pause pause reverse",
+          markers: true
+        }
+      });
+
+      tl.from(context.selector(".skills-heading"), {
+        opacity: 0,
+        y: 50,
+        duration: 0.6,
+        ease: "power2.out",
+        immediateRender: false,
+      });
+      tl.fromTo(
+        ".skill-item",
+        { opacity: 0, y:30, scale: 0.1 },
+        { opacity: 1, y: 0, scale: 1,  stagger: 0.1, duration: 0.5}
+      )      
+
+    },
+    { scope: sectionRef }
+  );  
+
   return (
-    <div className='skills-section-outer-container'>
+    <div className='skills-section-outer-container' ref={sectionRef}>
         <div className='container'>
           <div className='skills-section-inner-container'>
             <h2 className='skills-heading'>Skills & Tools</h2>
