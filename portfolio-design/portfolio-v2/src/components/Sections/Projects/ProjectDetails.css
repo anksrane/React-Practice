@@ -13,11 +13,13 @@
   color: var(--primary);
   margin-bottom: 1%;
   text-align: center; 
+  font-size: calc(20px + (32 - 20) * ((100vw - 320px) / (1920 - 320)));
 }
 .project-details-section .proj-det-desc {
   color: var(--text-color);
   margin-bottom: 1%;
   text-align: justify;   
+  font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
 }
 
 .project-details-section .skills-container {
@@ -39,6 +41,7 @@
   gap: 5px;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .project-details-section .skill-item {
@@ -66,7 +69,10 @@
   text-decoration: none;
   background-color: var(--primary-dark);
   color: var(--white);
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
   border: 1px solid rgba(var(--border), 0.2);
   font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
   border-radius: 10px;
@@ -164,6 +170,9 @@
       height: 35px;
   }  
   .project-details-section .proj-det-desc{
-    text-align: left;
+    text-align: center;
+  }
+  .project-details-section .proj-links{
+    padding: 10px;
   }
 }

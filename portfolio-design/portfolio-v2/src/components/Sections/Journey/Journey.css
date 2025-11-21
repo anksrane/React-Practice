@@ -48,3 +48,16 @@
 .vertical-timeline-list {
   margin: 10px;
 }
+
+@media (max-width:768px){
+  .timeline-section{
+    padding: 30px 15px;
+  }
+  .vertical-timeline{
+    padding: 10px 0;
+    width: 100%;
+  }
+  .vertical-timeline-list{
+    font-size: 14px;
+  }
+}
