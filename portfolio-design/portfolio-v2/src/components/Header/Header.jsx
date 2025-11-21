@@ -10,6 +10,8 @@ import { IoCloseCircle } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../features/ui/themeSlice";
 import { toggleMenu } from "../../features/ui/mobMenuSlice";
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import "./Header.css";
 
 function Header() {
@@ -27,6 +29,52 @@ function Header() {
     { name: "Journey", id: "journey" },
   ];
 
+  // animation using gsap
+  useGSAP(()=>{
+    const links = document.querySelectorAll(".nav-link");
+
+    // screen width
+    const isMobile=window.innerWidth<=769;
+
+    // Mobile Animation
+    if(isMobile && links.length){
+      setTimeout(()=>{
+        gsap.fromTo(
+          links,
+          {opacity:0, y:20},
+          {
+            opacity:1,
+            y:0,
+            duration: 0.8,
+            stagger: 0.08,
+            ease: "power2.out",          
+          }
+        );
+        return;
+      },50);        
+    }
+
+    // Desktop Animation
+    if(!isMobile && !menuOpen && links.length){
+      setTimeout(()=>{
+        gsap.fromTo(
+          links,
+          {opacity:0, y:20},
+          {
+            opacity:1,
+            y:0,
+            duration: 0.8,
+            stagger: 0.07,
+            ease: "power2.out",          
+          }
+        );
+        return; 
+      },50);
+    }
+
+  },{dependencies:[menuOpen]})
+
+  // handle navigation and scroll
   const handleNavigation = (id) => {
     if (location.pathname === "/") {
       window.location.hash = id;
@@ -93,14 +141,6 @@ function Header() {
             </div>
             {navItems.map((item) => {
               return (
-                // <NavLink
-                //   key={item.name}
-                //   to={item.path}
-                //   className={({ isActive }) =>`nav-link ${isActive ? 'active' : ''}`
-                //   }
-                //   onClick={() => handleNavigation(item.id)}
-                // >{item.name}             
-                // </NavLink>
                 <button
                   key={item.name}
                   className={`nav-link ${location.hash === "#" + item.id ? "active" : ""}`}
