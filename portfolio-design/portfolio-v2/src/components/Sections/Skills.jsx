@@ -32,30 +32,23 @@ function Skills() {
 
   useGSAP(
     (context) => {
-
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: context.selector(".skills-section-inner-container"),
           start: "top 20%",
-          // toggleActions: "play none none none",
-           toggleActions: "play pause pause reverse",
-          // markers: true
+          toggleActions: "play none none none",
         }
       });
-
-      tl.from(context.selector(".skills-heading"), {
-        opacity: 0,
-        y: 50,
-        duration: 0.6,
-        ease: "power2.out",
-        immediateRender: false,
-      });
+      tl.fromTo(
+        ".skills-heading",
+        { opacity: 0, y:50, ease: "power2.out" },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      )  
       tl.fromTo(
         ".skill-item",
         { opacity: 0, y:30, scale: 0.1 },
-        { opacity: 1, y: 0, scale: 1,  stagger: 0.1, duration: 0.5}
+        { opacity: 1, y: 0, scale: 1, duration: 0.6}
       )      
-
     },
     { scope: sectionRef }
   );  

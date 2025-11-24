@@ -92,12 +92,16 @@
     transform: none;
   }
 
+  .skills-section-outer-container .skill-icon{
+    max-width: 70px;
+  }
+
   /* Disable hover effects */
-  .skill-item:hover .skill-icon {
+  .skills-section-outer-container .skill-item:hover .skill-icon {
     transform: none;
   }
 
-  .skill-item:hover .skill-name {
+  .skills-section-outer-container .skill-name {
     opacity: 1;
     visibility: visible;
     height: auto;
