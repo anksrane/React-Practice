@@ -5,6 +5,9 @@ import "./Projects.css";
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function Projects() {
 
@@ -29,7 +32,6 @@ function Projects() {
             scale: 0.1,
             duration: 0.6,
             ease: "power2.out",
-            // stagger: 0.1,
             scrollTrigger: {
                 trigger: ".projects-inner-container",
                 start: "top 20%",

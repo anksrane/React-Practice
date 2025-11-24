@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay, Navigation } from "swiper/modules";
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { FaGithub } from "react-icons/fa6";
 import { FaLink } from "react-icons/fa";
@@ -12,12 +12,55 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import "./ProjectDetails.css";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const ProjectDetails = () => {
   const { slug } = useParams();
   const project = projectsData.find((p) => p.slug === slug);
-  useEffect(() => {
-    console.log(project);
-  }, [slug, project]);
+
+  useGSAP(()=>{
+    gsap.fromTo(
+      ".proj-det-heading",
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }
+    );
+
+    gsap.fromTo(
+      ".proj-det-desc",
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power3.out"
+      }
+    );  
+
+    // proj-det-icon scroll animation
+    gsap.fromTo(
+      ".proj-det-icon",
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".skills-container-icons",
+          start: "top bottom",   
+          once: true,          
+          // markers:true,
+          immediateRender:false,
+        }
+      }
+    );    
+  })   
 
   if (!project) {
     return (
@@ -25,7 +68,7 @@ const ProjectDetails = () => {
         Project not found.
       </div>
     );
-  }
+  } 
 
   return (
     <>
@@ -53,7 +96,7 @@ const ProjectDetails = () => {
           </div>                      
           <div className="left-panel">
             <div>
-              <h1 className="proj-det-heading">{project.title}</h1>   
+              <h1 className="proj-det-heading" >{project.title}</h1>   
               <div className="proj-det-desc-container">{project.longDesc ? (
                 project.longDesc.map((para,index)=>(
                   <p key={index} className="proj-det-desc">{para}</p>
@@ -67,7 +110,6 @@ const ProjectDetails = () => {
                   ))}
               </div> 
               <div className="btns-container">
-                {/* {project.projLink?(<a href={project.projLink} className="proj-links" target="_blank"><FaLink /> Live Demo</a>):""}    */}
                 {project.projLink ? (
                   project.projLink.map((link, index) => (
                     <a key={index} href={link} className="proj-links" target="_blank" rel="noopener noreferrer">

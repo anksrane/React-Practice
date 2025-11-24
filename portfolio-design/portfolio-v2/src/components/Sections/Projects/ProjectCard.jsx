@@ -15,47 +15,6 @@ function ProjectCard({ data, index }) {
     const card = cardRef.current;
     const overlay = overlayRef.current;    
 
-    // Hover timeline
-    // const hoverAnim = gsap.to(card, {
-    //   scale: 1.01,
-    //   duration: 0.3,
-    //   paused: true,
-    //   ease: "power2.out",
-    // });
-
-    // const overlayAnim = gsap.to(overlay, {
-    //   opacity: 1,
-    //   y: 0,
-    //   duration: 0.4,
-    //   paused: true,
-    //   ease: "power2.out",
-    // });
-
-    // const staggerTextAnim = gsap.from(
-    //   textRefs.current,
-    //   {
-    //     opacity: 0,
-    //     scale: 0.1,
-    //     stagger: 0.08,
-    //     paused: true,
-    //     ease: "power2.out",
-    //     duration: 0.3,
-    //   }
-    // );
-
-    // const element = document.querySelector(card);
-
-    // card.addEventListener("mouseenter", () => {
-    //   hoverAnim.play();
-    //   overlayAnim.play();
-    //   staggerTextAnim.restart();
-    // });
-
-    // card.addEventListener("mouseleave", () => {
-    //   hoverAnim.reverse();
-    //   overlayAnim.reverse();
-    // });
-
     const hoverTl = gsap.timeline({ paused: true });
 
     hoverTl
