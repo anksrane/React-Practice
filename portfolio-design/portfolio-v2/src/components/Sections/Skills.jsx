@@ -46,8 +46,8 @@ function Skills() {
       )  
       tl.fromTo(
         ".skill-item",
-        { opacity: 0, y:30, scale: 0.1 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.6}
+        { opacity: 0, y:30, scale: 0.1, ease: "power2.out"},
+        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power2.out"}
       )      
     },
     { scope: sectionRef }

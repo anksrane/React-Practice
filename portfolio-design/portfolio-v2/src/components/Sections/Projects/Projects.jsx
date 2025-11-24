@@ -3,7 +3,41 @@ import projectsData from './projectsData';
 import ProjectCard from './ProjectCard';
 import "./Projects.css";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
 function Projects() {
+
+    useGSAP(() => {
+        // Animate heading
+        gsap.from(".project-heading", {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".projects-inner-container",
+                start: "top 20%",
+                toggleActions: "play none none none",
+            },
+        });
+
+        // Animate all project cards
+        gsap.from(".projectCard-inner-section", {
+            opacity: 0,
+            y: 30,
+            scale: 0.1,
+            duration: 0.6,
+            ease: "power2.out",
+            // stagger: 0.1,
+            scrollTrigger: {
+                trigger: ".projects-inner-container",
+                start: "top 20%",
+                toggleActions: "play none none none",
+            },
+        });
+    });
+
   return (
     <div className='project-section'>
         <div className="container">
