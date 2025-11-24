@@ -53,9 +53,10 @@
   width: 50px;
   height: 50px;
   display: block;
-  border: 1px solid var(--text-color);
+  border: 1px solid rgba(var(--border),0.3);
   border-radius: 10px;
   padding: 3px;
+  box-shadow: 0 4px 12px rgba(var(--border), 0.15);
 }
 
 .project-details-section .btns-container{
@@ -146,7 +147,7 @@
   border: 1px solid var(--background);
 }
 
-.right-panel, .swiper-wrapper .img-responsive{ border-radius: 10px;}
+.right-panel, .swiper-wrapper .img-responsive{ border-radius: 10px;box-shadow: 0 4px 12px rgba(var(--border), 0.15); }
 /* Swiper CSS End */
 
 @media (max-width: 768px) {

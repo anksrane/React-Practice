@@ -87,7 +87,7 @@
 
 .project-section .project-hover-heading{
   font-size: calc(16px + (20 - 16) * ((100vw - 320px) / (1920 - 320)));
-  color: var(--primary);
+  color: var(--secondary);
   margin-bottom: 15px;
 }
 
@@ -108,7 +108,7 @@
   font-weight: 700;
   padding: 10px 15px;
   border-radius: 10px;
-  border: 1px solid rgba(var(--border),0.2);
+  border: 1px solid var(--white);
   font-weight: 600;  
 }
 

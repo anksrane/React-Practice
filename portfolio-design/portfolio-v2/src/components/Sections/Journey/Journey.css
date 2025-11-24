@@ -49,6 +49,10 @@
   margin: 10px;
 }
 
+.vertical-timeline-element-title{
+  color: var(--primary);
+}
+
 @media (max-width:768px){
   .timeline-section{
     padding: 30px 15px;

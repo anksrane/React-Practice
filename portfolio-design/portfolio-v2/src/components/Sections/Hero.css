@@ -79,6 +79,7 @@
 }
 .social-links:hover .social-icons{
     opacity: 1;
+    color: var(--primary);
 }
 
 @media (max-width:768px) {
