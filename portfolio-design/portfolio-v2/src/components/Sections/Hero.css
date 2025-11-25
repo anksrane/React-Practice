@@ -64,7 +64,7 @@
     display: flex;
     border-bottom: 0.1px solid transparent;
     text-decoration: none;
-    font-size: calc(16px + (20 - 16) * ((100vw - 320px) / (1920 - 320)));
+    font-size: calc(15px + (20 - 15) * ((100vw - 320px) / (1920 - 320)));
     gap: 3px;
     font-weight: 600;
     justify-content: center;

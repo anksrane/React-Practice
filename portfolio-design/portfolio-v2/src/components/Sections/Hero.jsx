@@ -2,6 +2,7 @@ import React from 'react'
 import { FaGithub } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { IoCall } from "react-icons/io5";
 
 import LineSvg from './LineSvg';
 import gsap from 'gsap';
@@ -51,6 +52,9 @@ function Hero() {
               </a>            
               <a href="mailto:ankitrane900@gmail.com" className='social-links' target="_blank" rel="noopener noreferrer">
                 <MdEmail className='social-icons'/> Gmail
+              </a>            
+              <a href="tel:8082466900" className='social-links' target="_blank" rel="noopener noreferrer">
+                <IoCall className='social-icons'/> Call
               </a>            
             </div>
           </div>
