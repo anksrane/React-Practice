@@ -35,8 +35,12 @@ function Skills() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: context.selector(".skills-section-inner-container"),
-          start: "top 20%",
-          toggleActions: "play none none none",
+          start: () => {
+            return window.innerWidth < 768 ? "top 80%" : "top 50%";
+          },   
+          end: () => window.innerWidth > 570 ? "bottom bottom" : "+=0",
+          scrub: () => window.innerWidth > 570 ? 0.5 : false,
+          toggleActions: () => window.innerWidth > 570 ? "none" : "play none none none",
         }
       });
       tl.fromTo(

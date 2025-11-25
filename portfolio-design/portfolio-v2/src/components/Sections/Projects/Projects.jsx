@@ -20,8 +20,12 @@ function Projects() {
             ease: "power2.out",
             scrollTrigger: {
                 trigger: ".projects-inner-container",
-                start: "top 20%",
-                toggleActions: "play none none none",
+                start: () => {
+                    return window.innerWidth < 768 ? "top 70%" : "top 50%";
+                },   
+                end: () => window.innerWidth > 570 ? "bottom bottom" : "50% bottom",
+                scrub: () => window.innerWidth > 570 ? 0.5 : false,
+                toggleActions: () => window.innerWidth > 570 ? "none" : "play none none none",              
             },
         });
 
@@ -32,10 +36,15 @@ function Projects() {
             scale: 0.1,
             duration: 0.6,
             ease: "power2.out",
+            stagger: 0.15,
             scrollTrigger: {
                 trigger: ".projects-inner-container",
-                start: "top 20%",
-                toggleActions: "play none none none",
+                start: () => {
+                    return window.innerWidth < 768 ? "top 70%" : "top 50%";
+                },   
+                end: () => window.innerWidth > 570 ? "bottom bottom" : "50% bottom",
+                scrub: () => window.innerWidth > 570 ? 0.5 : false,
+                toggleActions: () => window.innerWidth > 570 ? "none" : "play none none none",             
             },
         });
     });
