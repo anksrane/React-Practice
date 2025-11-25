@@ -12,37 +12,60 @@ import taskImage1 from "../../../assets/images/projects-main/screenshot/tasklyti
 import taskImage2 from "../../../assets/images/projects-main/screenshot/tasklytics2.jpg";
 import taskImage3 from "../../../assets/images/projects-main/screenshot/tasklytics3.jpg";
 import taskImage4 from "../../../assets/images/projects-main/screenshot/tasklytics3.jpg";
+import taskImage1Mob from "../../../assets/images/projects-main/screenshot/tasklytics1Mobile.JPG";
+import taskImage2Mob from "../../../assets/images/projects-main/screenshot/tasklytics2Mobile.JPG";
+import taskImage3Mob from "../../../assets/images/projects-main/screenshot/tasklytics3Mobile.JPG";
+import taskImage4Mob from "../../../assets/images/projects-main/screenshot/tasklytics4Mobile.jpg";
 
 // Gmmco Screenshots
 import gmmcoImage1 from "../../../assets/images/projects-main/screenshot/gmmcoImage1.jpg";
 import gmmcoImage2 from "../../../assets/images/projects-main/screenshot/gmmcoImage2.jpg";
 import gmmcoImage3 from "../../../assets/images/projects-main/screenshot/gmmcoImage3.jpg";
 import gmmcoImage4 from "../../../assets/images/projects-main/screenshot/gmmcoImage4.jpg";
+import gmmcoImage1Mob from "../../../assets/images/projects-main/screenshot/gmmcoImage1Mob.jpg";
+import gmmcoImage2Mob from "../../../assets/images/projects-main/screenshot/gmmcoImage2Mob.jpg";
+import gmmcoImage3Mob from "../../../assets/images/projects-main/screenshot/gmmcoImage3Mob.jpg";
+import gmmcoImage4Mob from "../../../assets/images/projects-main/screenshot/gmmcoImage4Mob.jpg";
 
 // G20 Screenshot
 import g20Img1 from '../../../assets/images/projects-main/screenshot/g20Img1.jpg';
 import g20Img2 from '../../../assets/images/projects-main/screenshot/g20Img2.jpg';
 import g20Img3 from '../../../assets/images/projects-main/screenshot/g20Img3.jpg';
 import g20Img4 from '../../../assets/images/projects-main/screenshot/g20Img4.jpg';
+import g20Img1Mob from '../../../assets/images/projects-main/screenshot/g20Img1Mob.jpg';
+import g20Img2Mob from '../../../assets/images/projects-main/screenshot/g20Img2Mob.jpg';
+import g20Img3Mob from '../../../assets/images/projects-main/screenshot/g20Img3Mob.jpg';
+import g20Img4Mob from '../../../assets/images/projects-main/screenshot/g20Img4Mob.jpg';
 
 // Vijay Screenshot
 import vijayImage1 from '../../../assets/images/projects-main/screenshot/vijayImage1.jpg';
 import vijayImage2 from '../../../assets/images/projects-main/screenshot/vijayImage2.jpg';
+import vijayImage1Mob from '../../../assets/images/projects-main/screenshot/vijayImage1Mob.jpg';
+import vijayImage2Mob from '../../../assets/images/projects-main/screenshot/vijayImage2Mob.jpg';
 
 // hansa gcr Screentshot
 import hansaImage1 from '../../../assets/images/projects-main/screenshot/hansaImage1.jpg';
 import hansaImage2 from '../../../assets/images/projects-main/screenshot/hansaImage2.jpg';
 import hansaImage3 from '../../../assets/images/projects-main/screenshot/hansaImage3.jpg';
+import hansaImage1Mob from '../../../assets/images/projects-main/screenshot/hansaImage1Mob.jpg';
+import hansaImage2Mob from '../../../assets/images/projects-main/screenshot/hansaImage2Mob.jpg';
+import hansaImage3Mob from '../../../assets/images/projects-main/screenshot/hansaImage3Mob.jpg';
 
 // stockholding screenshot
 import stockImage1 from '../../../assets/images/projects-main/screenshot/stockImage1.jpg';
 import stockImage2 from '../../../assets/images/projects-main/screenshot/stockImage2.jpg';
 import stockImage3 from '../../../assets/images/projects-main/screenshot/stockImage3.jpg';
 import stockImage4 from '../../../assets/images/projects-main/screenshot/stockImage4.jpg';
+import stockImage1Mob from '../../../assets/images/projects-main/screenshot/stockImage1Mob.jpg';
+import stockImage2Mob from '../../../assets/images/projects-main/screenshot/stockImage2Mob.jpg';
+import stockImage3Mob from '../../../assets/images/projects-main/screenshot/stockImage3Mob.jpg';
+import stockImage4Mob from '../../../assets/images/projects-main/screenshot/stockImage4Mob.jpg';
 
 // zuari screenshot
 import zuariImage1 from '../../../assets/images/projects-main/screenshot/zuariImage1.jpg';
 import zuariImage2 from '../../../assets/images/projects-main/screenshot/zuariImage2.jpg';
+import zuariImage1Mob from '../../../assets/images/projects-main/screenshot/zuariImage1Mob.jpg';
+import zuariImage2Mob from '../../../assets/images/projects-main/screenshot/zuariImage2Mob.jpg';
 
 import {
    icons
@@ -67,6 +90,12 @@ const projectsData = [
             taskImage3,
             taskImage4,
         ],
+        imagesMobile: [
+            taskImage1Mob,
+            taskImage2Mob,
+            taskImage3Mob,
+            taskImage4Mob,
+        ],
         status: "Ongoing"
     },
     // {
@@ -89,6 +118,12 @@ const projectsData = [
     //       gmmcoImage3,
     //       gmmcoImage4,
     //     ],
+    //     imagesMobile: [
+    //         gmmcoImage1Mob,
+    //         gmmcoImage2Mob,
+    //         gmmcoImage3Mob,
+    //         gmmcoImage4Mob,
+    //     ],    
     //     status: "Completed"
     // },
     {
@@ -109,6 +144,12 @@ const projectsData = [
           g20Img3,
           g20Img4,
         ],
+        imagesMobile: [
+            g20Img1Mob,
+            g20Img2Mob,
+            g20Img3Mob,
+            g20Img4Mob,
+        ],        
         status: "Completed"
     },
     {
@@ -127,6 +168,10 @@ const projectsData = [
           vijayImage1,
           vijayImage2
         ],
+        imagesMobile: [
+            vijayImage1Mob,
+            vijayImage2Mob,
+        ],        
         status: "Completed"
     },
     {
@@ -146,6 +191,11 @@ const projectsData = [
           hansaImage2,
           hansaImage3,
         ],
+        imagesMobile: [
+          hansaImage1Mob,
+          hansaImage2Mob,
+          hansaImage3Mob,
+        ],        
         status: "Completed"
     },
     {
@@ -163,6 +213,12 @@ const projectsData = [
         images: [
           stockImage1, stockImage2, stockImage3, stockImage4
         ],
+        imagesMobile: [
+            stockImage1Mob,
+            stockImage2Mob,
+            stockImage3Mob,
+            stockImage4Mob,
+        ],        
         status: "Completed"
     },
     {
@@ -180,6 +236,9 @@ const projectsData = [
         images: [
           zuariImage1, zuariImage2
         ],
+        imagesMobile: [
+          zuariImage1Mob, zuariImage2Mob
+        ],        
         status: "Completed"
     },
 ];

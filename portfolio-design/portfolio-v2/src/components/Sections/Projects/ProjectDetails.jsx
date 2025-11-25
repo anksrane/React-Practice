@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay, Navigation } from "swiper/modules";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { FaGithub } from "react-icons/fa6";
 import { FaLink } from "react-icons/fa";
@@ -21,6 +21,7 @@ gsap.registerPlugin(ScrollTrigger);
 const ProjectDetails = () => {
   const { slug } = useParams();
   const project = projectsData.find((p) => p.slug === slug);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 769);
 
   useGSAP(()=>{
     gsap.fromTo(
@@ -62,6 +63,14 @@ const ProjectDetails = () => {
     );    
   })   
 
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 769);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const imagesToShow = isMobile ? project.imagesMobile : project.images;
+
   if (!project) {
     return (
       <div style={{ color: "#000", textAlign: "center", marginTop: "100px" }}>
@@ -87,7 +96,7 @@ const ProjectDetails = () => {
               }}              
               modules={[Pagination, Autoplay, Navigation ]}
             >
-              {project.images?.map((img, i) => (
+              {imagesToShow?.map((img, i) => (
                 <SwiperSlide key={i}>
                   <img src={img} alt={`Project Slide ${i + 1}`} className="img-responsive"/>
                 </SwiperSlide>
