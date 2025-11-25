@@ -1,0 +1,22 @@
+/* container covers viewport so balls positioned with vw/vh are relative to viewport */
+.floating-balls-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none; /* so it doesn't block clicks */
+  z-index: 0;
+}
+
+/* ball style */
+.ball {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+  will-change: transform;
+}
+/* ball style */
+.dark .ball {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.2;
+  will-change: transform;
+}

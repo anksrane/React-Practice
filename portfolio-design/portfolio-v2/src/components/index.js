@@ -10,6 +10,8 @@ import Journey from './sections/Journey/Journey';
 import Projects from './sections/Projects/Projects';
 import ProjectDetails from './sections/Projects/ProjectDetails';
 
+import FloatingBalls from './FloatingBalls';
+
 export {
     // Layout
     Header,
@@ -24,5 +26,7 @@ export {
 
     // Pages
     Homepage,
-    ProjectDetailsPage
+    ProjectDetailsPage,
+
+    FloatingBalls
 }

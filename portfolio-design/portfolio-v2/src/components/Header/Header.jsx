@@ -15,7 +15,6 @@ import { useGSAP } from '@gsap/react';
 import "./Header.css";
 
 function Header() {
-  const [activeSection, setActiveSection] = useState(null);
   const [isHidden, setIsHidden] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();  
