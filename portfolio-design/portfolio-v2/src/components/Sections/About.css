@@ -1,0 +1,142 @@
+.about-section-outer-container {
+  background-color: color-mix(
+    in srgb,
+    var(--background-contrast) 50%,
+    transparent
+  );
+}
+
+.about-section-inner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 3% 0;
+}
+
+.about-section-outer-container .about-heading {
+  text-align: center;
+  color: var(--primary);
+  font-size: calc(24px + (50 - 24) * ((100vw - 320px) / (1920 - 320)));
+  margin-bottom: 5%;
+}
+
+.line {
+  background-color: #e9d8a6;
+  width: 50px;
+  height: 5px;
+  border-radius: 30px;
+  margin: auto;
+}
+
+.about-section-inner-container .about-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3%;
+  align-items: start;
+}
+
+.page-info-content {
+    color: var(--text-color);
+    text-align: center;
+    font-size: calc(16px + .00125*(100vw - 320px));
+    margin: 20px 15px 5%;
+}
+
+.about-section-inner-container .skills-content {
+  margin: 0 auto 1rem auto;
+  color: var(--text-color);
+  font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.about-section-inner-container .about-subhead {
+  color: var(--text-color);
+  margin-bottom: 5px;
+  font-size: calc(18px + (20 - 18) * ((100vw - 320px) / (1920 - 320)));
+}
+
+.about-section-outer-container .skill-item-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 10px;
+  margin-bottom: 20px;
+}
+
+.about-section-outer-container .skill-item {
+  background-color: var(--background-contrast);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 10px;
+  padding: 5px 10px;
+  border: 1px solid rgba(var(--border), 0.2);
+  box-shadow: 0 4px 12px rgba(var(--border), 0.15);
+  height: fit-content;
+}
+
+.about-section-outer-container .skill-icon {
+  max-width: 25px;
+  width: 100%;
+  filter: drop-shadow(1px 1px 1px var(--text-color));
+}
+
+.about-section-outer-container .skill-name {
+  color: var(--text-color);
+  font-weight: 700;
+  font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
+}
+
+@media (max-width: 1024px) {
+  .about-section-outer-container .skill-item-container {
+    gap: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .about-section-outer-container .skill-item-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .about-section-inner-container {
+    padding: 30px 0;
+  }
+  .page-info-content{
+    margin: 15px;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 640px){
+  .about-section-inner-container .about-grid-container{
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 20px;
+  }    
+}
+
+@media (max-width: 580px) {
+  /* Always show skill name on small screens */
+  .skill-name {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+    transform: none;
+  }
+
+  /* Disable hover effects */
+  .about-section-outer-container .skill-item:hover .skill-icon {
+    transform: none;
+  }
+
+  .about-section-outer-container .skill-name {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+
+}

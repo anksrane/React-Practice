@@ -4,6 +4,7 @@ import {Hero} from '../../components';
 import {Skills} from '../../components';
 import {Journey} from '../../components';
 import {Projects} from '../../components';
+import {About} from '../../components';
 
 function Homepage() {
   useEffect(() => {
@@ -20,7 +21,8 @@ function Homepage() {
     <>
         <div><Header /></div>
         <section id="hero"><Hero /></section>
-        <section id="skills"><Skills /></section>
+        <section id="about"><About /></section>
+        {/* <section id="skills"><Skills /></section> */}
         <section id="projects"><Projects/></section>
         <section id="journey"><Journey /></section>
     </>

@@ -23,7 +23,7 @@ function Header() {
   const menuOpen = useSelector((state) => state.menuMobile.isMenuOpen);
   const navItems = [
     { name: "Home", id: "hero" },
-    { name: "Skills", id: "skills" },
+    { name: "About", id: "about" },
     { name: "Projects", id: "projects" },
     { name: "Journey", id: "journey" },
   ];

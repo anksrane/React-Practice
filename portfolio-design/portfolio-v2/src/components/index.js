@@ -8,6 +8,7 @@ import LineSvg from './sections/LineSvg';
 import Skills from './sections/Skills';
 import Journey from './sections/Journey/Journey';
 import Projects from './sections/Projects/Projects';
+import About from './sections/About';
 import ProjectDetails from './sections/Projects/ProjectDetails';
 
 import FloatingBalls from './FloatingBalls';
@@ -22,6 +23,7 @@ export {
     Skills,
     Journey,
     Projects,
+    About,
     ProjectDetails,
 
     // Pages
