@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react';
 import projectsData from './projectsData';
 import ProjectCard from './ProjectCard';
 import "./Projects.css";
@@ -10,50 +10,51 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 function Projects() {
+    const projectSectionRef= useRef(null);
 
     useGSAP(() => {
-        // Animate heading
-        gsap.from(".project-heading", {
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-                trigger: ".projects-inner-container",
-                start: () => {
-                    return window.innerWidth < 768 ? "top 70%" : "top 50%";
-                },   
-                end: () => window.innerWidth > 570 ? "bottom bottom" : "50% bottom",
-                scrub: () => window.innerWidth > 570 ? 0.5 : false,
-                toggleActions: () => window.innerWidth > 570 ? "none" : "play none none none",              
-            },
-        });
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".projects-inner-container",
+                    start: window.innerWidth < 769 ? "top 75%" : "top 50%",
+                    end: window.innerWidth > 769 ? "bottom bottom" : "50% bottom",
+                    scrub: window.innerWidth > 769 ? 1 : false,
+                    toggleActions: window.innerWidth > 769 ? "none" : "play none none none",
+                }
+            });
 
-        // Animate all project cards
-        gsap.from(".projectCard-inner-section", {
-            opacity: 0,
-            y: 30,
-            scale: 0.1,
-            duration: 0.6,
-            ease: "power2.out",
-            stagger: 0.15,
-            scrollTrigger: {
-                trigger: ".projects-inner-container",
-                start: () => {
-                    return window.innerWidth < 768 ? "top 70%" : "top 50%";
-                },   
-                end: () => window.innerWidth > 570 ? "bottom bottom" : "50% bottom",
-                scrub: () => window.innerWidth > 570 ? 0.5 : false,
-                toggleActions: () => window.innerWidth > 570 ? "none" : "play none none none",             
-            },
-        });
-    });
+            tl.from(".project-heading", {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                ease: "power2.out",
+            });
+
+            // Animate Line
+            tl.fromTo(".line",
+                { opacity: 0, y: 50, scaleX: 0, transformOrigin: "center", immediateRender: false },
+                { opacity: 1, y: 0, duration: 0.6, scaleX: 1, ease: "power2.out" }
+            );    
+
+            tl.from(".projectCard-inner-section", {
+                opacity: 0,
+                y: 30,
+                scale: 0.1,
+                duration: 0.6,
+                ease: "power2.out",
+                scrub:1,
+            });
+        },{ scope: projectSectionRef }
+    );
 
   return (
-    <div className='project-section'>
+    <div className='project-section' ref={projectSectionRef}>
         <div className="container">
             <div className="projects-inner-container">
-                <h2 className="project-heading">Projects</h2>
+                <div className="heading-container">
+                    <h2 className="project-heading">Projects</h2>
+                    <div className="line"></div>
+                </div>                
                 <div className="projects-outer-container">
                     {projectsData.map((proj,index)=>(
                         <ProjectCard 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from 'react';
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -6,6 +6,12 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 import { FaBriefcase, FaGraduationCap } from "react-icons/fa6";
 import './Journey.css';
+
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const professional = [
     {
@@ -78,11 +84,40 @@ const academics=[
 ]
 
 function Journey() {
-  return (
-    <div className="timeline-section">
-        <div className="timeline-inner-container">
-          <h2 className="timeline-heading">My Journey</h2>
+  const journeySectionRef =useRef(null);
 
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: journeySectionRef.current.querySelector(".timeline-inner-container"),
+        start: "top 80%", 
+        end: "top 70%",
+        scrub: 1,
+        // markers: true,
+      },
+    });
+
+    // Animate heading
+    tl.fromTo(".timeline-heading",
+      { opacity: 0, y: 50, immediateRender: false },
+      { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+    );
+
+    // Animate line
+    tl.fromTo(
+      ".line",
+      { opacity: 0, y: 50, scaleX: 0, transformOrigin: "center", immediateRender: false },
+      { opacity: 1, y: 0, duration: 0.6, scaleX: 1, ease: "power2.out" }
+    );
+  }, { scope: journeySectionRef });  
+
+  return (
+    <div className="timeline-section" ref={journeySectionRef}>
+        <div className="timeline-inner-container">
+          <div className="heading-container">
+              <h2 className="timeline-heading">My Journey</h2>
+              <div className="line"></div>
+          </div>          
           <VerticalTimeline lineColor="rgba(255,255,255,0.2)">
             {/* Professional Timeline */}
             {professional.map((item, index) => (

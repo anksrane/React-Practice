@@ -48,40 +48,47 @@ function About() {
             // Animate Heading
             tl.fromTo(
             ".about-heading",
-            { opacity: 0, y: 50, immediateRender: false },
-            { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+                { opacity: 0, y: 50, immediateRender: false },
+                { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+            );
+
+            // Animate Line
+            tl.fromTo(
+            ".line",
+                { opacity: 0, y: 50, scaleX: 0, transformOrigin: "center", immediateRender: false },
+                { opacity: 1, y: 0, duration: 0.6, scaleX: 1, ease: "power2.out" }
             );
 
             // Animate Sub Text under heading
             tl.fromTo(
             ".page-info-content",
-            { opacity: 0, y: 40 },
-            { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-            "-=0.3"
+                { opacity: 0, y: 40 },
+                { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+                "-=0.3"
             );
 
             // Animate about text block
             tl.fromTo(
             ".about-text",
-            { opacity: 0, y: 40 },
-            { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" },
-            "-=0.2"
+                { opacity: 0, y: 40 },
+                { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" },
+                "-=0.2"
             );
 
             // Animate skills + tools container (Right Side)
             tl.fromTo(
             ".skills-outer-container",
-            { opacity: 0, y: 40 },
-            { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" },
-            "-=0.3"
+                { opacity: 0, y: 40 },
+                { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" },
+                "-=0.3"
             );
 
             // Optional: animate each skill item with stagger
             tl.fromTo(
             ".skill-item",
-            { opacity: 0, scale: 0.8, y: 20 },
-            { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" },
-            "-=0.3"
+                { opacity: 0, scale: 0.8, y: 20 },
+                { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: 0.05, ease: "power2.out" },
+                "-=0.3"
             );
         },
         { scope: aboutSectionRef }
@@ -91,8 +98,10 @@ function About() {
         <div className='about-section-outer-container' ref={aboutSectionRef} >
             <div className='container'>
             <div className='about-section-inner-container'>
-                <h2 className='about-heading'>About Me</h2>
-                {/* <div className="line"></div> */}
+                <div className="heading-container">
+                    <h2 className='about-heading'>About Me</h2>
+                    <div className="line"></div>
+                </div>
                 <p className="page-info-content">Here you will find more information about me, what I do, and my current skills mostly in terms of programming and technology.</p>
                 <div className="about-grid-container">
                     <div className="about-text">

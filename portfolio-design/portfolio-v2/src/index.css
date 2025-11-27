@@ -16,6 +16,8 @@
   --black: #000000;
   --grey: #D4D6D7;                  /* Neutral border/surface separator */
   --border: 0, 0, 0;  
+
+  --underline-gradient: linear-gradient(90deg, #c3912f, #8a5c15);
 }
 
 .dark {
@@ -35,6 +37,8 @@
   --black: #000;  
   --grey: #3A3B3E;
   --border: 255, 255, 255;
+
+  --underline-gradient: linear-gradient(90deg, #bfa86c, #807243);
 }
 
 /* Inter Font */

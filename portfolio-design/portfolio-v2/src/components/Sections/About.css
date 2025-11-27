@@ -18,15 +18,17 @@
   text-align: center;
   color: var(--primary);
   font-size: calc(24px + (50 - 24) * ((100vw - 320px) / (1920 - 320)));
-  margin-bottom: 5%;
+  margin-bottom: 15px;
+  text-transform: uppercase;
 }
 
-.line {
-  background-color: #e9d8a6;
-  width: 50px;
+.about-section-outer-container .line {
+  background: var(--underline-gradient);
+  width: 100px;
   height: 5px;
   border-radius: 30px;
   margin: auto;
+  margin-bottom: 5%;
 }
 
 .about-section-inner-container .about-grid-container {
