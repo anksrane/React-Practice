@@ -12,6 +12,7 @@ import About from './sections/About';
 import ProjectDetails from './sections/Projects/ProjectDetails';
 
 import FloatingBalls from './FloatingBalls';
+import Loader from './Loader';
 
 export {
     // Layout
@@ -30,5 +31,6 @@ export {
     Homepage,
     ProjectDetailsPage,
 
-    FloatingBalls
+    FloatingBalls,
+    Loader
 }

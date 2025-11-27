@@ -57,3 +57,18 @@
   font-style: italic;
   font-display: swap;
 }
+
+@font-face {
+  font-family: "Allura";
+  src: url('./assets/fonts/Allura-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Funnel Display";
+  src: url('./assets/fonts/FunnelDisplay-VariableFont_wght.ttf') format('truetype');
+  font-optical-sizing: auto;
+  font-weight: 300 800;
+  font-style: normal;
+}

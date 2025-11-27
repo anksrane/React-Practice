@@ -54,6 +54,11 @@
     font-weight: 500;   
 }
 
+.hero-content strong{
+    font-family: "Funnel Display", sans-serif;
+    font-size: calc(19px + (27 - 19) * ((100vw - 320px) / (1920 - 320)));
+}
+
 .social-links-container{
     display: flex;
     flex-wrap: wrap;
