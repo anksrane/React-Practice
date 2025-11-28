@@ -117,21 +117,13 @@ function Header() {
       <div className="container">
         <div className="navbar-container">
           <NavLink to={"/"} className='logo-link'>
-            <img
-              src={logo}
-              alt="home"
-              className="img-responsive logo-img"
-            ></img>
+            <span className="logo-link-text">AR</span>
           </NavLink>
 
           <div className={`nav-items ${menuOpen? "open" : ""}`}>
             <div className="mobile-head">
               <NavLink to={"/"} className='logo-link logo-link-mobile'>
-                <img
-                  src={logo}
-                  alt="home"
-                  className="img-responsive logo-img"
-                ></img>
+                <span className="logo-link-text">AR</span>                
               </NavLink>  
               
               <button className="close-mob-menu-btn" onClick={() => dispatch(toggleMenu())}>
