@@ -1,5 +1,5 @@
 import React from 'react';
-import { icons } from '../../assets/images/icons';
+import { icons } from '../../../assets/images/icons';
 import './About.css';
 
 import gsap from "gsap";

@@ -1,4 +1,4 @@
-import { icons } from '../../assets/images/icons';
+import { icons } from '../../../assets/images/icons';
 import './Skills.css';
 
 import gsap from "gsap";
