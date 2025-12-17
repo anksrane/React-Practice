@@ -40,7 +40,7 @@ function ProjectCard({ data, index }) {
           y: 20,
           scale: 0.9,
           stagger: 0.3,
-          duration: 0.3,
+          duration: 0.1,
           ease: "power2.out",
         },
         "-=0.2"

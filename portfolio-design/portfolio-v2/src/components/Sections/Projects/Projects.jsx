@@ -16,17 +16,17 @@ function Projects() {
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".projects-inner-container",
-                    start: window.innerWidth < 769 ? "top 75%" : "top 50%",
+                    start: window.innerWidth < 769 ? "top 75%" : "top 65%",
                     end: window.innerWidth > 769 ? "bottom bottom" : "50% bottom",
-                    scrub: window.innerWidth > 769 ? 1 : false,
-                    toggleActions: window.innerWidth > 769 ? "none" : "play none none none",
+                    // scrub: window.innerWidth > 769 ? 1 : false,
+                    toggleActions: "play none none none",
                 }
             });
 
             tl.from(".project-heading", {
                 opacity: 0,
                 y: 50,
-                duration: 1,
+                duration: 0.5,
                 ease: "power2.out",
             });
 
