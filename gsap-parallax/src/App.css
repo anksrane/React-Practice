@@ -1,0 +1,37 @@
+html {
+  scroll-behavior: auto;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+}
+
+/* HERO */
+.hero {
+  background: #111;
+  color: white;
+}
+
+/* 🔥 PARALLAX BACKGROUND */
+.parallax-bg {
+  background-image: url("./assets/bg-image.jpg");
+  background-size: cover;
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
+}
+
+/* CONTENT */
+.content {
+  background: #222;
+  color: white;
+}
