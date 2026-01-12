@@ -10,13 +10,19 @@ function MultiPartForm() {
     register,
     reset,
     handleSubmit,
+    trigger,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(multipartSchema),
+    mode: "onSubmit",
   });
 
-  const nextForm = () =>{
-    setStep(2);
+  const nextForm = async () =>{
+    const isValid = await trigger(["email", "password"]);
+
+    if (isValid) {
+      setStep(2);
+    }
   }
 
   const clearStep1 = () =>{
@@ -41,9 +47,14 @@ function MultiPartForm() {
     });
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+    reset();
   };
+
+  const goToStep1 = () => {
+    setStep(1);
+  }
 
   return (
     <div className={styles.formOuterContainer}>
@@ -75,7 +86,8 @@ function MultiPartForm() {
 
             {step && step == 2 &&(
                 <>
-                  <input {...register("name")} placeholder="Name" />
+                  <input {...register("name")} 
+                   placeholder="Name" />
                   {errors.name && (
                     <p className="error-text">{errors.name.message}</p>
                   )}
@@ -85,15 +97,13 @@ function MultiPartForm() {
                     <p className="error-text">{errors.city.message}</p>
                   )}
 
-                    <div className="form-buttons">
-                        <button type="submit">Sumbit</button>
-                        <button type="button" onClick={clearStep2}>Reset</button>
-                        <button type="button">&lt;&lt;</button>
-                    </div>                  
+                  <div className="form-buttons">
+                      <button type="submit">Login</button>
+                      <button type="button" onClick={clearStep2}>Reset</button>
+                      <button type="button" onClick={goToStep1}>&lt;&lt;</button>
+                  </div>                  
                 </>
             )}
-
-
         </form>
       </div>
     </div>
