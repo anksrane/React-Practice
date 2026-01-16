@@ -1,7 +1,7 @@
 // App.jsx
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; //this will replace useEffect
-import { fetchProducts, addProduct } from "./api/products";
+import { fetchProducts, addProduct, updateProduct, deleteProduct } from "./api/products";
 import { useForm } from "react-hook-form";
 import "./App.css";
 
@@ -15,7 +15,9 @@ function App() {
   } = useQuery({
     queryKey: ["products", search], // unique cache key
     queryFn: () => fetchProducts(search), // function that fetches data
-    keepPreviousData: true, // To PRevent Previous Data
+    // ❌ CHANGE THIS LINE (v5 doesn't use keepPreviousData)
+    // keepPreviousData: true,     
+    placeholderData: (previousData) => previousData,
   });
 
   // Form Setup
@@ -29,14 +31,38 @@ function App() {
   // React Query cache access
   const queryClient = useQueryClient();
 
+  // add Products Mutation
   const addProductMutation = useMutation({
     mutationFn: addProduct,
 
     onSuccess: () => {
-      queryClient.invalidateQueries(["products"]);
+      // ❌ Your old line (not fully correct with search)
+      // queryClient.invalidateQueries(["products"]);
+
+      // ✅ NEW CORRECT LINE
+      queryClient.invalidateQueries({ queryKey: ["products"] });      
       reset();
     },
   });
+
+  // update Products Mutation
+  const updateProductMutation = useMutation({
+    mutationFn: updateProduct,
+
+    onSuccess: () => {
+      // Refresh product list after update
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    }
+  })
+
+  const deleteProductMutation = useMutation({
+    mutationFn: deleteProduct,
+
+    onSuccess: () => {
+      // Refresh product list after delete
+      queryClient.invalidateQueries({ queryKey: ["products"] })
+    }
+  })
 
   // Form submit handler
   const onSubmit = (data) => {
@@ -48,13 +74,29 @@ function App() {
     });
   };
 
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
+  // Handle Update
+  const handleUpdate = (product) => {
+    const newName = prompt("Enter new product name:", product.name);
+    const newPrice = prompt("Enter new price:", product.price);
 
-  if (isError) {
-    return <h1>Error While Loading Data</h1>;
-  }
+    if (!newName || !newPrice) return;
+    // console.log("Update Products: ",product);
+
+    updateProductMutation.mutate({
+      id: product.id,
+      data: {
+        name: newName,
+        price: Number(newPrice),
+      },
+    });
+  };  
+
+  // Handle Delete
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      deleteProductMutation.mutate(id);
+    }
+  };
 
   return (
     <>
@@ -99,13 +141,35 @@ function App() {
 
       <h2>Number of Products are: {products.length}</h2>
 
-      <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
-        {products.map((product) => (
-          <li key={product.id}>
-            {product.name} - ₹{product.price}
-          </li>
-        ))}
-      </ul>
+      {
+        isLoading ? (
+          <h1>Loading...</h1>
+        ) : isError ? (
+          <h1>Error While Loading Data</h1>
+        ) : (
+          <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
+            {products.map((product) => (
+              <li key={product.id} style={{ marginBottom: "8px" }}>
+                {product.name} - ₹{product.price}
+
+                <button
+                  style={{ marginLeft: "10px" }}
+                  onClick={() => handleUpdate(product)}
+                >
+                  Edit
+                </button>
+
+                <button
+                  style={{ marginLeft: "5px" }}
+                  onClick={() => handleDelete(product.id)}
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        )
+      }
     </>
   );
 }

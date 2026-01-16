@@ -20,3 +20,15 @@ export const addProduct = async (data) => {
     const response = await axios.post("/api/products", data);
     return response.data;
 }
+
+// Update Products
+export const updateProduct = async ({id, data}) => {
+    const response = await axios.put(`/api/products/${id}`,data)
+    return response.data;
+}
+
+// Delete Products
+export const deleteProduct = async (id) => {
+    const response = await axios.delete(`/api/products/${id}`)
+    return response.data;
+}

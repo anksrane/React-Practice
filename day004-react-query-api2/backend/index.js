@@ -1,3 +1,4 @@
+//  backend/index.js
 import express from 'express';
 const app = express();
 const port = process.env.PORT || 3000;
@@ -11,7 +12,7 @@ app.listen(port, () => {
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
-const products = [
+let products = [
     {
         id: 1,
         name: 'table wooden',
@@ -64,14 +65,16 @@ const products = [
     },
 ];
 
-// Get API
+// Get API for getll all list
 app.get('/api/products', (req, res) => {
     if (req.query.search) {
         console.log(req.query.search);
         const filterProducts = products.filter(product => product.name.includes(req.query.search))
 
-        res.send(filterProducts);
-        return;
+        setTimeout(() => {
+            res.send(filterProducts);
+            return;
+        }, 3000);
     }
 
     setTimeout(() => {
@@ -79,7 +82,7 @@ app.get('/api/products', (req, res) => {
     }, 3000);
 })
 
-// POST API
+// POST API for Create
 app.post('/api/products', (req,res) => {
     console.log('BODY:', req.body)
     const newProducts = {
@@ -90,4 +93,34 @@ app.post('/api/products', (req,res) => {
 
     products.push(newProducts);
     res.status(201).send(newProducts);
+})
+
+// PUT API to update data
+app.put('/api/products/:id',(req, res) => {
+    console.log(req);
+    const { id } = req.params;
+    const { name, price } = req.body;
+
+    const index= products.findIndex(p=> p.id === Number(id));
+
+    if(index===-1){
+        return res.status(404).send({message: "Product Not Found"});
+    }
+
+    products[index] = {
+        ...products[index],
+        name,
+        price
+    }
+
+    res.send(products[index]);
+})
+
+// DELETE API to Delete Data
+app.delete('/api/products/:id', (req, res) => {
+    const { id } = req.params;
+
+    products = products.filter(p => p.id !== Number(id));
+
+    res.status(200).send({ message: 'Product deleted' });
 })
