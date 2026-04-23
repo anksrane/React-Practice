@@ -1,0 +1,84 @@
+:root {
+  /* FONT */
+  --font-primary: 'Inter', sans-serif;
+
+  /* PRIMARY BRAND */
+  /* --primary-10: #C4D2FF;
+  --primary-30: #82C5FF;
+  --primary: #0052CC;
+  --primary-deep: #3B63D9;
+  --primary-dim: #B2C5FF;
+  --primary-hover: #003D9B; */
+  --primary-10: #6FB2FF;
+  --primary-30: #A6C9FF;
+  --primary: #003D99;
+  --primary-deep: #3667B3;
+  --primary-dim: #264A89;
+  --primary-hover: #6BA6FF;  
+
+  /* SURFACES */
+  --bg: #F5F7FF;
+  --surface: #FFFFFF;
+  --surface-low: #F1F3FF;
+  --surface-high: #E0E8FF;
+  --surface-variant: #D8E2F9;
+
+  /* TEXT */
+  --text: #1F2430;
+  --text-muted: #5B6475;
+  --text-soft: #8B93A7;
+  --text-white: #FFFFFF;
+
+  /* STATUS */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #BA1A1A;
+  --info: #003D9B;
+
+  /* BORDER */
+  --border: #E4E8F3;
+  --border-dark: #CCD4E5;
+
+  /* SHADOW */
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.06);
+  --shadow-md: 0 6px 16px rgba(0,0,0,0.10);
+  --shadow-lg: 0 10px 24px rgba(0,0,0,0.14);
+
+  /* RADIUS */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+}
+
+[data-theme="dark"] {
+  --primary-10: #6FB2FF;
+  --primary-30: #A6C9FF;
+  --primary: #003D99;
+  --primary-deep: #3667B3;
+  --primary-dim: #264A89;
+  --primary-hover: #6BA6FF;
+
+  --bg: #020617;
+  --surface: #0F172A;
+  --surface-low: #111827;
+  --surface-high: #1E293B;
+  --surface-variant: #334155;
+
+  --text: #F8FAFC;
+  --text-muted: #CBD5E1;
+  --text-soft: #94A3B8;
+  --text-white: #FFFFFF;
+
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #BA1A1A;
+  --info: #38BDF8;
+
+  --border: #243041;
+  --border-dark: #334155;
+
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.35);
+  --shadow-md: 0 6px 16px rgba(0,0,0,0.45);
+  --shadow-lg: 0 10px 24px rgba(0,0,0,0.55);
+}

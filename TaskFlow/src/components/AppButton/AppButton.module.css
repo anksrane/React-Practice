@@ -1,0 +1,108 @@
+/* src/components/AppButton/AppButton.module.css */
+
+.button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  font-family: var(--font-primary);
+  font-weight: 600;
+  transition: all 0.2s ease;
+  user-select: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 44px;
+  padding: 10px 18px;
+}
+
+/* LABEL + ICON */
+.label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+/* PRIMARY */
+.primary {
+  background: var(--primary);
+  color: var(--text-white);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* SECONDARY */
+.secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.secondary:hover:not(:disabled) {
+  background: var(--surface-variant);
+  border-color: var(--primary);
+}
+
+/* SUCCESS */
+.success {
+  background: var(--success);
+  color: var(--text-white);
+}
+
+.success:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+
+/* WARNING */
+.warning {
+  background: var(--warning);
+  color: var(--text-white);
+}
+
+.warning:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+
+/* INFO */
+.info {
+  background: var(--info);
+  color: var(--text-white);
+}
+
+.info:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+
+/* ACTIVE */
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* FOCUS */
+.button:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.18);
+}
+
+/* DISABLED */
+.disabled,
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* FULL WIDTH */
+.fullWidth {
+  width: 100%;
+}
