@@ -1,4 +1,4 @@
-import AppButton from './components/AppButton/AppButton';
+import {AppButton, AppChangeMode, AppInput} from './components';
 import './styles/variables.css';
 import './styles/global.css';
 import './App.css'
@@ -10,10 +10,18 @@ import {
   FiInfo,
   FiMenu
 } from 'react-icons/fi';
+import {
+  FiMail,
+  FiLock,
+  FiEye,
+  FiSearch,
+  FiUser
+} from 'react-icons/fi';
 
 function App() {
 
   return (
+    <>    
     <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', padding: '24px' }}>
       {/* TEXT ONLY */}
       <AppButton variant="primary">
@@ -53,6 +61,9 @@ function App() {
         iconLeft={<FiMenu />}
       />
 
+      <AppChangeMode >
+      </AppChangeMode>
+
       {/* FULL WIDTH */}
       <AppButton
         variant="info"
@@ -70,6 +81,56 @@ function App() {
         Delete
       </AppButton>
     </div>
+
+    <div
+      style={{
+        maxWidth: '420px',
+        padding: '24px',
+        display: 'grid',
+        gap: '18px'
+      }}
+    >
+      {/* EMAIL */}
+      <AppInput
+        label="Email"
+        placeholder="Enter email"
+        leftIcon={<FiMail />}
+      />
+
+      {/* PASSWORD like your design */}
+      <AppInput
+        label="Password"
+        linkText="Forgot?"
+        placeholder="••••••••"
+        type="password"
+        leftIcon={<FiLock />}
+        rightIcon={<FiEye />}
+      />
+
+      {/* SEARCH */}
+      <AppInput
+        placeholder="Search tasks..."
+        leftIcon={<FiSearch />}
+      />
+
+      {/* USER */}
+      <AppInput
+        label="Username"
+        placeholder="John Doe"
+        leftIcon={<FiUser />}
+        helperText="Use your full name"
+      />
+
+      {/* ERROR */}
+      <AppInput
+        label="Password"
+        type="password"
+        leftIcon={<FiLock />}
+        rightIcon={<FiEye />}
+        error="Password is required"
+      />
+    </div>
+    </>    
   )
 }
 

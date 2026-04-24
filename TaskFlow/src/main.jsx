@@ -3,9 +3,12 @@ import { createRoot } from 'react-dom/client'
 import '@fontsource/inter';
 import './index.css'
 import App from './App.jsx'
+import { ThemeProvider } from './app/providers/ThemeProvider.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </StrictMode>,
 )

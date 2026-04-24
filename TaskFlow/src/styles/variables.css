@@ -3,13 +3,7 @@
   --font-primary: 'Inter', sans-serif;
 
   /* PRIMARY BRAND */
-  /* --primary-10: #C4D2FF;
-  --primary-30: #82C5FF;
-  --primary: #0052CC;
-  --primary-deep: #3B63D9;
-  --primary-dim: #B2C5FF;
-  --primary-hover: #003D9B; */
-  --primary-10: #6FB2FF;
+  --primary-10: #e1e7f5;
   --primary-30: #A6C9FF;
   --primary: #003D99;
   --primary-deep: #3667B3;
@@ -17,11 +11,13 @@
   --primary-hover: #6BA6FF;  
 
   /* SURFACES */
-  --bg: #F5F7FF;
+  --bg: #f9f9f9;
   --surface: #FFFFFF;
   --surface-low: #F1F3FF;
   --surface-high: #E0E8FF;
   --surface-variant: #D8E2F9;
+
+  --input-bg: #f3f3f3;  
 
   /* TEXT */
   --text: #1F2430;
@@ -45,9 +41,9 @@
   --shadow-lg: 0 10px 24px rgba(0,0,0,0.14);
 
   /* RADIUS */
-  --radius-sm: 4px;
+  --radius-sm: 6px;
   --radius-md: 8px;
-  --radius-lg: 16px;
+  --radius-lg: 12px;
   --radius-full: 999px;
 }
 
@@ -59,11 +55,13 @@
   --primary-dim: #264A89;
   --primary-hover: #6BA6FF;
 
-  --bg: #020617;
+  --bg: #111318;
   --surface: #0F172A;
   --surface-low: #111827;
   --surface-high: #1E293B;
   --surface-variant: #334155;
+
+  --input-bg: #1D202A;
 
   --text: #F8FAFC;
   --text-muted: #CBD5E1;

@@ -1,5 +1,4 @@
 /* src/components/AppButton/AppButton.module.css */
-
 .button {
   border: none;
   outline: none;
@@ -51,8 +50,8 @@
 }
 
 .secondary:hover:not(:disabled) {
-  background: var(--surface-variant);
-  border-color: var(--primary);
+  background: var(--text);
+  color: var(--surface-variant);
 }
 
 /* SUCCESS */

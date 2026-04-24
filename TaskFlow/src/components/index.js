@@ -1,5 +1,9 @@
 import AppButton from "./AppButton/AppButton";
+import AppInput from "./AppInput/AppInput";
+import AppChangeMode from "./AppChangeMode/AppChangeMode";
 
-export default {
-    AppButton
+export {
+    AppButton,
+    AppInput,
+    AppChangeMode
 }

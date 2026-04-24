@@ -1,0 +1,36 @@
+/* src/components/AppChangeMode/AppChangeMode.module.css */
+.toggleBtn {
+  /* width: 42px;
+  height: 42px; */
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+
+  background: var(--surface);
+  color: var(--text);
+  padding: 12px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  font-size: 18px;
+
+  transition: all 0.2s ease;
+}
+
+.toggleBtn:hover {
+  background: var(--text);
+  border-color: var(--primary);
+  color: var(--surface-variant);
+  transform: translateY(-1px);
+}
+
+.toggleBtn:active {
+  transform: translateY(0);
+}
+
+.toggleBtn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.14);
+}
