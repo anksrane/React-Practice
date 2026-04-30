@@ -1,14 +1,11 @@
 /* src/components/AppChangeMode/AppChangeMode.module.css */
 .toggleBtn {
-  /* width: 42px;
-  height: 42px; */
-
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
 
-  background: var(--surface);
+  background: var(--surface-low);
   color: var(--text);
-  padding: 12px;
+  padding: 10px;
 
   display: inline-flex;
   align-items: center;

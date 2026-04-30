@@ -26,10 +26,10 @@
   --text-white: #FFFFFF;
 
   /* STATUS */
-  --success: #10B981;
+  --success: #198754;
   --warning: #F59E0B;
   --danger: #BA1A1A;
-  --info: #003D9B;
+  --info: #0DCAF0;
 
   /* BORDER */
   --border: #E4E8F3;
@@ -68,10 +68,10 @@
   --text-soft: #94A3B8;
   --text-white: #FFFFFF;
 
-  --success: #10B981;
+  --success: #198754;
   --warning: #F59E0B;
   --danger: #BA1A1A;
-  --info: #38BDF8;
+  --info: #0DCAF0;
 
   --border: #243041;
   --border-dark: #334155;

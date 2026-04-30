@@ -1,0 +1,77 @@
+.authBg{
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.authInnerContainer{
+    width: 100%;
+    max-width: 1150px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+}
+.authLeftImageContainer{
+    background: url('../../assets/login-signup-bg.jpg');
+    padding: 7%;
+    border-top-left-radius: var(--radius-md);
+    border-bottom-left-radius: var(--radius-md);
+}
+.logoContainer{ 
+    margin-bottom: 20px;
+}
+.logoImage{
+
+}
+.heading{
+    color: var(--text-white);
+    font-size: calc(20px + (36 - 20) * ((100vw - 320px) / (1920 - 320)));
+    line-height: calc(25px + (45 - 25) * ((100vw - 320px) / (1920 - 320)));
+}
+.para{
+    color: var(--text-white);
+    font-size: calc(16px + (18 - 16) * ((100vw - 320px) / (1920 - 320)));
+    line-height: calc(20px + (28 - 20) * ((100vw - 320px) / (1920 - 320)));  
+    margin-top: 5%;  
+}
+.authRightFormContainer{
+    background-color: var(--surface);
+    padding: 7%;
+    border-top-right-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);    
+}
+.modeButtonContainer{
+    display: flex;
+    justify-content: flex-end;
+}
+.formTabOuterContainer{
+    
+}
+.buttonContainer{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    padding: 4px;
+    background-color: var(--surface-low);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--surface-variant);
+}
+.authButtons{
+    background-color: transparent;
+    border: transparent;
+    padding: 8px 15px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 20px;      
+    transition: background-color 0.3s ease 0.1s, color 0.3s ease 0.1s;
+}
+.authButtons.active{
+    background-color: var(--primary);
+    color: var(--text-white);
+}
