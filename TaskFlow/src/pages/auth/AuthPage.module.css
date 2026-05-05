@@ -13,6 +13,7 @@
     grid-template-columns: 1fr 1fr;
     box-shadow: var(--shadow-md);
     border-radius: var(--radius-md);
+    min-height: 700px;
 }
 .authLeftImageContainer{
     background: url('../../assets/login-signup-bg.jpg');
@@ -22,9 +23,6 @@
 }
 .logoContainer{ 
     margin-bottom: 20px;
-}
-.logoImage{
-
 }
 .heading{
     color: var(--text-white);
@@ -39,16 +37,22 @@
 }
 .authRightFormContainer{
     background-color: var(--surface);
-    padding: 7%;
+    padding: 15% 7%;
     border-top-right-radius: var(--radius-md);
     border-bottom-right-radius: var(--radius-md);    
+    position: relative;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
 }
 .modeButtonContainer{
-    display: flex;
-    justify-content: flex-end;
+    position: absolute;
+    top: 4%;
+    right: 4%;
 }
 .formTabOuterContainer{
-    
+    width: 100%;
+    max-width: 500px;
 }
 .buttonContainer{
     width: 100%;
@@ -74,4 +78,41 @@
 .authButtons.active{
     background-color: var(--primary);
     color: var(--text-white);
+}
+
+@media (max-width: 768px) {
+    .heading, .para{
+        display: none;
+    }
+    .authInnerContainer{
+        min-height: auto;
+        grid-template-columns: auto;
+        padding: 15px;
+    }
+    .authLeftImageContainer{
+        border-radius: 0;
+        border-top-left-radius: var(--radius-md);
+        border-top-right-radius: var(--radius-md);
+        padding: 30px;
+    }
+    .logoContainer{
+        margin: 0;
+    }
+    .logoContainer img{
+        display: block;
+        margin: auto;
+    }
+    .authRightFormContainer{
+        padding: 15% 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modeButtonContainer{
+        top: 15px;
+        right: 15px;
+    }
+    .authRightFormContainer{
+        padding: 70px 15px 40px;
+    }
 }

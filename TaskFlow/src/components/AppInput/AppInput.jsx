@@ -53,7 +53,7 @@ export default function AppInput({
       {(label || linkText) && (
         <div className={styles.topRow}>
           {label && (
-            <label className={styles.label}>
+            <label className={styles.label} htmlFor={props.name}>
               {label}
             </label>
           )}
@@ -82,6 +82,7 @@ export default function AppInput({
           placeholder={placeholder}
           disabled={disabled}
           className={styles.input}
+          id={props.name}
           {...props}
         />
 

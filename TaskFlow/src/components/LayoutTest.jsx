@@ -6,9 +6,7 @@ import {
   FiTrash2,
   FiCheck,
   FiInfo,
-  FiMenu
-} from 'react-icons/fi';
-import {
+  FiMenu,
   FiMail,
   FiLock,
   FiEye,
